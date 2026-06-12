@@ -1,0 +1,514 @@
+import { lazy, Suspense } from 'react'
+import {
+  ArrowRight,
+  Bot,
+  BookOpenText,
+  BriefcaseBusiness,
+  CreditCard,
+  Database,
+  Download,
+  Gamepad2,
+  GitBranch,
+  LayoutDashboard,
+  ListChecks,
+  Mail,
+  Music2,
+  PanelsTopLeft,
+  ShieldCheck,
+  Sparkles,
+  Wrench,
+} from 'lucide-react'
+import './App.css'
+
+const ThreeBackdrop = lazy(() => import('./ThreeBackdrop'))
+
+const projects = [
+  {
+    name: 'H5 游戏发行 SDK 与充值体系',
+    status: '脱敏案例',
+    type: 'SDK / 支付 / 多端适配',
+    summary:
+      '参与游戏发行 SDK 和充值业务开发，覆盖统一登录、支付拉起、角色上报、浮窗、实名、防沉迷、客服与活动能力。',
+    modules: ['SDK 对外 API', '微信/支付宝支付', 'iframe 通信', '小游戏适配'],
+    stack: ['Vue3', 'TypeScript', 'Vite', 'H5', 'postMessage', 'WeixinJSBridge'],
+    icon: Gamepad2,
+    tone: 'mint',
+  },
+  {
+    name: '广告买量系统',
+    status: '工作项目',
+    type: '中后台 / 业务流程',
+    summary:
+      '参与多平台广告投放系统前端开发，负责业务页面、复杂表单、状态回显、操作确认、接口联调与国际化配置。',
+    modules: ['广告创建', '投放操作', '复杂表单', '状态回显'],
+    stack: ['Vue3', 'TypeScript', 'Vite', 'Element Plus', 'Axios', 'vue-i18n'],
+    icon: LayoutDashboard,
+    tone: 'amber',
+  },
+  {
+    name: 'AI 音乐生成工具',
+    status: '已开源',
+    type: 'AI 应用 / Audio',
+    summary:
+      '独立开发音乐生成全栈控制台，端到端「提示词 → 歌词 → 音乐 → 封面」管线，作品持久化、可回放。',
+    modules: ['生成任务', '歌词生成', '音频播放', '作品管理'],
+    stack: ['React', 'TypeScript', 'Bun', 'Hono', 'SQLite', 'MiniMax API'],
+    icon: Music2,
+    tone: 'rose',
+    repo: 'https://github.com/hackrabbit6/music',
+  },
+  {
+    name: '数字亲人 / 家庭记忆 AI',
+    status: '已开源',
+    type: 'AI 对话 / RAG',
+    summary:
+      '记忆陪伴 AI，代码层强制「证据不足就说不知道」的 grounding 约束，避免幻觉；证据与解读分离，Go + RAG + React。',
+    modules: ['人物档案', '记忆资料', 'grounding 校验', 'RAG 流程'],
+    stack: ['Go', 'React', 'TypeScript', 'RAG', 'Grounding', 'AI Chat'],
+    icon: BookOpenText,
+    tone: 'sky',
+    repo: 'https://github.com/hackrabbit6/digital-loved-one',
+  },
+  {
+    name: 'onchain-research',
+    status: '已开源',
+    type: '本地工具 / 链上研究 CLI',
+    summary:
+      '本地优先的 EVM/BSC 链上研究 CLI：持有人聚类与钱包追踪，输出可复核的证据而非归因证明，强调研究而非自动交易。',
+    modules: ['持有人聚类', '集中度分析', '钱包追踪', 'Markdown 报告'],
+    stack: ['TypeScript', 'Bun', 'EVM', 'BSC', 'Moralis', 'CLI'],
+    icon: Database,
+    tone: 'blue',
+    repo: 'https://github.com/hackrabbit6/onchain-research',
+  },
+]
+
+const focusItems = [
+  ['业务前端', '中后台、复杂表单、接口联调、状态回显和上线交付'],
+  ['H5 / SDK', '游戏发行 SDK、充值支付、Hybrid 通信和小游戏适配'],
+  ['工具项目', 'WebSocket 数据工具、桌面端封装和轻量全栈补位'],
+  ['AI 延展', '用 React、Bun 和 AI API 做可演示的产品原型'],
+]
+
+const caseStudies = [
+  {
+    title: 'H5 游戏发行 SDK 与充值体系',
+    context:
+      '多款 H5 游戏和小游戏需要接入统一账号、支付、浮窗、公告、礼包、实名、防沉迷和客服能力，减少每个游戏重复接入成本。',
+    role:
+      '负责 SDK 前端模块、充值流程、H5/小游戏适配和联调排查，维护老版 Webpack/React SDK，并参与新版 Vue3 + TypeScript SDK 改造。',
+    challenge:
+      '难点集中在 iframe/postMessage 通信、微信/支付宝支付拉起、微信内置浏览器与普通浏览器差异、小游戏环境限制、移动端输入框和横竖屏兼容。',
+    result:
+      '支撑多个游戏、公众号充值和活动页面上线，把登录、支付、角色上报等能力沉淀成可复用接入流程。',
+  },
+  {
+    title: '广告买量系统',
+    context:
+      '业务团队需要在内部系统里完成多平台广告创建、推送、暂停、删除和状态管理，前端需要把复杂投放流程做成稳定可操作的后台界面。',
+    role:
+      '负责 Vue3 + TypeScript 页面开发、复杂表单、状态回显、接口联调、操作确认、异常提示和国际化配置。',
+    challenge:
+      '难点包括表单字段多、接口状态多、投放操作不可误触、列表与详情状态一致性、多环境配置和多语言文案维护。',
+    result:
+      '支持广告投放业务日常配置和迭代上线，提升运营人员创建、调整和排查广告任务的效率。',
+  },
+  {
+    title: 'AI 音乐生成工具',
+    context:
+      'AIGC 产品需要把提示词、风格参数、异步生成状态、失败提示、作品历史和音频播放组织成稳定的前端流程。',
+    role:
+      '独立梳理产品原型和交互流程，搭建生成入口、任务状态、历史记录、作品管理和音频播放等核心页面。',
+    challenge:
+      '难点包括生成任务不是即时返回、用户需要理解等待/失败/重试状态，作品列表也要和播放、收藏、再次生成等动作保持一致。',
+    result:
+      '沉淀了 AIGC 应用前端常见的异步任务管理、作品管理和 AI API 接入经验，可作为 AI 应用前端面试案例。',
+  },
+]
+
+const resumeSignals = [
+  {
+    title: '稳定业务交付',
+    text: '从需求评审、页面开发、接口联调、自测到上线验收都参与过，适合中后台、H5、工具平台类岗位。',
+    icon: ListChecks,
+  },
+  {
+    title: '复杂链路经验',
+    text: '做过支付、SDK、壳包通信、WebSocket 和多端兼容，能处理比普通页面更长的状态链路。',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'AI 应用延展',
+    text: '近期项目围绕 AI 生成任务、RAG、Tool Use、Prompt 和作品管理，把 AI 能力落到可操作界面。',
+    icon: Sparkles,
+  },
+  {
+    title: '轻量全栈补位',
+    text: '能用 Node.js、Bun、Elysia、Go、Gin 做基础接口、CRUD、分页、鉴权思路和前后端联调。',
+    icon: Wrench,
+  },
+]
+
+const capabilities = [
+  {
+    title: '前端业务交付',
+    text: 'Vue2 / Vue3、React、TypeScript、Vite、Webpack、Element Plus、Vant，能完成页面开发、组件封装、接口联调和上线交付。',
+  },
+  {
+    title: 'H5 / SDK / 支付链路',
+    text: '参与游戏发行 SDK、公众号充值、微信/支付宝支付、小游戏适配、iframe 通信、移动端兼容和线上问题排查。',
+  },
+  {
+    title: '工具与全栈补位',
+    text: 'Node.js、Bun、Elysia、Go、Gin、REST API、WebSocket、基础 CRUD 后台，能把业务原型推进到可联调版本。',
+  },
+  {
+    title: 'AI 应用接入',
+    text: 'RAG、Function Calling / Tool Use、Prompt 调整、AI 聊天应用集成和 AI 协同开发，重点关注应用层产品体验。',
+  },
+]
+
+const stackGroups = [
+  ['前端框架', 'Vue2 / Vue3、React、TypeScript、JavaScript、Vite、Webpack'],
+  ['业务组件', 'Element Plus、Vant、复杂表单、复杂表格、状态回显、操作确认'],
+  ['移动与跨端', 'H5、微信公众号、微信支付、支付宝支付、Hybrid 通信、小游戏适配'],
+  ['数据与接口', 'Axios、REST API、WebSocket、鉴权流程、异常处理、接口联调'],
+  ['后端与工具', 'Node.js、Bun、Elysia、Go、Gin、Python、基础 CRUD 和数据处理'],
+  ['AI 应用', 'RAG、Function Calling / Tool Use、Prompt 调整、AI 聊天集成、AI 协同开发'],
+]
+
+const experience = [
+  {
+    company: '九月稻田',
+    role: '前端开发工程师',
+    time: '2024.03 - 2024.08',
+    detail: '参与广告买量系统开发，负责 Vue3 + Vite 页面搭建、接口联调、多平台广告投放流程和国际化配置。',
+  },
+  {
+    company: '602 游戏',
+    role: '前端开发工程师',
+    time: '2021.10 - 2024.01',
+    detail: '负责 H5 SDK、充值活动、公众号业务和桌面端工具，处理支付对接、移动端适配、壳包通信和 WebSocket 数据解析。',
+  },
+  {
+    company: '嘉仕软件江苏有限公司',
+    role: '前端开发工程师',
+    time: '2021.03 - 2021.10',
+    detail: '参与供应链与数据管理平台，负责复杂表格、数据展示、报表功能、公式计算和性能优化。',
+  },
+  {
+    company: '广州顶点思维教育科技有限公司',
+    role: '前端开发工程师',
+    time: '2019.11 - 2021.03',
+    detail: '参与教育平台学生端、教师端和后台维护，负责 Vue H5 WebApp、Android 原生能力调用和 Socket 通信。',
+  },
+]
+
+function App() {
+  return (
+    <main>
+      <Suspense fallback={null}>
+        <ThreeBackdrop />
+      </Suspense>
+      <nav className="topbar" aria-label="主导航">
+        <a className="brand" href="#top">
+          <span>hackrabbit</span>
+          <small>Frontend Engineer</small>
+        </a>
+        <div className="nav-links">
+          <a href="#projects">项目</a>
+          <a href="#cases">案例</a>
+          <a href="#capabilities">能力</a>
+          <a href="#experience">经历</a>
+          <a href="#contact">联系</a>
+        </div>
+      </nav>
+
+      <section className="hero" id="top">
+        <div className="hero-copy">
+          <p className="eyebrow">前端开发工程师 / 偏前端全栈</p>
+          <h1>能稳定交付业务前端，也能把 AI 想法做成可运行原型。</h1>
+          <p className="lead">
+            4-5 年前端开发经验，长期参与中后台系统、H5 游戏发行 SDK、充值支付、Hybrid 通信和桌面端工具开发。近期围绕 AI 音乐生成、数字亲人和 Web3 研究工具沉淀可展示项目。
+          </p>
+          <div className="actions">
+            <a className="primary" href="#projects">
+              查看项目 <ArrowRight size={18} />
+            </a>
+            <a className="secondary" href="/resume.pdf" target="_blank" rel="noreferrer">
+              下载简历 <Download size={18} />
+            </a>
+          </div>
+          <div className="proof-row" aria-label="关键经验">
+            <div>
+              <strong>4-5 年</strong>
+              <span>前端业务开发</span>
+            </div>
+            <div>
+              <strong>H5 SDK</strong>
+              <span>支付与多端适配</span>
+            </div>
+            <div>
+              <strong>AI 原型</strong>
+              <span>生成任务 / RAG / API 集成</span>
+            </div>
+          </div>
+        </div>
+
+        <aside className="product-board" aria-label="作品集项目面板">
+          <div className="board-top">
+            <div>
+              <span>Current focus</span>
+              <strong>Portfolio Launch</strong>
+            </div>
+            <PanelsTopLeft size={22} />
+          </div>
+          <div className="board-panel main-panel">
+            <span className="panel-label">Resume to portfolio</span>
+            <div className="pipeline">
+              <span>Resume</span>
+              <i />
+              <span>Case</span>
+              <i />
+              <span>Demo</span>
+            </div>
+          </div>
+          <div className="board-grid">
+            <div className="board-panel">
+              <Gamepad2 size={22} />
+              <strong>H5 SDK</strong>
+              <span>Login / Pay</span>
+            </div>
+            <div className="board-panel">
+              <LayoutDashboard size={22} />
+              <strong>中后台</strong>
+              <span>Forms / Tables</span>
+            </div>
+            <div className="board-panel">
+              <CreditCard size={22} />
+              <strong>支付链路</strong>
+              <span>WeChat / Alipay</span>
+            </div>
+            <div className="board-panel">
+              <Bot size={22} />
+              <strong>AI 工具</strong>
+              <span>Task / RAG</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section className="focus-strip" aria-label="当前优先级">
+        {focusItems.map(([title, text], index) => (
+          <article key={title}>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="section projects-section" id="projects">
+        <div className="section-heading wide-heading">
+          <p className="eyebrow">Selected projects</p>
+          <h2>先展示真实业务项目，再展示 AI 和工具型项目的延展能力。</h2>
+          <p>
+            工作项目用脱敏案例说明职责、难点和结果；个人项目展示近期保持开发状态、AI 应用理解和轻量全栈能力。
+          </p>
+        </div>
+        <div className="project-grid">
+          {projects.map((project) => {
+            const Icon = project.icon
+
+            return (
+              <article className={`project-card ${project.tone}`} key={project.name}>
+                <div className="project-visual" aria-hidden="true">
+                  <div className="visual-window">
+                    <div className="visual-bar">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                    <div className="visual-content">
+                      <Icon size={28} />
+                      <div>
+                        <strong>{project.type}</strong>
+                        <small>{project.status}</small>
+                      </div>
+                    </div>
+                    <div className="visual-lines">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </div>
+                </div>
+                <div className="card-head">
+                  <div>
+                    <p>{project.type}</p>
+                    <h3>{project.name}</h3>
+                  </div>
+                  <span>{project.status}</span>
+                </div>
+                <p className="project-summary">{project.summary}</p>
+                <div className="module-list">
+                  {project.modules.map((module) => (
+                    <span key={module}>{module}</span>
+                  ))}
+                </div>
+                <div className="tags">
+                  {project.stack.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+                {'repo' in project && project.repo ? (
+                  <a
+                    className="project-link"
+                    href={project.repo}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    查看代码 →
+                  </a>
+                ) : null}
+              </article>
+            )
+          })}
+        </div>
+      </section>
+
+      <section className="section resume-fit" aria-label="简历对应作品集证据">
+        <div className="section-heading wide-heading">
+          <p className="eyebrow">Resume fit</p>
+          <h2>简历里的关键词，在作品集中对应到这些证据。</h2>
+        </div>
+        <div className="signal-grid">
+          {resumeSignals.map((signal) => {
+            const Icon = signal.icon
+
+            return (
+              <article key={signal.title}>
+                <Icon size={22} />
+                <h3>{signal.title}</h3>
+                <p>{signal.text}</p>
+              </article>
+            )
+          })}
+        </div>
+      </section>
+
+      <section className="section projects-section" id="cases">
+        <div className="section-heading wide-heading">
+          <p className="eyebrow">Case studies</p>
+          <h2>可用于面试展开的项目案例。</h2>
+          <p>每个案例都按背景、职责、难点、结果组织，方便从简历快速过渡到具体实现讨论。</p>
+        </div>
+        <div className="case-study-list" aria-label="脱敏项目案例说明">
+          {caseStudies.map((study) => (
+            <article className="case-study" key={study.title}>
+              <div className="case-title">
+                <p className="eyebrow">Case study</p>
+                <h3>{study.title}</h3>
+              </div>
+              <div className="case-points">
+                <div>
+                  <span>背景</span>
+                  <p>{study.context}</p>
+                </div>
+                <div>
+                  <span>职责</span>
+                  <p>{study.role}</p>
+                </div>
+                <div>
+                  <span>难点</span>
+                  <p>{study.challenge}</p>
+                </div>
+                <div>
+                  <span>结果</span>
+                  <p>{study.result}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section split" id="capabilities">
+        <div className="section-heading sticky-heading">
+          <p className="eyebrow">Skill map</p>
+          <h2>我能交付什么</h2>
+          <p>偏前端全栈，不追求把每个方向都说满，重点是把业务需求推进到可运行、可联调、可上线。</p>
+        </div>
+        <div className="capability-list">
+          {capabilities.map((item) => (
+            <article key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section stack-section" aria-label="技术栈">
+        <div className="section-heading wide-heading">
+          <p className="eyebrow">Stack</p>
+          <h2>技术栈按岗位价值归类，而不是只列名词。</h2>
+        </div>
+        <div className="stack-grid">
+          {stackGroups.map(([title, text]) => (
+            <article key={title}>
+              <span>{title}</span>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section narrative">
+        <div className="narrative-card">
+          <BriefcaseBusiness size={26} />
+          <div>
+            <p className="eyebrow">Positioning</p>
+            <h2>先证明我能稳定交付业务前端，再展示我能把 AI 能力接进真实产品流程。</h2>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="experience">
+        <div className="section-heading">
+          <p className="eyebrow">Experience</p>
+          <h2>工作经历</h2>
+        </div>
+        <div className="timeline">
+          {experience.map((item) => (
+            <article className="timeline-item" key={`${item.company}-${item.time}`}>
+              <div>
+                <h3>{item.company}</h3>
+                <p>{item.role}</p>
+              </div>
+              <time>{item.time}</time>
+              <p>{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="contact" id="contact">
+        <div>
+          <p className="eyebrow">Contact</p>
+          <h2>正在寻找前端、中级前端、偏前端全栈和 AI 应用前端相关机会。</h2>
+        </div>
+        <div className="contact-links">
+          <a href="mailto:hackrabbit@qq.com">
+            <Mail size={18} /> hackrabbit@qq.com
+          </a>
+          <a href="https://github.com/hackrabbit6" target="_blank" rel="noreferrer">
+            <GitBranch size={18} /> GitHub
+          </a>
+        </div>
+      </section>
+    </main>
+  )
+}
+
+export default App
