@@ -139,7 +139,7 @@ const caseStudies = [
     context:
       '多款 H5 游戏和小游戏需要接入统一账号、支付、浮窗、公告、礼包、实名、防沉迷和客服能力，减少每个游戏重复接入成本。',
     role:
-      '负责 SDK 前端模块、充值流程、H5/小游戏适配和联调排查，维护老版 Webpack/React SDK，并参与新版 Vue3 + TypeScript SDK 改造。',
+      '我把 SDK 前端模块、充值流程、H5/小游戏适配和联调排查串起来,同时维护老版 Webpack/React SDK,再推进新版 Vue3 + TypeScript SDK 改造。',
     challenge:
       '难点集中在 iframe/postMessage 通信、微信/支付宝支付拉起、微信内置浏览器与普通浏览器差异、小游戏环境限制、移动端输入框和横竖屏兼容。',
     result:
@@ -150,7 +150,7 @@ const caseStudies = [
     context:
       '业务团队需要在内部系统里完成多平台广告创建、推送、暂停、删除和状态管理，前端需要把复杂投放流程做成稳定可操作的后台界面。',
     role:
-      '负责 Vue3 + TypeScript 页面开发、复杂表单、状态回显、接口联调、操作确认、异常提示和国际化配置。',
+      '我用 Vue3 + TypeScript 把复杂表单、状态回显、接口联调、操作确认、异常提示和国际化配置落到可上线页面。',
     challenge:
       '难点包括表单字段多、接口状态多、投放操作不可误触、列表与详情状态一致性、多环境配置和多语言文案维护。',
     result:
@@ -161,7 +161,7 @@ const caseStudies = [
     context:
       'AIGC 产品需要把提示词、风格参数、异步生成状态、失败提示、作品历史和音频播放组织成稳定的前端流程。',
     role:
-      '独立梳理产品原型和交互流程，搭建生成入口、任务状态、历史记录、作品管理和音频播放等核心页面。',
+      '我先梳理产品原型和交互流程,再搭建生成入口、任务状态、历史记录、作品管理和音频播放等核心页面。',
     challenge:
       '难点包括生成任务不是即时返回、用户需要理解等待/失败/重试状态，作品列表也要和播放、收藏、再次生成等动作保持一致。',
     result:
@@ -172,22 +172,22 @@ const caseStudies = [
 const resumeSignals = [
   {
     title: '稳定业务交付',
-    text: '从需求评审、页面开发、接口联调、自测到上线验收都参与过，适合中后台、H5、工具平台类岗位。',
+    text: '我能从需求评审、页面开发、接口联调、自测走到上线验收,适配中后台、H5、工具平台类岗位。',
     icon: ListChecks,
   },
   {
     title: '复杂链路经验',
-    text: '做过支付、SDK、壳包通信、WebSocket 和多端兼容，能处理比普通页面更长的状态链路。',
+    text: '我做过支付、SDK、壳包通信、WebSocket 和多端兼容,能处理比普通页面更长的状态链路。',
     icon: ShieldCheck,
   },
   {
     title: 'AI 应用延展',
-    text: '近期项目围绕 AI 生成任务、RAG、Tool Use、Prompt 和作品管理，把 AI 能力落到可操作界面。',
+    text: '我近期围绕 AI 生成任务、RAG、Tool Use、Prompt 和作品管理,把 AI 能力落到可操作界面。',
     icon: Sparkles,
   },
   {
     title: '轻量全栈补位',
-    text: '能用 Node.js、Bun、Elysia、Go、Gin 做基础接口、CRUD、分页、鉴权思路和前后端联调。',
+    text: '我能用 Node.js、Bun、Elysia、Go、Gin 补基础接口、CRUD、分页、鉴权思路和前后端联调。',
     icon: Wrench,
   },
 ]
@@ -195,19 +195,23 @@ const resumeSignals = [
 const capabilities = [
   {
     title: '前端业务交付',
-    text: 'Vue2 / Vue3、React、TypeScript、Vite、Webpack、Element Plus、Vant，能完成页面开发、组件封装、接口联调和上线交付。',
+    text: '我用 Vue2 / Vue3、React、TypeScript、Vite、Webpack、Element Plus、Vant 交付页面、组件、接口联调和上线。',
+    ai: '我让 agent 先搭常规结构,我集中审业务状态、异常分支和验收路径。',
   },
   {
     title: 'H5 / SDK / 支付链路',
-    text: '参与游戏发行 SDK、公众号充值、微信/支付宝支付、小游戏适配、iframe 通信、移动端兼容和线上问题排查。',
+    text: '我做过游戏发行 SDK、公众号充值、微信/支付宝支付、小游戏适配、iframe 通信、移动端兼容和线上问题排查。',
+    ai: '我让 agent 帮我列兼容矩阵和回归点,我自己盯支付链路和线上风险。',
   },
   {
     title: '工具与全栈补位',
-    text: 'Node.js、Bun、Elysia、Go、Gin、REST API、WebSocket、基础 CRUD 后台，能把业务原型推进到可联调版本。',
+    text: '我用 Node.js、Bun、Elysia、Go、Gin、REST API、WebSocket 和基础 CRUD 把业务原型推进到可联调版本。',
+    ai: '我让 agent 补样板接口和数据处理,我检查边界、错误处理和真实可用性。',
   },
   {
     title: 'AI 应用接入',
-    text: 'RAG、Function Calling / Tool Use、Prompt 调整、AI 聊天应用集成和 AI 协同开发，重点关注应用层产品体验。',
+    text: '我接 RAG、Function Calling / Tool Use、Prompt、AI 聊天应用和 AI 协同开发,重点盯应用层产品体验。',
+    ai: '我让 agent 快速试实现路线,我用 grounding、任务状态和产品判断收口。',
   },
 ]
 
@@ -225,25 +229,25 @@ const experience = [
     company: '九月稻田',
     role: '前端开发工程师',
     time: '2024.03 - 2024.08',
-    detail: '参与广告买量系统开发，负责 Vue3 + Vite 页面搭建、接口联调、多平台广告投放流程和国际化配置。',
+    detail: '我在广告买量系统里交付 Vue3 + Vite 页面、接口联调、多平台广告投放流程和国际化配置。',
   },
   {
     company: '602 游戏',
     role: '前端开发工程师',
     time: '2021.10 - 2024.01',
-    detail: '负责 H5 SDK、充值活动、公众号业务和桌面端工具，处理支付对接、移动端适配、壳包通信和 WebSocket 数据解析。',
+    detail: '我把 H5 SDK、充值活动、公众号业务和桌面端工具推进上线,处理支付对接、移动端适配、壳包通信和 WebSocket 数据解析。',
   },
   {
     company: '嘉仕软件江苏有限公司',
     role: '前端开发工程师',
     time: '2021.03 - 2021.10',
-    detail: '参与供应链与数据管理平台，负责复杂表格、数据展示、报表功能、公式计算和性能优化。',
+    detail: '我在供应链与数据管理平台里交付复杂表格、数据展示、报表功能、公式计算和性能优化。',
   },
   {
     company: '广州顶点思维教育科技有限公司',
     role: '前端开发工程师',
     time: '2019.11 - 2021.03',
-    detail: '参与教育平台学生端、教师端和后台维护，负责 Vue H5 WebApp、Android 原生能力调用和 Socket 通信。',
+    detail: '我在教育平台里做学生端、教师端和后台维护,把 Vue H5 WebApp、Android 原生能力调用和 Socket 通信接进业务。',
   },
 ]
 
@@ -468,7 +472,7 @@ function App() {
         <div className="section-heading wide-heading">
           <p className="eyebrow">Case studies</p>
           <h2>可用于面试展开的项目案例。</h2>
-          <p>每个案例都按背景、职责、难点、结果组织，方便从简历快速过渡到具体实现讨论。</p>
+          <p>每个案例都按背景、我的判断、难点、结果组织,方便从简历快速过渡到具体实现讨论。</p>
         </div>
         <div className="case-study-list" aria-label="脱敏项目案例说明">
           {caseStudies.map((study) => (
@@ -483,7 +487,7 @@ function App() {
                   <p>{study.context}</p>
                 </div>
                 <div>
-                  <span>职责</span>
+                  <span>我的判断</span>
                   <p>{study.role}</p>
                 </div>
                 <div>
@@ -511,6 +515,7 @@ function App() {
             <article key={item.title}>
               <h3>{item.title}</h3>
               <p>{item.text}</p>
+              <small>&gt; agent boost: {item.ai}</small>
             </article>
           ))}
         </div>
@@ -563,11 +568,12 @@ function App() {
       <section className="contact" id="contact">
         <div>
           <p className="eyebrow">Contact</p>
-          <h2>正在寻找前端、中级前端、偏前端全栈和 AI 应用前端相关机会。</h2>
+          <h2>我在找前端、中级前端、偏前端全栈和 AI 应用前端机会,能交付稳定业务,也能把 AI 流程做成可运行产品。</h2>
+          <HackRabbitMark compact />
         </div>
         <div className="contact-links">
-          <a href="mailto:hackrabbit@qq.com">
-            <Mail size={18} /> hackrabbit@qq.com
+          <a href="mailto:hackrabbit6@gmail.com">
+            <Mail size={18} /> hackrabbit6@gmail.com
           </a>
           <a href="https://github.com/hackrabbit6" target="_blank" rel="noreferrer">
             <GitBranch size={18} /> GitHub

@@ -536,18 +536,18 @@ h3 {
 
 .case-study-list {
   display: grid;
-  gap: 16px;
-  margin-top: 28px;
+  gap: var(--s4);
+  margin-top: var(--s5);
 }
 
 .case-study {
-  background: #ffffff;
+  background: var(--bg-elev);
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 8px;
   display: grid;
-  gap: 24px;
+  gap: var(--s5);
   grid-template-columns: minmax(220px, 0.42fr) 1fr;
-  padding: 24px;
+  padding: var(--s5);
 }
 
 .case-title h3 {
@@ -557,14 +557,14 @@ h3 {
 
 .case-points {
   display: grid;
-  gap: 14px;
+  gap: var(--s4);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .case-points div {
   background: var(--soft);
   border-radius: 8px;
-  padding: 16px;
+  padding: var(--s4);
 }
 
 .case-points span {
@@ -572,7 +572,7 @@ h3 {
   display: block;
   font-size: 13px;
   font-weight: 850;
-  margin-bottom: 8px;
+  margin-bottom: var(--s2);
 }
 
 .case-points p {
@@ -587,16 +587,16 @@ h3 {
 
 .signal-grid {
   display: grid;
-  gap: 16px;
+  gap: var(--s4);
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .signal-grid article {
-  background: #ffffff;
+  background: var(--bg-elev);
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 8px;
   min-height: 220px;
-  padding: 22px;
+  padding: var(--s5);
 }
 
 .signal-grid svg {
@@ -606,7 +606,16 @@ h3 {
 
 .signal-grid h3 {
   font-size: 19px;
-  margin-bottom: 10px;
+  margin-bottom: var(--s3);
+}
+
+.signal-grid small,
+.capability-list small {
+  color: var(--accent);
+  display: block;
+  font-family: var(--font-mono);
+  line-height: 1.7;
+  margin-top: var(--s3);
 }
 
 .signal-grid p,
@@ -618,30 +627,30 @@ h3 {
 .split {
   align-items: start;
   display: grid;
-  gap: 48px;
+  gap: var(--s6);
   grid-template-columns: 0.72fr 1.28fr;
 }
 
 .sticky-heading {
   position: sticky;
-  top: 24px;
+  top: var(--s5);
 }
 
 .capability-list {
   display: grid;
-  gap: 14px;
+  gap: var(--s4);
 }
 
 .capability-list article {
-  background: #ffffff;
+  background: var(--bg-elev);
   border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 22px;
+  border-radius: 8px;
+  padding: var(--s5);
 }
 
 .capability-list h3 {
   font-size: 19px;
-  margin-bottom: 8px;
+  margin-bottom: var(--s2);
 }
 
 .stack-section {
@@ -650,15 +659,15 @@ h3 {
 
 .stack-grid {
   display: grid;
-  gap: 12px;
+  gap: var(--s3);
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .stack-grid article {
-  background: #ffffff;
+  background: var(--bg-elev);
   border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 8px;
+  padding: var(--s5);
 }
 
 .stack-grid span {
@@ -666,7 +675,7 @@ h3 {
   display: block;
   font-size: 13px;
   font-weight: 850;
-  margin-bottom: 10px;
+  margin-bottom: var(--s3);
   text-transform: uppercase;
 }
 
@@ -681,37 +690,38 @@ h3 {
 
 .narrative-card {
   align-items: start;
-  background: #1f2937;
-  border-radius: 12px;
-  color: #ffffff;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
   display: grid;
-  gap: 22px;
+  gap: var(--s5);
   grid-template-columns: auto 1fr;
-  padding: 36px;
+  padding: var(--s6);
 }
 
 .narrative-card h2 {
-  color: #ffffff;
+  color: var(--ink);
   max-width: 920px;
 }
 
 .narrative-card .eyebrow {
-  color: #82e6c1;
+  color: var(--accent);
 }
 
 .timeline {
   display: grid;
-  gap: 14px;
+  gap: var(--s4);
 }
 
 .timeline-item {
-  background: #ffffff;
+  background: var(--bg-elev);
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 8px;
   display: grid;
-  gap: 12px;
+  gap: var(--s3);
   grid-template-columns: 1fr auto;
-  padding: 22px;
+  padding: var(--s5);
 }
 
 .timeline-item > p {
@@ -726,13 +736,13 @@ time {
 
 .contact {
   align-items: center;
-  background: #ffffff;
+  background: var(--bg-elev);
   border-top: 1px solid var(--line);
   display: flex;
-  gap: 32px;
+  gap: var(--s6);
   justify-content: space-between;
-  margin-top: 48px;
-  padding: 56px max(24px, calc((100vw - 1180px) / 2 + 24px));
+  margin-top: var(--s6);
+  padding: var(--s7) max(var(--s5), calc((100vw - 1180px) / 2 + var(--s5)));
 }
 
 .contact h2 {
@@ -742,14 +752,14 @@ time {
 .contact-links {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--s3);
   text-align: right;
 }
 
 .contact-links a {
   align-items: center;
   display: inline-flex;
-  gap: 8px;
+  gap: var(--s2);
   justify-content: flex-end;
 }
 
