@@ -1,4 +1,3 @@
-import { lazy, Suspense } from 'react'
 import {
   ArrowRight,
   Bot,
@@ -19,8 +18,6 @@ import {
   Wrench,
 } from 'lucide-react'
 import './App.css'
-
-const ThreeBackdrop = lazy(() => import('./ThreeBackdrop'))
 
 function HackRabbitMark({ compact = false }: { compact?: boolean }) {
   return (
@@ -254,9 +251,6 @@ const experience = [
 function App() {
   return (
     <main>
-      <Suspense fallback={null}>
-        <ThreeBackdrop />
-      </Suspense>
       <nav className="topbar" aria-label="主导航">
         <a className="brand" href="#top">
           <span>hackrabbit</span>
