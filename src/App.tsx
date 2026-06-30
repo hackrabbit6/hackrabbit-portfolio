@@ -37,58 +37,73 @@ const projects = [
     name: 'H5 游戏发行 SDK 与充值体系',
     status: '脱敏案例',
     type: 'SDK / 支付 / 多端适配',
-    summary:
-      '参与游戏发行 SDK 和充值业务开发，覆盖统一登录、支付拉起、角色上报、浮窗、实名、防沉迷、客服与活动能力。',
+    direction:
+      '我看到每个游戏重复接账号、支付和活动能力会拖慢上线,所以把问题拆成稳定 SDK 接入链路。',
+    collaboration:
+      '这是工作期项目,核心难点我自己和团队一起排查:iframe 通信、微信/支付宝拉起、小游戏限制和移动端兼容。',
+    result:
+      '我交付并维护了登录、支付、角色上报、浮窗、实名、防沉迷等能力,支撑多款游戏和充值活动上线。',
     modules: ['SDK 对外 API', '微信/支付宝支付', 'iframe 通信', '小游戏适配'],
     stack: ['Vue3', 'TypeScript', 'Vite', 'H5', 'postMessage', 'WeixinJSBridge'],
     icon: Gamepad2,
-    tone: 'mint',
   },
   {
     name: '广告买量系统',
     status: '工作项目',
     type: '中后台 / 业务流程',
-    summary:
-      '参与多平台广告投放系统前端开发，负责业务页面、复杂表单、状态回显、操作确认、接口联调与国际化配置。',
+    direction:
+      '我看到投放系统最怕误操作和状态不一致,所以优先把复杂流程拆成可确认、可回显、可追踪的界面。',
+    collaboration:
+      '工作期项目里我和后端、运营一起对齐字段、状态和异常分支,把复杂表单和接口联调压到可上线范围。',
+    result:
+      '我交付了广告创建、投放操作、状态回显、国际化配置等页面,让运营能稳定完成日常投放调整。',
     modules: ['广告创建', '投放操作', '复杂表单', '状态回显'],
     stack: ['Vue3', 'TypeScript', 'Vite', 'Element Plus', 'Axios', 'vue-i18n'],
     icon: LayoutDashboard,
-    tone: 'amber',
   },
   {
     name: 'AI 音乐生成工具',
     status: '已开源',
     type: 'AI 应用 / Audio',
-    summary:
-      '独立开发音乐生成全栈控制台，端到端「提示词 → 歌词 → 音乐 → 封面」管线，作品持久化、可回放。',
+    direction:
+      '我看到 AI 生成产品的关键不是按钮,而是异步任务、失败状态和作品管理,所以先把生成链路产品化。',
+    collaboration:
+      '我定流程和验收标准,再用 AI 辅助拆页面、补接口和整理边界状态,最后自己检查播放、持久化和重试体验。',
+    result:
+      '我做出了可运行的「提示词 -> 歌词 -> 音乐 -> 封面」控制台,作品可保存、可回放、可复核代码。',
     modules: ['生成任务', '歌词生成', '音频播放', '作品管理'],
     stack: ['React', 'TypeScript', 'Bun', 'Hono', 'SQLite', 'MiniMax API'],
     icon: Music2,
-    tone: 'rose',
     repo: 'https://github.com/hackrabbit6/music',
   },
   {
     name: '数字亲人 / 家庭记忆 AI',
     status: '已开源',
     type: 'AI 对话 / RAG',
-    summary:
-      '记忆陪伴 AI，代码层强制「证据不足就说不知道」的 grounding 约束，避免幻觉；证据与解读分离，Go + RAG + React。',
+    direction:
+      '我看到情感类 AI 最大风险是胡说,所以先把证据和解读分开,让系统在证据不足时必须承认不知道。',
+    collaboration:
+      '我用 agent 辅助梳理 RAG 流程和前端状态,但 grounding 约束、资料边界和回答原则由我定。',
+    result:
+      '我交付了 Go + React 的记忆对话原型,代码里有可检查的 grounding 约束,适合展示 AI 产品判断力。',
     modules: ['人物档案', '记忆资料', 'grounding 校验', 'RAG 流程'],
     stack: ['Go', 'React', 'TypeScript', 'RAG', 'Grounding', 'AI Chat'],
     icon: BookOpenText,
-    tone: 'sky',
     repo: 'https://github.com/hackrabbit6/digital-loved-one',
   },
   {
     name: 'onchain-research',
     status: '已开源',
     type: '本地工具 / 链上研究 CLI',
-    summary:
-      '本地优先的 EVM/BSC 链上研究 CLI：持有人聚类与钱包追踪，输出可复核的证据而非归因证明，强调研究而非自动交易。',
+    direction:
+      '我看到链上研究很容易把猜测当结论,所以工具只输出可复核证据,不把聚类包装成归因证明。',
+    collaboration:
+      '我定研究边界和报告结构,让 agent 辅助写 CLI、整理 Markdown 输出和补数据处理细节,我检查风险表述。',
+    result:
+      '我做出本地优先的 EVM/BSC 研究 CLI,覆盖持有人聚类、集中度分析和钱包追踪,定位是研究辅助而非自动交易。',
     modules: ['持有人聚类', '集中度分析', '钱包追踪', 'Markdown 报告'],
     stack: ['TypeScript', 'Bun', 'EVM', 'BSC', 'Moralis', 'CLI'],
     icon: Database,
-    tone: 'blue',
     repo: 'https://github.com/hackrabbit6/onchain-research',
   },
 ]
@@ -380,36 +395,29 @@ function App() {
             const Icon = project.icon
 
             return (
-              <article className={`project-card ${project.tone}`} key={project.name}>
-                <div className="project-visual" aria-hidden="true">
-                  <div className="visual-window">
-                    <div className="visual-bar">
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                    <div className="visual-content">
-                      <Icon size={28} />
-                      <div>
-                        <strong>{project.type}</strong>
-                        <small>{project.status}</small>
-                      </div>
-                    </div>
-                    <div className="visual-lines">
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                  </div>
-                </div>
+              <article className="project-card" key={project.name}>
                 <div className="card-head">
                   <div>
+                    <Icon size={22} />
                     <p>{project.type}</p>
                     <h3>{project.name}</h3>
                   </div>
                   <span>{project.status}</span>
                 </div>
-                <p className="project-summary">{project.summary}</p>
+                <div className="project-story">
+                  <div>
+                    <strong>方向</strong>
+                    <p>{project.direction}</p>
+                  </div>
+                  <div>
+                    <strong>协作</strong>
+                    <p>{project.collaboration}</p>
+                  </div>
+                  <div>
+                    <strong>结果</strong>
+                    <p>{project.result}</p>
+                  </div>
+                </div>
                 <div className="module-list">
                   {project.modules.map((module) => (
                     <span key={module}>{module}</span>
