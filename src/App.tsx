@@ -22,6 +22,16 @@ import './App.css'
 
 const ThreeBackdrop = lazy(() => import('./ThreeBackdrop'))
 
+function HackRabbitMark({ compact = false }: { compact?: boolean }) {
+  return (
+    <pre className={compact ? 'hackrabbit-mark compact' : 'hackrabbit-mark'} aria-label="hackrabbit mark">
+{`(\\(\\
+(•ᴥ•)
+/ づ`}
+    </pre>
+  )
+}
+
 const projects = [
   {
     name: 'H5 游戏发行 SDK 与充值体系',
@@ -226,11 +236,20 @@ function App() {
 
       <section className="hero" id="top">
         <div className="hero-copy">
-          <p className="eyebrow">前端开发工程师 / 偏前端全栈</p>
-          <h1>能稳定交付业务前端，也能把 AI 想法做成可运行原型。</h1>
+          <p className="eyebrow">Frontend operator / hackrabbit</p>
+          <h1>
+            <span>4-5 年前端交付</span> + 我用<span>第一性原理</span>思考、指挥一队{' '}
+            <span>AI 智能体</span>,把活干得更快更稳。
+          </h1>
           <p className="lead">
-            4-5 年前端开发经验，长期参与中后台系统、H5 游戏发行 SDK、充值支付、Hybrid 通信和桌面端工具开发。近期围绕 AI 音乐生成、数字亲人和 Web3 研究工具沉淀可展示项目。
+            我先用稳定的业务前端交付建立可信度，再把 AI 当成执行队伍来放大产出。写码、联调、验收我都做，只是现在会把可拆给 agent 的重复活交出去。
           </p>
+          <div className="pillar-row" aria-label="四个判断支柱">
+            {['健康', '现金流', '认知', 'AI'].map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+          <p className="crew-status">&gt; crew: 3 agents online</p>
           <div className="actions">
             <a className="primary" href="#projects">
               查看项目 <ArrowRight size={18} />
@@ -256,6 +275,7 @@ function App() {
         </div>
 
         <aside className="product-board" aria-label="作品集项目面板">
+          <HackRabbitMark />
           <div className="board-top">
             <div>
               <span>Current focus</span>
