@@ -100,6 +100,24 @@ const focusItems = [
   ['AI 延展', '用 React、Bun 和 AI API 做可演示的产品原型'],
 ]
 
+const crew = [
+  {
+    agent: 'Claude Code',
+    role: '规划 / 大段重构 / code review',
+    flow: '我先用第一性原理把问题拆成 spec,再让它产出实现计划和 review 意见,最后我收口取舍。',
+  },
+  {
+    agent: 'Codex 桌面版',
+    role: '执行 / GUI / 截图 / 高频重复',
+    flow: '我把已经对齐的计划交给它落地,浏览器验证、截图和重复检查由它跑,我验收最终 diff。',
+  },
+  {
+    agent: 'OpenSpec 工作流',
+    role: '规范 / 边界 / 防跑偏',
+    flow: '我先用规范把需求、约束和验收写清楚,再进入实现,避免 vibe coding 把问题越做越散。',
+  },
+]
+
 const caseStudies = [
   {
     title: 'H5 游戏发行 SDK 与充值体系',
@@ -226,6 +244,7 @@ function App() {
           <small>Frontend Engineer</small>
         </a>
         <div className="nav-links">
+          <a href="#crew">AI Crew</a>
           <a href="#projects">项目</a>
           <a href="#cases">案例</a>
           <a href="#capabilities">能力</a>
@@ -326,6 +345,26 @@ function App() {
             <p>{text}</p>
           </article>
         ))}
+      </section>
+
+      <section className="section crew-section" id="crew">
+        <div className="section-heading wide-heading">
+          <p className="eyebrow">My AI Crew</p>
+          <h2>我不是一个人写代码,我管理一队 AI 智能体。</h2>
+          <p>
+            我保留方向判断、业务取舍和最终验收,把能被规范化的执行交给 agent。这样不是少写代码,而是把写码放进更稳的交付系统。
+          </p>
+        </div>
+        <div className="crew-grid">
+          {crew.map((item) => (
+            <article className="crew-card" key={item.agent}>
+              <p>&gt; status: online</p>
+              <h3>{item.agent}</h3>
+              <strong>{item.role}</strong>
+              <span>{item.flow}</span>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="section projects-section" id="projects">

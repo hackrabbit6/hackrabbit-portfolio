@@ -352,6 +352,46 @@ h3 {
   margin-top: 10px;
 }
 
+.crew-section {
+  background:
+    linear-gradient(90deg, rgba(57, 255, 139, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(57, 255, 139, 0.06) 1px, transparent 1px);
+  background-size: var(--s6) var(--s6);
+}
+
+.crew-grid {
+  display: grid;
+  gap: var(--s4);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.crew-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: var(--s3);
+  min-height: 260px;
+  padding: var(--s5);
+}
+
+.crew-card p,
+.crew-card strong {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.crew-card h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+}
+
+.crew-card span {
+  color: var(--ink-dim);
+  line-height: 1.75;
+}
+
 .section {
   border-top: 1px solid var(--line);
   margin: 0 auto;
@@ -783,6 +823,7 @@ time {
 
   .hero,
   .split,
+  .crew-grid,
   .project-grid,
   .case-study,
   .case-points,
