@@ -385,7 +385,7 @@ function App() {
           <p className="eyebrow">Selected projects</p>
           <h2>先展示真实业务项目，再展示 AI 和工具型项目的延展能力。</h2>
           <p>
-            工作项目用脱敏案例说明职责、难点和结果；个人项目展示近期保持开发状态、AI 应用理解和轻量全栈能力。
+            工作项目用脱敏案例说明我的判断、难点和结果；个人项目展示近期保持开发状态、AI 应用理解和轻量全栈能力。
           </p>
         </div>
         <div className="project-grid">
