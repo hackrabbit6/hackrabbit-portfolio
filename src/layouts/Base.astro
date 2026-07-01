@@ -27,8 +27,9 @@ const { title = 'hackrabbit | Cinematic Portfolio' } = Astro.props
     <slot />
     <script>
       import { initSmoothScroll } from '../lib/smoothScroll'
+      import { connectGsap } from '../lib/gsapLenis'
 
-      initSmoothScroll()
+      connectGsap(initSmoothScroll())
     </script>
   </body>
 </html>
