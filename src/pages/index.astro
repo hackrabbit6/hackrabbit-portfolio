@@ -2,11 +2,13 @@
 import Base from '../layouts/Base.astro'
 import { Hero } from '../components/Hero'
 import { Manifesto } from '../components/Manifesto'
+import { Crew } from '../components/Crew'
 ---
 
 <Base>
   <main>
     <Hero client:load />
     <Manifesto client:load />
+    <Crew client:load />
   </main>
 </Base>
