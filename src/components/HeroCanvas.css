@@ -1,0 +1,10 @@
+.hero-canvas {
+  inset: 0;
+  opacity: 0.9;
+  pointer-events: none;
+  position: absolute;
+}
+
+.hero-canvas canvas {
+  display: block;
+}

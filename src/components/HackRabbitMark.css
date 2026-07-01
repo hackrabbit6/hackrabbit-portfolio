@@ -1,0 +1,12 @@
+.hackrabbit-mark {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: clamp(24px, 5vw, 56px);
+  line-height: 1.04;
+  margin: 0;
+  text-shadow: var(--glow);
+}
+
+.hackrabbit-mark.compact {
+  font-size: 18px;
+}
