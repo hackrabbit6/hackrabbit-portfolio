@@ -1,0 +1,34 @@
+---
+import '../styles/tokens.css'
+
+const { title = 'hackrabbit | Cinematic Portfolio' } = Astro.props
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="hackrabbit 的综合个人站首页：前端交付、第一性原理、AI 智能体协作与黑客兔身份。"
+    />
+    <meta name="theme-color" content="#0B0B0E" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    <script>
+      import { initSmoothScroll } from '../lib/smoothScroll'
+
+      initSmoothScroll()
+    </script>
+  </body>
+</html>
