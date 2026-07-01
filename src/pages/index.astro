@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro'
-import { Hero } from '../components/Hero'
+import Hero from '../components/Hero.astro'
 import { Manifesto } from '../components/Manifesto'
 import { Crew } from '../components/Crew'
 import { Work } from '../components/Work'
@@ -11,12 +11,12 @@ import { Contact } from '../components/Contact'
 
 <Base>
   <main>
-    <Hero client:load />
-    <Manifesto client:load />
-    <Crew client:load />
-    <Work client:load />
-    <Skills client:load />
-    <Experience client:load />
+    <Hero />
+    <Manifesto client:visible />
+    <Crew client:visible />
+    <Work client:visible />
+    <Skills client:visible />
+    <Experience client:visible />
     <Contact />
   </main>
 </Base>

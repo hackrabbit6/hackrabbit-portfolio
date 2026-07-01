@@ -1,0 +1,3 @@
+[build]
+  command = "bunx astro build"
+  publish = "dist"

@@ -16,8 +16,8 @@
   --s6: 40px;
   --s7: 64px;
   --s8: 120px;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: system-ui, -apple-system, 'PingFang SC', sans-serif;
   --font-body: system-ui, -apple-system, 'PingFang SC', sans-serif;
   --ease-cine: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: dark;
