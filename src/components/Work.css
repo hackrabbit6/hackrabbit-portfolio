@@ -1,0 +1,113 @@
+.work {
+  display: grid;
+  gap: var(--s7);
+  grid-template-columns: 0.72fr 1.28fr;
+  padding: var(--s8) max(var(--s5), calc((100vw - 1180px) / 2 + var(--s5)));
+}
+
+.work-heading {
+  align-self: start;
+  padding-top: var(--s6);
+}
+
+.work-heading h2 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 86px);
+  line-height: 1;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.work-list {
+  display: grid;
+  gap: var(--s5);
+}
+
+.work-card {
+  background:
+    linear-gradient(135deg, rgba(57, 255, 139, 0.08), transparent 28%),
+    rgba(20, 20, 24, 0.86);
+  border: 1px solid var(--line);
+  border-radius: var(--s4);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.28);
+  padding: var(--s6);
+}
+
+.work-card-head {
+  align-items: center;
+  display: flex;
+  gap: var(--s4);
+  justify-content: space-between;
+}
+
+.work-card-head p,
+.work-card-head span,
+.work-point strong,
+.work-tags,
+.work-link {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.work-card-head p,
+.work-point strong,
+.work-link {
+  color: var(--accent);
+}
+
+.work-card-head span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-dim);
+  padding: var(--s2) var(--s3);
+}
+
+.work-card h3 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 56px);
+  line-height: 1.05;
+  margin: var(--s5) 0;
+}
+
+.work-point {
+  border-left: 1px solid var(--line);
+  margin-top: var(--s4);
+  padding-left: var(--s4);
+}
+
+.work-point p {
+  color: var(--ink-dim);
+  line-height: 1.75;
+  margin: var(--s2) 0 0;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  margin-top: var(--s5);
+}
+
+.work-tags span {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-dim);
+  padding: var(--s2) var(--s3);
+}
+
+.work-link {
+  display: inline-flex;
+  margin-top: var(--s5);
+}
+
+@media (max-width: 767px) {
+  .work {
+    grid-template-columns: 1fr;
+    padding: var(--s7) var(--s5);
+  }
+
+  .work-card {
+    padding: var(--s5);
+  }
+}
