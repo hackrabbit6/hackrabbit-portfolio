@@ -1,11 +1,11 @@
 ---
 import './Hero.css'
 import './HackRabbitMark.css'
-import { HeroCanvasMount } from './HeroCanvasMount'
+import HeroField from './HeroField.astro'
 ---
 
 <section class="hero-act static" id="top">
-  <HeroCanvasMount client:load />
+  <HeroField />
   <nav class="site-nav" aria-label="主导航">
     <a class="brand" href="#top">
       <span>hackrabbit</span>
@@ -16,6 +16,7 @@ import { HeroCanvasMount } from './HeroCanvasMount'
       <a href="#work">作品</a>
       <a href="#skills">能力</a>
       <a href="#experience">经历</a>
+      <a href="/work/">案例</a>
       <a href="#contact">联系</a>
     </div>
   </nav>
@@ -23,8 +24,8 @@ import { HeroCanvasMount } from './HeroCanvasMount'
     <div class="hero-copy">
       <p class="eyebrow hero-reveal">frontend operator / hackrabbit</p>
       <h1 class="hero-reveal">
-        <span>4-5 年前端交付</span> + 我用<span>第一性原理</span>思考、指挥一队
-        <span>AI 智能体</span>,把活干得更快更稳。
+        <span>4-5 年前端交付</span><br />
+        我用<span>第一性原理</span>思考，带着 AI 把活干得<span>更快、更稳</span>。
       </h1>
       <p class="lead hero-reveal">
         我先用稳定的业务前端交付建立可信度，再把 AI 当成执行队伍来放大产出。写码、联调、验收我都做，只是现在会把可拆给 agent 的重复活交出去。

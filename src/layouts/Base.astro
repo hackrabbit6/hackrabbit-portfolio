@@ -1,7 +1,10 @@
 ---
 import '../styles/tokens.css'
 
-const { title = 'hackrabbit | Cinematic Portfolio' } = Astro.props
+const {
+  title = 'hackrabbit | 前端交付与 AI 应用',
+  description = 'hackrabbit 的个人作品集：前端业务交付、H5 游戏 SDK、支付链路与 AI 应用实践。',
+} = Astro.props
 ---
 
 <!doctype html>
@@ -12,7 +15,7 @@ const { title = 'hackrabbit | Cinematic Portfolio' } = Astro.props
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="hackrabbit 的综合个人站首页：前端交付、第一性原理、AI 智能体协作与黑客兔身份。"
+      content={description}
     />
     <meta name="theme-color" content="#0B0B0E" />
     <title>{title}</title>

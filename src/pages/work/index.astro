@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+---
+
+<Base
+  title="项目案例 | hackrabbit"
+  description="hackrabbit 的前端项目案例：业务背景、职责边界、技术判断、交付过程与结果。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="案例导航">
+      <a href="/">← 返回首页</a>
+      <a href="/#contact">联系我</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">selected case studies</p>
+      <h1>不只展示结果，也展示我怎么判断和交付。</h1>
+      <p class="case-lead">
+        工作项目遵守脱敏边界，不公开公司代码与业务数据；重点说明问题、职责、约束和可复核的交付范围。
+      </p>
+    </header>
+
+    <section class="case-section" aria-labelledby="case-list-title">
+      <div>
+        <p class="case-label">01 / delivery</p>
+        <h2 id="case-list-title">业务前端案例</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <p class="case-label">SDK · PAYMENT · HYBRID</p>
+          <h3>H5 游戏发行 SDK 与充值体系</h3>
+          <p>把分散在多款游戏里的账号、支付、实名、防沉迷和跨端通信能力收敛成稳定接入链路。</p>
+          <a class="case-button" href="/work/h5-game-sdk/">阅读案例 →</a>
+        </article>
+        <article class="case-card">
+          <p class="case-label">ADMIN · WORKFLOW</p>
+          <h3>广告买量系统</h3>
+          <p>复杂表单、投放状态与运营误操作控制。完整脱敏案例整理中，首页已提供职责与结果摘要。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-cta">
+      <h2>公开代码项目在 GitHub。</h2>
+      <a class="case-button" href="https://github.com/hackrabbit6" target="_blank" rel="noreferrer">查看 GitHub →</a>
+    </section>
+  </main>
+</Base>

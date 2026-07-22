@@ -99,6 +99,7 @@
 .work-link {
   display: inline-flex;
   margin-top: var(--s5);
+  margin-right: var(--s5);
 }
 
 @media (max-width: 767px) {

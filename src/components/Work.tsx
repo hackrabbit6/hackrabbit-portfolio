@@ -12,6 +12,7 @@ const projects = [
     collaboration: '这是工作期项目,核心难点我自己和团队一起排查:iframe 通信、微信/支付宝拉起、小游戏限制和移动端兼容。',
     result: '我交付并维护了登录、支付、角色上报、浮窗、实名、防沉迷等能力,支撑多款游戏和充值活动上线。',
     stack: ['Vue3', 'TypeScript', 'Vite', 'H5', 'postMessage', 'WeixinJSBridge'],
+    caseUrl: '/work/h5-game-sdk/',
   },
   {
     name: '广告买量系统',
@@ -111,6 +112,7 @@ export function Work() {
                 <span key={item}>{item}</span>
               ))}
             </div>
+            {project.caseUrl ? <a className="work-link" href={project.caseUrl}>查看案例 →</a> : null}
             {project.repo ? (
               <a className="work-link" href={project.repo} target="_blank" rel="noreferrer">
                 查看代码 →

@@ -1,0 +1,71 @@
+---
+import './HeroCanvas.css'
+---
+
+<canvas class="hero-canvas" data-hero-field aria-hidden="true"></canvas>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-hero-field]')
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+  const desktop = window.matchMedia('(min-width: 768px)')
+
+  if (canvas && desktop.matches && !reduceMotion.matches) {
+    const context = canvas.getContext('2d', { alpha: false })
+    let frame = 0
+    let width = 0
+    let height = 0
+
+    const resize = () => {
+      const ratio = Math.min(window.devicePixelRatio || 1, 1.5)
+      width = window.innerWidth
+      height = window.innerHeight
+      canvas.width = Math.round(width * ratio)
+      canvas.height = Math.round(height * ratio)
+      canvas.style.width = `${width}px`
+      canvas.style.height = `${height}px`
+      context?.setTransform(ratio, 0, 0, ratio, 0, 0)
+    }
+
+    const draw = (time: number) => {
+      if (!context) return
+      context.fillStyle = '#0b0b0e'
+      context.fillRect(0, 0, width, height)
+
+      const phase = time * 0.00018
+      const fields = [
+        { x: 0.72 + Math.sin(phase) * 0.06, y: 0.4, radius: 0.34, color: '57,255,139' },
+        { x: 0.18, y: 0.82 + Math.cos(phase * 0.8) * 0.04, radius: 0.28, color: '34,211,238' },
+      ]
+
+      for (const field of fields) {
+        const radius = Math.max(width, height) * field.radius
+        const gradient = context.createRadialGradient(
+          width * field.x,
+          height * field.y,
+          0,
+          width * field.x,
+          height * field.y,
+          radius,
+        )
+        gradient.addColorStop(0, `rgba(${field.color},0.2)`)
+        gradient.addColorStop(0.48, `rgba(${field.color},0.07)`)
+        gradient.addColorStop(1, `rgba(${field.color},0)`)
+        context.fillStyle = gradient
+        context.fillRect(0, 0, width, height)
+      }
+
+      frame = requestAnimationFrame(draw)
+    }
+
+    resize()
+    window.addEventListener('resize', resize, { passive: true })
+    frame = requestAnimationFrame(draw)
+
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('resize', resize)
+    }, { once: true })
+  } else {
+    canvas?.remove()
+  }
+</script>

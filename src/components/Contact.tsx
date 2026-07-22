@@ -1,7 +1,11 @@
 import { HackRabbitMark } from './HackRabbitMark'
 import './Contact.css'
 
-const next = ['博客', 'GitHub 项目', '自媒体']
+const next = [
+  { label: '项目案例', meta: '过程与判断', href: '/work/' },
+  { label: 'GitHub', meta: '公开代码', href: 'https://github.com/hackrabbit6' },
+  { label: '下载简历', meta: 'PDF', href: '/resume.pdf' },
+]
 
 export function Contact() {
   return (
@@ -18,12 +22,12 @@ export function Contact() {
           </a>
         </div>
       </div>
-      <div className="next-grid" aria-label="后续分期入口">
+      <div className="next-grid" aria-label="继续了解">
         {next.map((item) => (
-          <a href="#" className="next-card" key={item} aria-label={`${item} 即将上线`}>
-            <span>soon</span>
-            <strong>{item}</strong>
-            <p>Phase {next.indexOf(item) + 2}</p>
+          <a href={item.href} className="next-card" key={item.label}>
+            <span>explore</span>
+            <strong>{item.label}</strong>
+            <p>{item.meta} →</p>
           </a>
         ))}
       </div>

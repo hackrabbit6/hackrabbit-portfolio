@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+---
+
+<Base
+  title="H5 游戏发行 SDK 与充值体系 | hackrabbit"
+  description="脱敏项目案例：H5 游戏发行 SDK、支付链路、Hybrid 通信、多端适配与上线交付。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="案例导航">
+      <a href="/work/">← 全部案例</a>
+      <a href="/">返回首页</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">sanitized case study · h5 game delivery</p>
+      <h1>H5 游戏发行 SDK 与充值体系</h1>
+      <p class="case-lead">
+        把账号、支付、角色上报和合规能力从“每款游戏重复接一遍”，收敛成可维护、可联调、可上线的统一接入链路。
+      </p>
+      <div class="case-meta">
+        <div><strong>角色</strong><span>前端开发 / 联调交付</span></div>
+        <div><strong>场景</strong><span>H5、iframe、微信与移动端</span></div>
+        <div><strong>边界</strong><span>脱敏案例，不公开公司代码与数据</span></div>
+      </div>
+    </header>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">01 / problem</p>
+        <h2>真正的问题不是多写几个 API。</h2>
+      </div>
+      <div class="case-copy">
+        <p>不同游戏需要重复接入登录、支付、角色信息、浮窗、实名与防沉迷。运行环境又横跨普通浏览器、iframe、微信内置浏览器和移动端容器。</p>
+        <p><strong>核心风险</strong>是环境差异、通信时序和支付状态不一致：页面看起来能点，不代表完整链路可以安全上线。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">02 / decisions</p>
+        <h2>我负责的关键判断</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <h3>统一接入面</h3>
+          <p>把多款游戏共同需要的能力收敛为稳定接口，减少游戏侧重复实现，也让联调问题能在同一层定位。</p>
+        </article>
+        <article class="case-card">
+          <h3>先定义通信契约</h3>
+          <p>围绕 postMessage、回调与状态上报明确消息结构、来源和失败分支，避免 iframe 通信靠隐式约定。</p>
+        </article>
+        <article class="case-card">
+          <h3>支付按链路验收</h3>
+          <p>不把“成功拉起支付”当完成，而是检查渠道识别、拉起、回调、订单状态与异常恢复。</p>
+        </article>
+        <article class="case-card">
+          <h3>环境差异显式处理</h3>
+          <p>针对微信、支付宝、小游戏限制和移动端兼容性分支处理，让降级行为可预期。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">03 / delivery</p>
+        <h2>从接入到上线</h2>
+      </div>
+      <div class="case-copy">
+        <ol class="case-flow">
+          <li><span>与后端、运营和游戏侧确认接口字段、渠道差异、合规要求与验收边界。</span></li>
+          <li><span>实现登录、支付、角色上报、浮窗、实名、防沉迷等公共能力。</span></li>
+          <li><span>围绕 iframe、WeixinJSBridge 和移动端环境逐段联调，不用单一浏览器成功代替真实环境验证。</span></li>
+          <li><span>跟进上线问题并维护公共链路，让后续游戏接入能复用已验证的处理方式。</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">04 / result</p>
+        <h2>可确认的结果</h2>
+      </div>
+      <div class="case-copy">
+        <p>最终交付并维护了登录、支付、角色上报、浮窗、实名、防沉迷等能力，支撑多款游戏与充值活动上线。</p>
+        <p>由于这是工作期脱敏案例，我不展示公司代码、客户名称、订单数据或未经授权的业务指标。这里证明的是我对复杂前端链路的拆解、联调和上线能力。</p>
+      </div>
+    </section>
+
+    <section class="case-cta">
+      <h2>需要聊实现细节？</h2>
+      <a class="case-button" href="mailto:hackrabbit6@gmail.com">hackrabbit6@gmail.com →</a>
+    </section>
+  </main>
+</Base>

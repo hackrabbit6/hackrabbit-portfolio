@@ -1,59 +1,52 @@
 # hackrabbit portfolio
 
-个人求职作品集，用于展示前端业务经历、H5 游戏发行 SDK 与充值体系、广告买量系统、AI 应用原型、轻量全栈实践和联系方式。
+个人求职作品集：[hackrabbit.cc.cd](https://hackrabbit.cc.cd)。重点展示业务前端交付、H5 游戏发行 SDK 与支付链路、AI 应用实践和脱敏项目案例。
 
-当前定位：
+## 当前定位
 
-- 4-5 年前端开发经验
+- 4–5 年前端开发经验
 - 中后台系统、复杂表单、接口联调和上线交付
 - H5 游戏发行 SDK、支付链路、Hybrid 通信和多端适配
-- AI 音乐生成、数字亲人、Web3 研究工具等产品原型实践
-- Node.js / Bun / Go 的轻量全栈补位能力
+- AI 音乐生成、数字亲人等 AI 应用原型
+- Bun / Node.js / Go 的轻量全栈补位能力
 
-## 展示重点
+## 技术架构
 
-- 工作项目用脱敏案例说明背景、职责、难点和结果。
-- 个人项目展示 AI 应用理解、异步生成任务、RAG / 对话流程、研究工具和本地优先工作流。
-- 技术栈按岗位价值归类，减少只堆关键词的观感。
+- Astro 7 负责静态页面、路由和 SEO
+- React 19 islands 承载需要交互的首页区块
+- Lenis + GSAP ScrollTrigger 驱动滚动叙事
+- 原生 Canvas 2D 提供轻量动态 Hero；移动端和 `prefers-reduced-motion` 自动降级
+- Netlify 静态部署
 
-## 技术栈
+## 页面
 
-- React
-- TypeScript
-- Vite
-- Bun
-- Three.js
+- `/`：电影感滚动首页
+- `/work/`：项目案例索引
+- `/work/h5-game-sdk/`：H5 游戏发行 SDK 与充值体系脱敏案例
+- `/resume.pdf`：简历
 
 ## 本地开发
+
+项目使用 Bun 锁文件：
 
 ```bash
 bun install
 bun run dev
 ```
 
-## 构建
+## 验证
 
 ```bash
+bun run lint
 bun run build
 ```
 
 ## 部署
 
-推荐迁移到当前可登录的新 Vercel 账号，并连接 `hackrabbit6` GitHub 账号下的作品集仓库，避免继续依赖旧 Vercel 登录。
+站点部署在 Netlify，配置见 `netlify.toml`：
 
-Vercel 配置：
+- Build command：`bunx astro build`
+- Publish directory：`dist`
+- 自定义域名：`hackrabbit.cc.cd`
 
-- Framework Preset: `Vite`
-- Build Command: `bun run build`
-- Output Directory: `dist`
-
-如果之后改用 GitHub Pages：
-
-- 用户主页仓库 `hackrabbit6.github.io`：保持当前 `vite.config.ts` 不变。
-- 普通项目仓库，例如 `hackrabbit-portfolio`：需要在 `vite.config.ts` 里设置 `base: '/hackrabbit-portfolio/'`。
-
-## 检查
-
-```bash
-bun run lint
-```
+工作项目只展示脱敏后的背景、职责、技术判断和结果，不公开公司代码、客户信息或未经授权的业务数据。
