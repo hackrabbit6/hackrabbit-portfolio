@@ -169,14 +169,26 @@ CREW   Claude Code    规划 / 大段重构 / code review
 
 这是本轮视觉价值最高的一步。
 
-### 方式表（P0.5 探测后填定）
+### 方式表（P0.5 探测结果）
 
-| # | 项目 | 方式 | 备注 |
+| # | 项目 | 方式 | 状态 |
 |---|---|---|---|
-| 01 | H5 游戏发行 SDK | 设计图（架构） | 固定，不可改 |
-| 02 | AI 音乐生成 | 真实截图 → 失败则设计图 | P0.5 填定 |
-| 03 | 数字亲人 | 真实截图 → 失败则设计图 | P0.5 填定 |
-| 04 | onchain-research | 真实终端输出截图 | fixture 模式，应当可得 |
+| 01 | H5 游戏发行 SDK | 设计图（架构） | 已定。受脱敏约束，不可改 |
+| 02 | AI 音乐生成 | 待定 | 阻塞：需 `MINIMAX_API_KEY`（付费）。拿不到则走设计图 |
+| 03 | 数字亲人 | 待定 | 阻塞：需 `ANTHROPIC_API_KEY`。拿不到则走设计图 |
+| 04 | onchain-research | **真实终端输出截图** | 已验证可得 |
+
+**04 的复现方式**（已实测通过，无需任何 API key）：
+
+```bash
+git clone --depth 1 https://github.com/hackrabbit6/onchain-research.git
+cd onchain-research && bun install && cp .env.example .env
+bun run src/index.ts scan --token 0xccfb3e8b1772bd3a9fc62deaf75127adad597777 --format table
+```
+
+输出包含浓度统计、Top holder 表、cluster 置信度评分，以及两行免责警告
+（"Cluster output is research evidence, not proof of common control."）。
+截图**必须包含那两行警告** —— 它们正是 `Work.tsx` 中该项目「只输出可复核证据，不把聚类包装成归因证明」这句话的直接证据。
 
 ### 共同约束
 
