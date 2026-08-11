@@ -26,22 +26,14 @@ export function Crew() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     gsap.registerPlugin(ScrollTrigger)
 
-    const mm = gsap.matchMedia()
-    mm.add('(min-width: 768px)', () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.crew',
-          start: 'top top',
-          end: '+=1200',
-          pin: true,
-          scrub: true,
-        },
-      })
-      tl.from('.crew-card', { xPercent: 40, opacity: 0, stagger: 0.5 })
-      return () => tl.kill()
+    gsap.from('.crew-card', {
+      y: 40,
+      opacity: 0,
+      stagger: 0.12,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '.crew', start: 'top 80%' },
     })
-
-    return () => mm.revert()
   }, [])
 
   return (
