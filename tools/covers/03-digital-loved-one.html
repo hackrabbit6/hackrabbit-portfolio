@@ -1,0 +1,44 @@
+<!doctype html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="cover.css" />
+<div class="cover cover--p">
+  <div class="cover-head"><p class="cover-label">03 / Digital Memory</p></div>
+
+  <div class="cover-figure">
+    <svg width="278" height="233" viewBox="0 0 278 233" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0 0 L7 3.5 L0 7 z" fill="rgba(255,255,255,0.34)" />
+        </marker>
+        <marker id="ag" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0 0 L7 3.5 L0 7 z" fill="rgba(255,255,255,0.2)" />
+        </marker>
+      </defs>
+
+      <rect class="n-box" x="0" y="16" width="150" height="28" rx="6" />
+      <text class="t" x="12" y="30" dominant-baseline="central">Memory</text>
+      <path class="ln" d="M75 44 V56" marker-end="url(#a)" />
+
+      <rect class="n-box" x="0" y="62" width="150" height="28" rx="6" />
+      <text class="t" x="12" y="76" dominant-baseline="central">Knowledge</text>
+      <path class="ln" d="M75 90 V102" marker-end="url(#a)" />
+
+      <rect class="n-key" x="0" y="108" width="150" height="28" rx="6" />
+      <text class="t" x="12" y="122" dominant-baseline="central" style="fill: #39ff8b">Grounding</text>
+
+      <!-- 有依据：正常回答 -->
+      <path class="ln" d="M75 136 V166" marker-end="url(#a)" />
+      <text class="t-sub" x="82" y="155">EVIDENCE</text>
+      <rect class="n-box" x="0" y="172" width="150" height="28" rx="6" />
+      <text class="t" x="12" y="186" dominant-baseline="central">Conversation</text>
+
+      <!-- 没依据：承认不知道 -->
+      <path class="ln-ghost" d="M150 122 H214 V166" marker-end="url(#ag)" />
+      <text class="t-sub" x="160" y="113">NO EVIDENCE</text>
+      <rect class="n-ghost" x="170" y="172" width="108" height="28" rx="6" />
+      <text class="t-dim" x="224" y="186" text-anchor="middle" dominant-baseline="central">「不知道」</text>
+    </svg>
+  </div>
+
+  <p class="cover-note">有依据才回答，依据不足就说不知道<br />约束写在代码里，可逐条检查</p>
+</div>
