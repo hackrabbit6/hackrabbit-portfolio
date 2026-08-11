@@ -73,44 +73,60 @@
   text-transform: uppercase;
 }
 
-.hero-act h1 {
+.hero-title {
   font-family: var(--font-display);
-  font-size: clamp(48px, 5.7vw, 82px);
-  letter-spacing: -0.035em;
-  line-height: 1.08;
+  font-size: clamp(42px, 8vw, 112px);
+  letter-spacing: -0.045em;
+  line-height: 1;
   margin: 0;
-  text-wrap: balance;
-}
-
-.hero-act h1 span,
-.crew-status {
-  color: var(--accent);
 }
 
 .lead {
   color: var(--ink-dim);
-  font-size: clamp(17px, 2vw, 22px);
-  line-height: 1.8;
-  margin: var(--s6) 0 0;
-  max-width: 760px;
-}
-
-.crew-status,
-.scroll-cue {
-  font-family: var(--font-mono);
-}
-
-.crew-status {
+  font-size: clamp(17px, 1.6vw, 20px);
+  line-height: 1.75;
   margin: var(--s5) 0 0;
+  max-width: 34em;
 }
 
-.scroll-cue {
+/* 拉丁词组不允许被 CJK 换行拆开（中文本身可以任意断行，"AI crew" 不行） */
+.nowrap {
+  white-space: nowrap;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s4);
+  margin-top: var(--s6);
+}
+
+.cta {
   border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--ink);
   display: inline-flex;
-  margin-top: var(--s6);
+  font-family: var(--font-mono);
+  font-size: 14px;
   padding: var(--s3) var(--s5);
+  transition: border-color 0.2s var(--ease-cine), color 0.2s var(--ease-cine);
+}
+
+.cta:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cta-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+.cta-primary:hover {
+  background: transparent;
+  color: var(--accent);
 }
 
 .hero-mark {
@@ -166,14 +182,18 @@
     padding-top: var(--s6);
   }
 
-  .hero-act h1 {
-    font-size: clamp(42px, 12.5vw, 52px);
-    line-height: 1.03;
+  .hero-title {
+    font-size: clamp(40px, 13vw, 64px);
   }
 
   .lead {
     font-size: 17px;
     line-height: 1.7;
+    max-width: none;
+  }
+
+  .hero-mark {
+    justify-self: start;
   }
 
   .hero-mark {
