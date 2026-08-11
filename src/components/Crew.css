@@ -4,8 +4,8 @@
   display: grid;
   gap: var(--s5);
   margin: 0 auto;
-  max-width: 1180px;
-  padding: var(--s6) var(--s5);
+  max-width: var(--container);
+  padding: var(--space-band) var(--s5);
 }
 
 .band-row {
@@ -18,14 +18,14 @@
 .band-label {
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-meta);
   letter-spacing: 0.08em;
   margin: 0;
   text-transform: uppercase;
 }
 
 .band-now {
-  font-size: clamp(18px, 2vw, 24px);
+  font-size: var(--fs-lead);
   line-height: 1.5;
   margin: 0;
 }
@@ -45,14 +45,14 @@
 }
 
 .crew-item strong {
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 600;
 }
 
 .crew-item span {
   color: var(--ink-dim);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-meta);
   line-height: 1.6;
 }
 

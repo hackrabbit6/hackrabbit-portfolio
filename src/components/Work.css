@@ -2,7 +2,7 @@
   display: grid;
   gap: var(--s7);
   grid-template-columns: 0.72fr 1.28fr;
-  padding: var(--s8) max(var(--s5), calc((100vw - 1180px) / 2 + var(--s5)));
+  padding: var(--space-section) var(--gutter) var(--space-section-end);
 }
 
 .work-heading {
@@ -12,15 +12,17 @@
 
 .work-heading h2 {
   font-family: var(--font-display);
-  font-size: clamp(40px, 6vw, 86px);
-  line-height: 1;
+  font-size: var(--fs-h2);
+  line-height: 1.05;
   margin: 0;
   text-wrap: balance;
 }
 
+/* 项目与项目之间是全站最大的间距 —— 每个项目要能当成独立一页读，
+   而不是一串卡片。这条比「进入 Selected Work」的 160 还要大。 */
 .work-list {
   display: grid;
-  gap: var(--s7);
+  gap: var(--space-project);
 }
 
 /* ── 视觉位 ─────────────────────────────────────────── */
@@ -84,7 +86,7 @@
 .work-link,
 .work-point strong {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-meta);
 }
 
 .work-index {
@@ -102,12 +104,12 @@
 }
 
 .work-featured h3 {
-  font-size: clamp(30px, 3.6vw, 52px);
+  font-size: var(--fs-h3);
 }
 
 .work-card h3,
 .work-also h3 {
-  font-size: clamp(22px, 2.2vw, 30px);
+  font-size: var(--fs-h4);
 }
 
 .work-meta {
@@ -204,11 +206,11 @@
 
 @media (max-width: 767px) {
   .work {
-    padding: var(--s7) var(--s5);
+    padding: var(--s7) var(--s5) var(--s6);
   }
 
   .work-list {
-    gap: var(--s6);
+    gap: var(--s7);
   }
 
   /* 移动端全部单列 */

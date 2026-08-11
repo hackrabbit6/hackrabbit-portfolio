@@ -1,14 +1,8 @@
 .skills {
-  padding: var(--s8) max(var(--s5), calc((100vw - 1180px) / 2 + var(--s5)));
+  padding: var(--space-section) var(--gutter) var(--space-section-end);
 }
 
-.section-kicker h2 {
-  font-family: var(--font-display);
-  font-size: clamp(42px, 7vw, 96px);
-  line-height: 1;
-  margin: 0 0 var(--s7);
-}
-
+/* Skills 内部保持紧凑 —— 章节之间才拉开距离 */
 .skills-grid {
   display: grid;
   gap: var(--s4);
@@ -25,27 +19,29 @@
 
 .skill-card h3 {
   font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 52px);
+  font-size: var(--fs-h3);
+  line-height: 1.1;
   margin: 0;
 }
 
 .skill-card p {
   color: var(--ink-dim);
   line-height: 1.8;
-  margin: var(--s5) 0 0;
+  margin: var(--space-tight) 0 0;
 }
 
 .skill-card small {
   color: var(--accent);
   display: block;
   font-family: var(--font-mono);
+  font-size: var(--fs-meta);
   line-height: 1.7;
-  margin-top: var(--s5);
+  margin-top: var(--space-tight);
 }
 
 @media (max-width: 767px) {
   .skills {
-    padding: var(--s7) var(--s5);
+    padding: var(--s7) var(--s5) var(--s6);
   }
 
   .skills-grid {

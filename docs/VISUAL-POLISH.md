@@ -386,6 +386,44 @@ Hero、Cover、Selected Work 基本决定这个站最终能不能成立，方向
 
 变量统一收进 `src/styles/tokens.css`，不要在组件 CSS 里散落魔法数字。
 
+### 定下来的字号刻度
+
+相邻两级固定约 1.4 倍，任何两级放在同一屏都能分出主次。桌面满宽取值：
+
+| Token | 桌面 | 用在哪 |
+|---|---|---|
+| `--fs-display` | 112 | 每页唯一的锚点（首页 HACKRABBIT） |
+| `--fs-h1` | 80 | 案例页标题 |
+| `--fs-h2` | 56 | 章节标题（Selected Work / Skills / Experience / Contact 现在完全一致） |
+| `--fs-h3` | 40 | Featured 项目名、能力卡、时间线条目 |
+| `--fs-h4` | 28 | 双列项目名、案例页卡片 |
+| `--fs-lead` | 21 | 导语 |
+| `--fs-body` | 17 | 正文 |
+| `--fs-small` | 15 | 按钮 / 胶囊 |
+| `--fs-meta` | 13 | mono 标签 |
+
+改之前章节标题是 96 / 92 / 86 三个值，和 Hero 的 112 挤在同一档；现在 Display 正好是 H2 的两倍。
+
+两处**故意不在刻度上**：窄屏的 `.hero-title` 与 `.case-hero h1` 是单独算的（见 P6，不许等比缩小）；
+`.hackrabbit-mark` 的 `font-size` 是 ASCII 图形的缩放参数，不是排版层级。
+
+### 定下来的节奏
+
+间距本身是层级信号。实测渲染值：
+
+| 位置 | 间距 | 对应要求 |
+|---|---|---|
+| Hero → NOW·CREW | 104 | 近 |
+| NOW·CREW → Selected Work | 160 | 远 |
+| 项目与项目之间 | 200 | 非常远 |
+| 其余章节之间 | 184 | — |
+| Skills / Experience 内部 | 16 / 24 | 紧凑 |
+
+章节内边距改成不对称（起始 `--space-section` 120，收尾 `--space-section-end` 64），
+否则两个 120 相加会让每个章节边界都是 240，节奏被抹平。
+
+`--container` / `--gutter` 也收进 tokens —— 原先 `calc((100vw - 1180px) / 2 + var(--s5))` 在四个组件里各写了一遍。
+
 ### P5 验收
 
 - [ ] 字号层级在同一屏内可分辨主次

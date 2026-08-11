@@ -1,3 +1,5 @@
+/* ASCII 兔子的 font-size 是图形缩放参数，不是排版层级，
+   所以不走 --fs-* 那套刻度。 */
 .hackrabbit-mark {
   color: var(--accent);
   font-family: var(--font-mono);

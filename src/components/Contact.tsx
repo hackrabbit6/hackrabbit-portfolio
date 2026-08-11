@@ -12,7 +12,12 @@ export function Contact() {
     <section className="contact" id="contact">
       <div className="contact-main">
         <p className="eyebrow">contact</p>
-        <h2>我在找前端、中级前端、偏前端全栈和 AI 应用前端机会。</h2>
+        {/* CJK 默认可在任意两字之间断行，会把「中级前端」拆成「中/级前端」。
+            职位名是词组，逐个锁住不许拆。 */}
+        <h2>
+          我在找<span className="nowrap">前端</span>、<span className="nowrap">中级前端</span>、
+          <span className="nowrap">偏前端全栈</span>和<span className="nowrap">AI 应用前端</span>机会。
+        </h2>
         <p>我能交付稳定业务,也能把 AI 流程做成可运行产品。</p>
         <HackRabbitMark compact />
         <div className="contact-links">
