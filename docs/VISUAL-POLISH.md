@@ -486,12 +486,38 @@ Cover 是位图，字画在图里。窄屏下整张按比例缩小，04 的终�
 - 对比度：正文与背景满足 WCAG AA。
 - 逐页人工过一遍：`/`、`/work/`、`/work/h5-game-sdk/`、`/resume.pdf`。
 
+### 查出来并修掉的
+
+审计跑在**构建产物**上（`dist/`，端口 4400），不是 dev server —— dev 会往 tab 序里
+插一个 `astro-dev-toolbar`，在 dev 上验键盘可达会得出错误结论。
+
+- **Cover 里的说明文字对比度只有 3.84:1**（`--faint: #6b6e74`，11px 正文级，AA 要求 4.5）。
+  这些字是画进位图的，DOM 对比度审计扫不到，只能手算。改成 `#84878e`（5.46:1）后重出四张图。
+- **ASCII 兔子只写了 `aria-label` 没写 `role`。** `<pre>` 是 generic role，
+  ARIA 规范下 `aria-label` 不保证被暴露，读屏会逐个念 `(\(\ (•ᴥ•) / づ` 这些符号。
+  补 `role="img"`，整块作为一张图读出标签。
+
+### 实测结果
+
+| 项 | `/` | `/work/` | `/work/h5-game-sdk/` |
+|---|---|---|---|
+| Tab 可达 / DOM 可聚焦 | 22 / 22 | 4 / 4 | 3 / 3 |
+| focus 无轮廓 | 0 | 0 | 0 |
+| 无可访问名 | 0 | 0 | 0 |
+| 对比度未达 AA | 0 | 0 | 0 |
+
+四张 Cover 的 `alt` 都在描述图里到底画了什么（55–93 字），不是文件名。
+`HeroField` 的 canvas 已是 `aria-hidden="true"`，且在 `prefers-reduced-motion: reduce`
+下整个 `remove()`。reduced 与 no-preference 两种模式下都没有内容被留在 opacity 0。
+
+`/resume.pdf` 实际存在并以 `application/pdf` 正常返回（12557B）。
+
 ### P7 验收
 
-- [ ] 上述五项全部通过
-- [ ] `bun run lint` 绿
-- [ ] `bun run build` 绿
-- [ ] 全仓无 TODO / 占位 / 注释掉的死代码残留
+- [x] 上述五项全部通过
+- [x] `bun run lint` 绿
+- [x] `bun run build` 绿
+- [x] 全仓无 TODO / 占位 / 注释掉的死代码残留
 
 ---
 

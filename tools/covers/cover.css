@@ -5,7 +5,9 @@
   --bg: #0b0b0e;
   --ink: #f5f3ef;
   --dim: #a9abb0;
-  --faint: #6b6e74;
+  /* 4.5:1 是 WCAG AA 对正文级字号的下限；#6b6e74 只有 3.84，Cover 里的说明行
+     和图注是画进位图的，DOM 对比度审计查不到，只能在这里定死。 */
+  --faint: #84878e;
   --accent: #39ff8b;
   --cyan: #22d3ee;
   --amber: #e8b44a;
