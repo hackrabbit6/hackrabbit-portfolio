@@ -1,0 +1,62 @@
+---
+import './Follow.css'
+
+// 两个平台是同一个身份，简介也相同，所以简介提到区块级别，卡片里只区分「形式」。
+// 公众号在微信生态里没有可点击的公开主页，只能放二维码或让人搜账号名 —— 这是平台限制，
+// 不是没做完；不要为了「两边对称」而伪造一个跳转链接。
+const accounts = [
+  {
+    platform: '公众号',
+    format: '长文',
+    qr: '/wechat-qr.jpg',
+    hint: '微信扫码，或搜「黑兔实验室」',
+  },
+  {
+    platform: '小红书',
+    format: '图文笔记',
+    href: 'https://www.xiaohongshu.com/user/profile/5cd9477800000000160116e4',
+    hint: '打开主页',
+  },
+]
+---
+
+<section class="follow" id="follow">
+  <div class="follow-head">
+    <p class="eyebrow">关注</p>
+    <h2>黑兔实验室</h2>
+    <p class="follow-bio">AI、产品、认知工具与个人系统实验。</p>
+  </div>
+
+  <ul class="follow-list">
+    {
+      accounts.map((a) => (
+        <li class="follow-card">
+          <p class="follow-platform">
+            {a.platform}
+            <span>{a.format}</span>
+          </p>
+          {a.qr ? (
+            <img
+              class="follow-qr"
+              src={a.qr}
+              alt="黑兔实验室公众号二维码，用微信扫码关注"
+              width="128"
+              height="128"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : null}
+          {a.href ? (
+            <a class="follow-link" href={a.href} target="_blank" rel="noreferrer">
+              {a.hint} →
+            </a>
+          ) : (
+            <p class="follow-hint">{a.hint}</p>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+
+  <a class="follow-more" href="/writing/">看我写过什么 →</a>
+</section>
