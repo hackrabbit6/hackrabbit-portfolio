@@ -1,0 +1,288 @@
+/* 四张 Cover 的共同视觉语言：同一栅格、同一字体、同一配色、同一内边距、同一圆角与描边规则。
+   数值取自 src/styles/tokens.css，字号按「在页面上 1:1 显示」来定，不做二次缩放。 */
+
+:root {
+  --bg: #0b0b0e;
+  --ink: #f5f3ef;
+  --dim: #a9abb0;
+  /* 4.5:1 是 WCAG AA 对正文级字号的下限；#6b6e74 只有 3.84，Cover 里的说明行
+     和图注是画进位图的，DOM 对比度审计查不到，只能在这里定死。 */
+  --faint: #84878e;
+  --accent: #39ff8b;
+  --cyan: #22d3ee;
+  --amber: #e8b44a;
+  --line: rgba(255, 255, 255, 0.09);
+  --chip: rgba(255, 255, 255, 0.03);
+  --rule: rgba(255, 255, 255, 0.2);
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg);
+}
+
+.cover {
+  background:
+    radial-gradient(120% 90% at 6% -12%, rgba(57, 255, 139, 0.1), transparent 58%),
+    radial-gradient(90% 80% at 102% 18%, rgba(34, 211, 238, 0.05), transparent 60%), var(--bg);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--mono);
+  overflow: hidden;
+  position: relative;
+}
+
+/* 横版 684 宽（featured 684×520 / wide 684×440） */
+.cover--l {
+  padding: 30px 32px;
+  width: 684px;
+}
+
+/* 竖版 322 宽（pair 322×360） */
+.cover--p {
+  height: 360px;
+  padding: 22px;
+  width: 322px;
+}
+
+/* 窄屏专版 340 宽。01 与 04 按 684 出图，在手机上会被缩到 0.5×，
+   图里的字直接认不出来；这两张单独按窄屏重新排一遍，用 <picture> 切换。
+   02/03 本来就是 322 宽，手机上接近 1:1，不需要专版。 */
+.cover--m {
+  padding: 14px;
+  width: 340px;
+}
+
+.cover--m .cover-chain {
+  font-size: 10px;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.cover--m .term {
+  margin-top: 12px;
+}
+
+.cover--m .term-bar {
+  padding: 8px 10px;
+}
+
+.cover--m .term-cmd {
+  font-size: 10px;
+}
+
+/* 47 字符是表格最宽的一行（Cluster 表头与分隔线）。10px × 0.6001 = 6.0px/字，
+   面板内宽 292px → 48.6 字符，表格结构不会被折行拆掉。再大一档就断。 */
+.cover--m .term-body {
+  font-size: 10px;
+  line-height: 1.4;
+  padding: 10px;
+}
+
+.cover--m .term-body .gap {
+  height: 6px;
+}
+
+.cover--m .cover-note {
+  margin-top: 12px;
+}
+
+/* ── 顶部标签行 ─────────────────────────────────────── */
+
+.cover-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.cover-label {
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── 概念链（横版放在标签下方一行） ─────────────────── */
+
+.cover-chain {
+  color: var(--ink);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  gap: 10px;
+  letter-spacing: 0.02em;
+  margin-top: 14px;
+}
+
+.cover-chain i {
+  color: var(--faint);
+  font-style: normal;
+}
+
+/* ── 底部说明（两行，暗） ───────────────────────────── */
+
+.cover-note {
+  color: var(--faint);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  line-height: 1.65;
+}
+
+.cover--l .cover-note {
+  margin-top: 14px;
+}
+
+.cover--p .cover-note {
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+/* ── 图形区 ─────────────────────────────────────────── */
+
+.cover-figure {
+  flex: 1;
+  margin-top: 16px;
+  min-height: 0;
+}
+
+.cover-figure svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.n-box {
+  fill: var(--chip);
+  stroke: var(--line);
+}
+
+.n-key {
+  fill: rgba(57, 255, 139, 0.07);
+  stroke: rgba(57, 255, 139, 0.34);
+}
+
+.n-ghost {
+  fill: none;
+  stroke: var(--line);
+  stroke-dasharray: 3 3;
+}
+
+.t {
+  fill: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.t-key {
+  fill: var(--accent);
+  font-family: var(--mono);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+}
+
+.t-sub {
+  fill: var(--faint);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+}
+
+.t-dim {
+  fill: var(--dim);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.ln {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.ln-ghost {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-dasharray: 3 3;
+  stroke-width: 1;
+}
+
+/* ── 04 的终端面板 ──────────────────────────────────── */
+
+.term {
+  background: rgba(20, 20, 24, 0.86);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-top: 16px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.term-bar {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 8px;
+  padding: 9px 14px;
+}
+
+.term-bar b {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  display: block;
+  height: 7px;
+  width: 7px;
+}
+
+.term-cmd {
+  color: var(--dim);
+  font-size: 11.5px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.term-cmd s {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.term-body {
+  font-size: 12px;
+  line-height: 1.38;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+}
+
+.term-body .gap {
+  display: block;
+  height: 7px;
+}
+
+.term-body .g {
+  color: var(--accent);
+}
+
+.term-body .c {
+  color: var(--cyan);
+}
+
+.term-body .w {
+  color: var(--amber);
+}
+
+.term-body .d {
+  color: var(--faint);
+}

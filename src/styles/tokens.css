@@ -16,6 +16,35 @@
   --s6: 40px;
   --s7: 64px;
   --s8: 120px;
+  --s9: 160px;
+  --s10: 200px;
+
+  /* 容器与左右留白。章节一律用 --gutter，不要再各自写一遍这个 calc。 */
+  --container: 1180px;
+  --gutter: max(var(--s5), calc((100vw - var(--container)) / 2 + var(--s5)));
+
+  /* 节奏：间距本身是层级信号，刻意不等距。
+     Hero → NOW·CREW 近（104）< NOW·CREW → Selected Work 远（160）
+     < 项目与项目之间 非常远（200）。Skills / Experience 内部保持紧凑。 */
+  --space-band: var(--s6);
+  --space-section: var(--s8);
+  --space-section-end: var(--s7);
+  --space-project: var(--s10);
+  --space-tight: var(--s5);
+
+  /* 字号层级：相邻两级固定约 1.4 倍，保证任何两级放在同一屏都能分出主次。
+     桌面满宽依次是 112 / 80 / 56 / 40 / 28。
+     Display 只给每页唯一的锚点用（首页 HACKRABBIT），是 H2 的两倍。 */
+  --fs-display: clamp(42px, 8vw, 112px);
+  --fs-h1: clamp(38px, 5.8vw, 80px);
+  --fs-h2: clamp(32px, 4.1vw, 56px);
+  --fs-h3: clamp(25px, 2.9vw, 40px);
+  --fs-h4: clamp(20px, 2vw, 28px);
+  --fs-lead: clamp(17px, 1.5vw, 21px);
+  --fs-body: 17px;
+  --fs-small: 15px;
+  --fs-meta: 13px;
+
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-display: system-ui, -apple-system, 'PingFang SC', sans-serif;
   --font-body: system-ui, -apple-system, 'PingFang SC', sans-serif;
@@ -32,6 +61,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
+  font-size: var(--fs-body);
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
@@ -48,6 +78,33 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* 跨组件共用的两个排版件。Hero / Work / Skills / Experience / Contact 都在用，
+   所以放这里而不是任何单个组件的 CSS 里。 */
+.eyebrow {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  margin: 0 0 var(--s4);
+  text-transform: uppercase;
+}
+
+/* CJK 可以在任意两字之间断行，词组和拉丁短语得自己锁住。Hero 与 Contact 都在用。 */
+.nowrap {
+  white-space: nowrap;
+}
+
+.section-kicker h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  margin: 0 0 var(--s6);
+  text-wrap: balance;
 }
 
 button,

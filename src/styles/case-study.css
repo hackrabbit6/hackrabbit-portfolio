@@ -8,7 +8,7 @@
   align-items: center;
   display: flex;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-meta);
   justify-content: space-between;
   margin-bottom: var(--s8);
 }
@@ -21,6 +21,14 @@
   color: var(--accent);
 }
 
+/* 触摸设备上案例导航只有 18px 高，撑高点击区 */
+@media (pointer: coarse) {
+  .case-nav a {
+    display: inline-block;
+    padding-block: var(--s3);
+  }
+}
+
 .case-hero {
   border-bottom: 1px solid var(--line);
   padding-bottom: var(--s7);
@@ -28,7 +36,7 @@
 
 .case-hero h1 {
   font-family: var(--font-display);
-  font-size: clamp(52px, 8vw, 104px);
+  font-size: var(--fs-h1);
   letter-spacing: -0.045em;
   line-height: 0.95;
   margin: var(--s4) 0 var(--s5);
@@ -39,13 +47,13 @@
 .case-label {
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-meta);
   text-transform: uppercase;
 }
 
 .case-lead {
   color: var(--ink-dim);
-  font-size: clamp(20px, 2.4vw, 28px);
+  font-size: var(--fs-lead);
   line-height: 1.65;
   max-width: 820px;
 }
@@ -84,14 +92,14 @@
 
 .case-section h2 {
   font-family: var(--font-display);
-  font-size: clamp(34px, 4vw, 56px);
+  font-size: var(--fs-h2);
   line-height: 1.05;
   margin: var(--s3) 0 0;
 }
 
 .case-copy {
   color: var(--ink-dim);
-  font-size: 18px;
+  font-size: var(--fs-body);
   line-height: 1.8;
 }
 
@@ -112,7 +120,7 @@
 
 .case-card h3 {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: var(--fs-h4);
   margin: 0 0 var(--s3);
 }
 
@@ -160,7 +168,7 @@
 
 .case-cta h2 {
   font-family: var(--font-display);
-  font-size: clamp(30px, 4vw, 52px);
+  font-size: var(--fs-h3);
   margin: 0;
 }
 
@@ -170,6 +178,7 @@
   color: var(--accent);
   flex: 0 0 auto;
   font-family: var(--font-mono);
+  font-size: var(--fs-small);
   padding: var(--s3) var(--s5);
 }
 
@@ -182,6 +191,7 @@
     margin-bottom: var(--s7);
   }
 
+  /* 同上：窄屏单独定，不等比缩小 */
   .case-hero h1 {
     font-size: clamp(40px, 11.5vw, 54px);
     line-height: 1.02;

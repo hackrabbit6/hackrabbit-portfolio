@@ -1,65 +1,74 @@
-.crew {
-  align-items: center;
+/* NOW · CREW —— 一条薄带，不是章节。桌面端高度受 25vh 约束。 */
+.band {
+  border-block: 1px solid var(--line);
   display: grid;
-  gap: var(--s7);
-  grid-template-columns: 0.8fr 1.2fr;
-  min-height: 100vh;
-  overflow: hidden;
-  padding: var(--s8) max(var(--s5), calc((100vw - 1180px) / 2 + var(--s5)));
+  gap: var(--s5);
+  margin: 0 auto;
+  max-width: var(--container);
+  padding: var(--space-band) var(--s5);
 }
 
-.crew-heading h2 {
-  font-family: var(--font-display);
-  font-size: clamp(40px, 6vw, 88px);
-  line-height: 1;
-  margin: 0;
-  text-wrap: balance;
-}
-
-.crew-heading > p:last-child {
-  color: var(--ink-dim);
-  font-size: 20px;
-  line-height: 1.8;
-  margin: var(--s5) 0 0;
-}
-
-.crew-track {
+.band-row {
+  align-items: baseline;
   display: grid;
-  gap: var(--s4);
+  gap: var(--s3) var(--s6);
+  grid-template-columns: 64px minmax(0, 1fr);
 }
 
-.crew-card {
-  background: rgba(20, 20, 24, 0.72);
-  border: 1px solid var(--line);
-  border-radius: var(--s4);
-  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.26);
-  display: grid;
-  gap: var(--s3);
-  padding: var(--s5);
-}
-
-.crew-card p,
-.crew-card strong {
+.band-label {
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-meta);
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
 }
 
-.crew-card h3 {
-  font-family: var(--font-display);
-  font-size: clamp(26px, 4vw, 48px);
+.band-now {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
   margin: 0;
 }
 
-.crew-card span {
+.crew-list {
+  display: grid;
+  gap: var(--s4) var(--s6);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.crew-item {
+  display: grid;
+  gap: var(--s1);
+}
+
+.crew-item strong {
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+.crew-item span {
   color: var(--ink-dim);
-  line-height: 1.8;
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  line-height: 1.6;
 }
 
 @media (max-width: 767px) {
-  .crew {
+  .band {
+    gap: var(--s5);
+    padding: var(--s6) var(--s5);
+  }
+
+  .band-row {
+    gap: var(--s3);
     grid-template-columns: 1fr;
-    min-height: auto;
-    padding: var(--s7) var(--s5);
+  }
+
+  .crew-list {
+    gap: var(--s4);
+    grid-template-columns: 1fr;
   }
 }

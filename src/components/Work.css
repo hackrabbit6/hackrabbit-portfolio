@@ -2,7 +2,7 @@
   display: grid;
   gap: var(--s7);
   grid-template-columns: 0.72fr 1.28fr;
-  padding: var(--s8) max(var(--s5), calc((100vw - 1180px) / 2 + var(--s5)));
+  padding: var(--space-section) var(--gutter) var(--space-section-end);
 }
 
 .work-heading {
@@ -12,67 +12,145 @@
 
 .work-heading h2 {
   font-family: var(--font-display);
-  font-size: clamp(40px, 6vw, 86px);
-  line-height: 1;
+  font-size: var(--fs-h2);
+  line-height: 1.05;
   margin: 0;
   text-wrap: balance;
 }
 
+/* 项目与项目之间是全站最大的间距 —— 每个项目要能当成独立一页读，
+   而不是一串卡片。这条比「进入 Selected Work」的 160 还要大。 */
 .work-list {
   display: grid;
-  gap: var(--s5);
+  gap: var(--space-project);
 }
 
-.work-card {
-  background:
-    linear-gradient(135deg, rgba(57, 255, 139, 0.08), transparent 28%),
-    rgba(20, 20, 24, 0.86);
+/* ── 视觉位 ─────────────────────────────────────────── */
+
+.work-visual {
+  background: rgba(20, 20, 24, 0.86);
   border: 1px solid var(--line);
   border-radius: var(--s4);
-  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.28);
-  padding: var(--s6);
+  overflow: hidden;
+  position: relative;
 }
 
-.work-card-head {
-  align-items: center;
-  display: flex;
-  gap: var(--s4);
-  justify-content: space-between;
+.work-visual picture {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 
-.work-card-head p,
-.work-card-head span,
-.work-point strong,
+.work-visual img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-cine);
+  width: 100%;
+}
+
+.work-visual-link {
+  display: block;
+}
+
+/* 每张 Cover 都按它所在视觉位的尺寸出图，用 aspect-ratio 锁死比例，
+   这样任何宽度下都不会裁掉图里的概念链与说明行。
+   桌面容器满宽时分别是 684×520 / 322×360 / 684×480。 */
+.work-featured .work-visual {
+  aspect-ratio: 684 / 520;
+}
+
+.work-pair .work-visual {
+  aspect-ratio: 322 / 360;
+}
+
+.work-wide .work-visual {
+  aspect-ratio: 684 / 480;
+}
+
+/* hover 只允许两件事：图片 scale 与箭头 translate */
+.work-visual-link:hover .work-visual img {
+  transform: scale(1.03);
+}
+
+.work-link::after {
+  content: '→';
+  display: inline-block;
+  margin-left: var(--s2);
+  transition: transform 0.25s var(--ease-cine);
+}
+
+.work-link:hover::after {
+  transform: translateX(4px);
+}
+
+/* 触摸设备上这两个链接只有 68×18，撑高点击区 */
+@media (pointer: coarse) {
+  .work-link {
+    padding-block: var(--s2);
+  }
+}
+
+/* ── 文本 ───────────────────────────────────────────── */
+
+.work-index,
+.work-meta,
 .work-tags,
-.work-link {
+.work-link,
+.work-point strong {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-meta);
 }
 
-.work-card-head p,
-.work-point strong,
-.work-link {
+.work-index {
   color: var(--accent);
+  margin: var(--s5) 0 0;
+  text-transform: uppercase;
 }
 
-.work-card-head span {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--ink-dim);
-  padding: var(--s2) var(--s3);
-}
-
-.work-card h3 {
+.work-featured h3,
+.work-card h3,
+.work-also h3 {
   font-family: var(--font-display);
-  font-size: clamp(30px, 4vw, 56px);
   line-height: 1.05;
-  margin: var(--s5) 0;
+  margin: var(--s3) 0 0;
+}
+
+.work-featured h3 {
+  font-size: var(--fs-h3);
+}
+
+.work-card h3,
+.work-also h3 {
+  font-size: var(--fs-h4);
+}
+
+.work-meta {
+  color: var(--ink-dim);
+  display: flex;
+  gap: var(--s2);
+  margin: var(--s3) 0 0;
+}
+
+.work-summary {
+  color: var(--ink-dim);
+  line-height: 1.75;
+  margin: var(--s4) 0 0;
+  max-width: 62ch;
+}
+
+.work-points {
+  margin-top: var(--s5);
 }
 
 .work-point {
   border-left: 1px solid var(--line);
   margin-top: var(--s4);
   padding-left: var(--s4);
+}
+
+.work-point strong {
+  color: var(--accent);
 }
 
 .work-point p {
@@ -97,18 +175,71 @@
 }
 
 .work-link {
+  color: var(--accent);
   display: inline-flex;
-  margin-top: var(--s5);
   margin-right: var(--s5);
+  margin-top: var(--s5);
+}
+
+/* ── 1 + 2 + 1 ──────────────────────────────────────── */
+
+.work-pair {
+  display: grid;
+  gap: var(--s6);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 05：网格下方的一行纯文字，没有视觉位 */
+.work-also {
+  border-top: 1px solid var(--line);
+  padding-top: var(--s5);
+}
+
+.work-also .work-index {
+  margin-top: 0;
+}
+
+/* sticky 标题 + 列表的两列只在桌面成立。再窄就把标题叠回列表上方，
+   把整个容器宽度让给 Cover，否则视觉位会窄到图里的字看不清。 */
+@media (max-width: 1023px) {
+  .work {
+    gap: var(--s6);
+    grid-template-columns: 1fr;
+  }
+
+  .work-heading {
+    padding-top: 0;
+  }
+
+  /* Cover 按 684 出图，列表再宽就只是把位图拉糊，没有额外信息。 */
+  .work-list {
+    max-width: 684px;
+  }
 }
 
 @media (max-width: 767px) {
   .work {
-    grid-template-columns: 1fr;
-    padding: var(--s7) var(--s5);
+    padding: var(--s7) var(--s5) var(--s6);
   }
 
-  .work-card {
-    padding: var(--s5);
+  .work-list {
+    gap: var(--s7);
+  }
+
+  /* 移动端全部单列 */
+  .work-pair {
+    grid-template-columns: 1fr;
+  }
+
+  /* 01 与 04 在这里换成窄屏专版，比例必须跟着换 ——
+     断点要和 Work.tsx 里 <source media> 的 767px 完全一致，
+     否则换了图没换比例，object-fit: cover 会把图裁掉。
+     02/03 本来就是 322 宽，手机上接近 1:1，不换。 */
+  .work-featured .work-visual {
+    aspect-ratio: 340 / 454;
+  }
+
+  .work-wide .work-visual {
+    aspect-ratio: 340 / 464;
   }
 }

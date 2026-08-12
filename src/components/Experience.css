@@ -1,10 +1,10 @@
 .experience {
-  padding: var(--s8) max(var(--s5), calc((100vw - 1180px) / 2 + var(--s5)));
+  padding: var(--space-section) var(--gutter) var(--space-section-end);
 }
 
 .timeline {
   display: grid;
-  gap: var(--s5);
+  gap: var(--space-tight);
 }
 
 .timeline-item {
@@ -23,12 +23,12 @@
 .timeline-item time {
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-meta);
 }
 
 .timeline-item h3 {
   font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 52px);
+  font-size: var(--fs-h3);
   margin: 0;
 }
 
@@ -40,7 +40,7 @@
 
 @media (max-width: 767px) {
   .experience {
-    padding: var(--s7) var(--s5);
+    padding: var(--s7) var(--s5) var(--s6);
   }
 
   .timeline-item {
