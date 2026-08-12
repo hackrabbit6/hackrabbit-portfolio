@@ -150,7 +150,7 @@ NOW    2026 起 · 独立开发 / AI 工具与前端实验
 
 CREW   Claude Code    规划 / 大段重构 / code review
        Codex 桌面版    执行 / GUI / 截图 / 高频重复
-       OpenSpec       规范 / 边界 / 防跑偏
+       OpenSpec       规范 / 边界 / 防跑偏   ← 已停用，2026-08-12 换成 herdr（见 PERSONAL-SITE.md P0）
 ```
 
 ### 规则

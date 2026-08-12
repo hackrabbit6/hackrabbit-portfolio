@@ -6,7 +6,7 @@ import './Crew.css'
 const crew = [
   { agent: 'Claude Code', role: '规划 / 大段重构 / code review' },
   { agent: 'Codex 桌面版', role: '执行 / GUI / 截图 / 高频重复' },
-  { agent: 'OpenSpec 工作流', role: '规范 / 边界 / 防跑偏' },
+  { agent: 'herdr', role: '多 agent 管理 / 运行状态' },
 ]
 
 export function Crew() {

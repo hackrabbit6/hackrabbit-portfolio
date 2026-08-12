@@ -65,13 +65,13 @@
 { agent: 'OpenSpec 工作流', role: '规范 / 边界 / 防跑偏' }   // ← 已不再使用
 ```
 
-移除 OpenSpec，替换为 herdr。
+移除 OpenSpec，替换为 herdr。**已完成。**
 
-> herdr 是终端里的 AI agent 多路复用器（Rust 单二进制，能识别每个 pane 内 agent
-> 处于 working / blocked / done / idle）。**但它在本人流程里具体承担什么，必须由本人给出，
-> 不得照搬工具官方描述。**
+本人原话：「herdr 是我用来做多 agent 管理的状态工具」。据此写成
+`{ agent: 'herdr', role: '多 agent 管理 / 运行状态' }`，与另外两行的
+「短语 / 短语」格式一致。没有采用工具官方的功能描述。
 
-### P0.2 自媒体入口
+### P0.2 自媒体入口 —— 待本人提供账号信息
 
 首页需要一个「去哪关注我」的区块，位置在 Hero 之后、Selected Work 之前。
 每个账号给出：平台、账号名、链接、这个号在讲什么（一句话）。
