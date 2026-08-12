@@ -11,7 +11,7 @@ export function Contact() {
   return (
     <section className="contact" id="contact">
       <div className="contact-main">
-        <p className="eyebrow">contact</p>
+        <p className="eyebrow">联系</p>
         {/* 合作在前、全职在后 —— 与首屏的「独立优先」口径一致，见 CONTEXT.md。
             CJK 默认可在任意两字之间断行，词组要逐个锁住不许拆。 */}
         <h2>

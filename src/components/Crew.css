@@ -15,13 +15,13 @@
   grid-template-columns: 64px minmax(0, 1fr);
 }
 
+/* 同 .eyebrow：标签已是中文，不再用英文小标签那套等宽 + uppercase + 宽字距 */
 .band-label {
   color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: var(--fs-meta);
-  letter-spacing: 0.08em;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  letter-spacing: 0.02em;
   margin: 0;
-  text-transform: uppercase;
 }
 
 .band-now {

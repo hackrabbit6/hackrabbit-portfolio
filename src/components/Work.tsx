@@ -199,7 +199,7 @@ export function Work() {
   return (
     <section className="work" id="work">
       <div className="work-heading">
-        <p className="eyebrow">selected work</p>
+        <p className="eyebrow">作品</p>
         <h2>作品不是陈列柜,是我怎么判断、分工、验收的证据。</h2>
       </div>
 

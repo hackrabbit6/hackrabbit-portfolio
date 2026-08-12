@@ -27,11 +27,11 @@ export function Crew() {
   return (
     <section className="band" id="crew">
       <div className="band-row">
-        <p className="band-label">now</p>
+        <p className="band-label">现在</p>
         <p className="band-now">2026 起 · 独立开发 / AI 工具与前端实验</p>
       </div>
       <div className="band-row">
-        <p className="band-label">crew</p>
+        <p className="band-label">AI 工具</p>
         <ul className="crew-list">
           {crew.map((item) => (
             <li className="crew-item" key={item.agent}>

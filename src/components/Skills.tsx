@@ -43,7 +43,7 @@ export function Skills() {
   return (
     <section className="skills" id="skills">
       <div className="section-kicker">
-        <p className="eyebrow">delivery map</p>
+        <p className="eyebrow">能力</p>
         <h2>我能交付什么</h2>
       </div>
       <div className="skills-grid">
