@@ -9,10 +9,14 @@ const OUT = `${HERE}/../../public/covers`
 // 横版视觉位被 .work-list 的 max-width 卡在 684，2x 正好够；
 // 竖版在窄屏并成单列后最宽会到约 640，所以要 4x 才不糊。
 const COVERS = [
-  { file: '01-h5-game-sdk.html', out: 'h5-game-sdk.png', dpr: 2 },
-  { file: '02-ai-music.html', out: 'ai-music.png', dpr: 4 },
-  { file: '03-digital-loved-one.html', out: 'digital-loved-one.png', dpr: 4 },
-  { file: '04-onchain-research.html', out: 'onchain-research.png', dpr: 2 },
+  { file: '01-h5-game-sdk.html', out: 'h5-game-sdk.webp', dpr: 2 },
+  { file: '02-ai-music.html', out: 'ai-music.webp', dpr: 4 },
+  { file: '03-digital-loved-one.html', out: 'digital-loved-one.webp', dpr: 4 },
+  { file: '04-onchain-research.html', out: 'onchain-research.webp', dpr: 2 },
+  // 窄屏专版：01 与 04 按 684 出图，手机上会被缩到 0.5×，图里的字认不出来。
+  // 340 宽出图，手机上显示 312–382，倍率 0.92–1.12，所以要 4x 才够锐。
+  { file: '01m-h5-game-sdk.html', out: 'h5-game-sdk-narrow.webp', dpr: 4 },
+  { file: '04m-onchain-research.html', out: 'onchain-research-narrow.webp', dpr: 4 },
 ]
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
@@ -70,7 +74,7 @@ for (const { file, out, dpr } of COVERS) {
   }).then((r) => JSON.parse(r.result.result.value))
 
   const { data } = await send('Page.captureScreenshot', {
-    format: 'png', clip: box, captureBeyondViewport: true,
+    format: 'webp', quality: 95, clip: box, captureBeyondViewport: true,
   }).then((r) => r.result)
 
   await Bun.write(`${OUT}/${out}`, Buffer.from(data, 'base64'))

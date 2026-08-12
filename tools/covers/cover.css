@@ -53,6 +53,48 @@ body {
   width: 322px;
 }
 
+/* 窄屏专版 340 宽。01 与 04 按 684 出图，在手机上会被缩到 0.5×，
+   图里的字直接认不出来；这两张单独按窄屏重新排一遍，用 <picture> 切换。
+   02/03 本来就是 322 宽，手机上接近 1:1，不需要专版。 */
+.cover--m {
+  padding: 14px;
+  width: 340px;
+}
+
+.cover--m .cover-chain {
+  font-size: 10px;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.cover--m .term {
+  margin-top: 12px;
+}
+
+.cover--m .term-bar {
+  padding: 8px 10px;
+}
+
+.cover--m .term-cmd {
+  font-size: 10px;
+}
+
+/* 47 字符是表格最宽的一行（Cluster 表头与分隔线）。10px × 0.6001 = 6.0px/字，
+   面板内宽 292px → 48.6 字符，表格结构不会被折行拆掉。再大一档就断。 */
+.cover--m .term-body {
+  font-size: 10px;
+  line-height: 1.4;
+  padding: 10px;
+}
+
+.cover--m .term-body .gap {
+  height: 6px;
+}
+
+.cover--m .cover-note {
+  margin-top: 12px;
+}
+
 /* ── 顶部标签行 ─────────────────────────────────────── */
 
 .cover-head {

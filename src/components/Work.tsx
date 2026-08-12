@@ -11,6 +11,7 @@ type Project = {
   summary: string
   stack: string[]
   cover: string
+  coverNarrow?: string
   coverAlt: string
   caseUrl?: string
   repo?: string
@@ -21,7 +22,8 @@ const featured = {
   origin: '工作项目',
   evidence: '脱敏案例',
   type: 'SDK / 支付 / 多端适配',
-  cover: '/covers/h5-game-sdk.png',
+  cover: '/covers/h5-game-sdk.webp',
+  coverNarrow: '/covers/h5-game-sdk-narrow.webp',
   coverAlt:
     'H5 游戏发行 SDK 的脱敏结构图：登录、支付、角色上报、浮窗、实名、防沉迷六个能力模块汇入同一个 SDK，SDK 再分发给多款游戏，并向下连到 Reporting。',
   direction:
@@ -43,7 +45,7 @@ const projects: Project[] = [
     summary:
       '我做出了可运行的「提示词 -> 歌词 -> 音乐 -> 封面」控制台,作品可保存、可回放、可复核代码。',
     stack: ['React', 'TypeScript', 'Bun', 'Hono', 'SQLite', 'MiniMax API'],
-    cover: '/covers/ai-music.png',
+    cover: '/covers/ai-music.webp',
     coverAlt:
       'AI 音乐生成工具的链路图：Prompt 进入生成环节（音频波形），产出歌词、音乐、封面三项，最后进入作品库。',
     repo: 'https://github.com/hackrabbit6/music',
@@ -56,7 +58,7 @@ const projects: Project[] = [
     summary:
       '我交付了 Go + React 的记忆对话原型,代码里有可检查的 grounding 约束,证据不足时系统必须承认不知道。',
     stack: ['Go', 'React', 'TypeScript', 'RAG', 'Grounding', 'AI Chat'],
-    cover: '/covers/digital-loved-one.png',
+    cover: '/covers/digital-loved-one.webp',
     coverAlt:
       '数字亲人的 grounding 结构图：Memory 到 Knowledge 到 Grounding，有依据时进入 Conversation，没有依据时走虚线分支，回答「不知道」。',
     repo: 'https://github.com/hackrabbit6/digital-loved-one',
@@ -69,7 +71,8 @@ const projects: Project[] = [
     summary:
       '我做出本地优先的 EVM/BSC 研究 CLI,覆盖持有人聚类、集中度分析和钱包追踪,只输出可复核证据而非归因证明。',
     stack: ['TypeScript', 'Bun', 'EVM', 'BSC', 'Moralis', 'CLI'],
-    cover: '/covers/onchain-research.png',
+    cover: '/covers/onchain-research.webp',
+    coverNarrow: '/covers/onchain-research-narrow.webp',
     coverAlt:
       'onchain-research CLI 的真实终端输出：代币持有人集中度统计、Top 5 持有人表格、疑似协同聚类的置信度评分，以及两行说明聚类只是研究证据、不构成共同控制证明的警告。',
     repo: 'https://github.com/hackrabbit6/onchain-research',
@@ -96,8 +99,23 @@ function Meta({ origin, evidence }: { origin: string; evidence: string }) {
   )
 }
 
-/** Cover 是项目的主视觉位；每个有视觉位的项目都必须给出 alt。 */
-function Visual({ cover, alt, href }: { cover: string; alt: string; href: string }) {
+/**
+ * Cover 是项目的主视觉位；每个有视觉位的项目都必须给出 alt。
+ * coverNarrow 是窄屏专版：按 684 出图的那两张在手机上会被缩到 0.5×，
+ * 图里的字认不出来。这里的 767px 必须和 Work.css 里的断点一致，
+ * 否则换了图但 aspect-ratio 没换，object-fit: cover 会把图裁掉。
+ */
+function Visual({
+  cover,
+  coverNarrow,
+  alt,
+  href,
+}: {
+  cover: string
+  coverNarrow?: string
+  alt: string
+  href: string
+}) {
   const external = href.startsWith('http')
   return (
     <a
@@ -106,7 +124,10 @@ function Visual({ cover, alt, href }: { cover: string; alt: string; href: string
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
     >
       <div className="work-visual">
-        <img src={cover} alt={alt} loading="lazy" decoding="async" />
+        <picture>
+          {coverNarrow ? <source media="(max-width: 767px)" srcSet={coverNarrow} /> : null}
+          <img src={cover} alt={alt} loading="lazy" decoding="async" />
+        </picture>
       </div>
     </a>
   )
@@ -117,6 +138,7 @@ function Card({ project, index }: { project: Project; index: string }) {
     <article className="work-card">
       <Visual
         cover={project.cover}
+        coverNarrow={project.coverNarrow}
         alt={project.coverAlt}
         href={project.caseUrl ?? project.repo ?? '#'}
       />
@@ -183,7 +205,12 @@ export function Work() {
 
       <div className="work-list">
         <article className="work-featured">
-          <Visual cover={featured.cover} alt={featured.coverAlt} href={featured.caseUrl} />
+          <Visual
+            cover={featured.cover}
+            coverNarrow={featured.coverNarrow}
+            alt={featured.coverAlt}
+            href={featured.caseUrl}
+          />
           <p className="work-index">
             01 / featured — {featured.type}
           </p>

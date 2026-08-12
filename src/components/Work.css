@@ -35,6 +35,12 @@
   position: relative;
 }
 
+.work-visual picture {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
 .work-visual img {
   display: block;
   height: 100%;
@@ -223,5 +229,17 @@
   /* 移动端全部单列 */
   .work-pair {
     grid-template-columns: 1fr;
+  }
+
+  /* 01 与 04 在这里换成窄屏专版，比例必须跟着换 ——
+     断点要和 Work.tsx 里 <source media> 的 767px 完全一致，
+     否则换了图没换比例，object-fit: cover 会把图裁掉。
+     02/03 本来就是 322 宽，手机上接近 1:1，不换。 */
+  .work-featured .work-visual {
+    aspect-ratio: 340 / 454;
+  }
+
+  .work-wide .work-visual {
+    aspect-ratio: 340 / 464;
   }
 }
