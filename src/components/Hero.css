@@ -48,6 +48,16 @@
   color: var(--ink);
 }
 
+/* 触摸设备上导航链接只有 26×18，撑到 ≥24 高并留出舒适的点击区。
+   用 padding 而不是 font-size，视觉不变。
+   只选 div 里的链接：.brand 也是 <a>，它靠 display: grid 把两行叠起来，不能覆盖。 */
+@media (pointer: coarse) {
+  .site-nav div a {
+    display: inline-block;
+    padding-block: var(--s3);
+  }
+}
+
 .hero-inner {
   align-items: center;
   display: grid;

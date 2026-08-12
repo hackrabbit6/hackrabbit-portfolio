@@ -80,6 +80,10 @@ a {
   text-decoration: none;
 }
 
+img {
+  max-width: 100%;
+}
+
 /* 跨组件共用的两个排版件。Hero / Work / Skills / Experience / Contact 都在用，
    所以放这里而不是任何单个组件的 CSS 里。 */
 .eyebrow {

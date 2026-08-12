@@ -78,6 +78,13 @@
   transform: translateX(4px);
 }
 
+/* 触摸设备上这两个链接只有 68×18，撑高点击区 */
+@media (pointer: coarse) {
+  .work-link {
+    padding-block: var(--s2);
+  }
+}
+
 /* ── 文本 ───────────────────────────────────────────── */
 
 .work-index,

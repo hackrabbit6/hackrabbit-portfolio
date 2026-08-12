@@ -21,6 +21,14 @@
   color: var(--accent);
 }
 
+/* 触摸设备上案例导航只有 18px 高，撑高点击区 */
+@media (pointer: coarse) {
+  .case-nav a {
+    display: inline-block;
+    padding-block: var(--s3);
+  }
+}
+
 .case-hero {
   border-bottom: 1px solid var(--line);
   padding-bottom: var(--s7);

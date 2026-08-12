@@ -448,12 +448,31 @@ Hero、Cover、Selected Work 基本决定这个站最终能不能成立，方向
 - 检查所有 Cover 图在窄屏下不变形、不溢出。
 - 检查导航在窄屏下可用。
 
+### 查出来并修掉的
+
+用真机模拟（`mobile: true` + 触摸 + DPR 3）跑 3 个页面 × 3 个宽度，逐项审计
+横向溢出、文字截断、图片、触摸目标，而不是只看截图：
+
+- **所有图片的 `max-width` 计算值是 `none`。** 之前不溢出只是因为 `.work-visual img`
+  写了 `width: 100%`，属于碰巧。tokens.css 加了全局 `img { max-width: 100% }`。
+- **触摸目标只有 18px 高**：导航、`.work-link`、`.case-nav` 全部是 18px。
+  用 `@media (pointer: coarse)` 加 `padding-block` 撑高 —— 只在触摸设备生效，
+  桌面实测 `pointer: coarse` 不命中，布局零变化。
+- 顶部两字导航项现在是 26×42。宽度保持 26：过了 WCAG 2.2 的 24×24 下限，
+  彼此间距 16px；再加横向 padding 会让导航在 360px 掉成两行，不划算。
+
+### 已知未处理
+
+Cover 是位图，字画在图里。窄屏下整张按比例缩小，04 的终端正文（按 684 宽设计的
+11px）在 390px 上只有约 5.5px，认不出字。不变形、不溢出、不裁切都成立，
+但内容不可读。要修得给 Cover 出窄屏专版并上 `<picture>` srcset —— 不在 P6 必做项里。
+
 ### P6 验收
 
-- [ ] 360 / 390 / 430 三个宽度均无横向滚动
-- [ ] Hero 首屏无文字截断、无重叠
-- [ ] 所有图片 `max-width: 100%`
-- [ ] `bun run lint` / `bun run build` 绿
+- [x] 360 / 390 / 430 三个宽度均无横向滚动（3 个页面全部）
+- [x] Hero 首屏无文字截断、无重叠
+- [x] 所有图片 `max-width: 100%`
+- [x] `bun run lint` / `bun run build` 绿
 
 ---
 
