@@ -73,6 +73,12 @@
   padding: var(--s5);
 }
 
+/* 卡片纵向 flex：内容长短不一时，按钮吸底对齐。 */
+.case-card {
+  display: flex;
+  flex-direction: column;
+}
+
 .case-meta strong,
 .case-meta span {
   display: block;
@@ -128,7 +134,13 @@
 .case-card p {
   color: var(--ink-dim);
   line-height: 1.7;
-  margin: 0;
+  margin: 0 0 var(--s4);
+}
+
+/* 只在卡片里吸底；.case-cta 里的按钮仍走它自己的行内定位。 */
+.case-card .case-button {
+  align-self: flex-start;
+  margin-top: auto;
 }
 
 .case-flow {
