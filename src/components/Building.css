@@ -21,7 +21,8 @@
 }
 
 .building-list {
-  align-items: start;
+  /* 同一行两张卡等高：去掉 align-items:start，让矮的那张撑到行高，底边对齐。 */
+  align-items: stretch;
   display: grid;
   gap: var(--s5);
   grid-template-columns: repeat(2, minmax(0, 1fr));
