@@ -228,9 +228,10 @@
     padding-top: var(--s6);
   }
 
-  /* 窄屏重新算过的锚点字号，不是桌面值等比缩小 */
+  /* 窄屏重新算过的锚点字号，不是桌面值等比缩小。
+     HACKRABBIT 是 10 个拉丁字母，字号要留出右侧天头，别顶到屏幕边。 */
   .hero-title {
-    font-size: clamp(40px, 13vw, 64px);
+    font-size: clamp(34px, 11vw, 58px);
   }
 
   .lead {
