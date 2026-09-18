@@ -26,12 +26,8 @@ const featured = {
   coverNarrow: '/covers/h5-game-sdk-narrow.webp',
   coverAlt:
     'H5 游戏发行 SDK 的脱敏结构图：登录、支付、角色上报、浮窗、实名、防沉迷六个能力模块汇入同一个 SDK，SDK 再分发给多款游戏，并向下连到 Reporting。',
-  direction:
-    '每个游戏重复接账号、支付会拖慢上线，所以收敛成一条稳定 SDK 接入链路。',
-  collaboration:
-    '工作期项目，iframe 通信、微信/支付宝拉起、小游戏与移动端兼容由我和团队排查。',
-  result:
-    '交付并维护登录、支付、角色上报、浮窗、实名、防沉迷等能力。',
+  summary:
+    '把重复的账号、支付收敛成一条 SDK 接入链路，交付登录、支付、角色上报、实名、防沉迷等能力。',
   stack: ['Vue3', 'TypeScript', 'Vite', 'H5', 'postMessage', 'WeixinJSBridge'],
   caseUrl: '/work/h5-game-sdk/',
 } as const
@@ -193,18 +189,7 @@ export function Work() {
           </p>
           <h3>{featured.name}</h3>
           <Meta origin={featured.origin} evidence={featured.evidence} />
-          <div className="work-points">
-            {[
-              ['方向', featured.direction],
-              ['协作', featured.collaboration],
-              ['结果', featured.result],
-            ].map(([label, text]) => (
-              <div className="work-point" key={label}>
-                <strong>{label}</strong>
-                <p>{text}</p>
-              </div>
-            ))}
-          </div>
+          <p className="work-summary">{featured.summary}</p>
           <div className="work-tags">
             {featured.stack.map((item) => (
               <span key={item}>{item}</span>

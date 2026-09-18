@@ -100,8 +100,7 @@
 .work-index,
 .work-meta,
 .work-tags,
-.work-link,
-.work-point strong {
+.work-link {
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
 }
@@ -139,26 +138,6 @@
   line-height: 1.75;
   margin: var(--s4) 0 0;
   max-width: 62ch;
-}
-
-.work-points {
-  margin-top: var(--s5);
-}
-
-.work-point {
-  border-left: 1px solid var(--line);
-  margin-top: var(--s4);
-  padding-left: var(--s4);
-}
-
-.work-point strong {
-  color: var(--accent);
-}
-
-.work-point p {
-  color: var(--ink-dim);
-  line-height: 1.75;
-  margin: var(--s2) 0 0;
 }
 
 .work-tags {
