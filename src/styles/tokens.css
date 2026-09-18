@@ -92,13 +92,25 @@ img {
 /* 跨组件共用的两个排版件。Hero / Work / Skills / Experience / Contact 都在用，
    所以放这里而不是任何单个组件的 CSS 里。 */
 /* 首页段落标签已全部改成中文（ADR 0002）。等宽字体 + uppercase + 0.08em 字距
-   是给英文小标签设计的，套在中文上只会让字距发虚、uppercase 完全不起作用。 */
+   是给英文小标签设计的，套在中文上只会让字距发虚、uppercase 完全不起作用。
+   前面的绿宝石取自站主头像围巾上的宝石，作为全站的落款符号。 */
 .eyebrow {
+  align-items: center;
   color: var(--accent);
+  display: inline-flex;
   font-family: var(--font-body);
   font-size: var(--fs-small);
+  gap: var(--s2);
   letter-spacing: 0.02em;
   margin: 0 0 var(--s4);
+}
+
+.eyebrow::before {
+  background: url('/gem.svg') center / contain no-repeat;
+  content: '';
+  flex: none;
+  height: 12px;
+  width: 12px;
 }
 
 /* CJK 可以在任意两字之间断行，词组和拉丁短语得自己锁住。Hero 与 Contact 都在用。 */
@@ -154,6 +166,28 @@ a {
   --glow: none;
   background: #ede4d3;
   color: var(--ink);
+}
+
+/* Valorant 式速度线：hover 时轻微前冲（ORIENTAL-REDESIGN.md）。
+   用 a.xxx 提高特异度，压过各组件自己的 transition，避免被覆盖。 */
+a.cta,
+a.work-link,
+a.building-link,
+a.follow-more,
+a.work-more {
+  transition:
+    transform 0.25s var(--ease-cine),
+    color 0.25s var(--ease-cine),
+    border-color 0.25s var(--ease-cine),
+    background-color 0.25s var(--ease-cine);
+}
+
+a.cta:hover,
+a.work-link:hover,
+a.building-link:hover,
+a.follow-more:hover,
+a.work-more:hover {
+  transform: translateX(3px);
 }
 
 @media (prefers-reduced-motion: reduce) {

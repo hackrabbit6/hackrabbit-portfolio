@@ -68,18 +68,51 @@ import './HeroCanvas.css'
     const moon = new THREE.Sprite(
       new THREE.SpriteMaterial({
         map: softDisc([
-          [0, 'rgba(237,228,211,0.95)'],
-          [0.1, 'rgba(237,228,211,0.6)'],
-          [0.34, 'rgba(214,74,50,0.16)'],
+          [0, 'rgba(237,228,211,0.9)'],
+          [0.3, 'rgba(237,228,211,0.8)'],
+          [0.4, 'rgba(237,228,211,0.2)'],
+          [0.62, 'rgba(214,74,50,0.12)'],
           [1, 'rgba(214,74,50,0)'],
         ]),
         transparent: true,
         depthWrite: false,
       }),
     )
-    moon.scale.set(34, 34, 1)
-    moon.position.set(14, 10, -24)
+    moon.scale.set(20, 20, 1)
+    moon.position.set(19, 13, -24)
     scene.add(moon)
+
+    // 月兔：月亮上的侧身坐姿剪影，呼应站主「黑兔」身份与头像（ORIENTAL-REDESIGN.md）。
+    const rabbitTexture = () => {
+      const size = 256
+      const c = document.createElement('canvas')
+      c.width = c.height = size
+      const ctx = c.getContext('2d')!
+      ctx.fillStyle = '#12100c'
+      const ellipse = (x: number, y: number, rx: number, ry: number, rot = 0) => {
+        ctx.beginPath()
+        ctx.ellipse(x, y, rx, ry, rot, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      // 侧身坐姿：后身 → 头 → 一竖一后倾的耳朵 → 尾巴。
+      ellipse(126, 188, 48, 54)
+      ellipse(150, 122, 34, 32)
+      ellipse(162, 66, 10, 40, 0.08)
+      ellipse(126, 74, 9, 34, -0.5)
+      ellipse(82, 206, 15, 15)
+      return new THREE.CanvasTexture(c)
+    }
+    const rabbit = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: rabbitTexture(),
+        transparent: true,
+        depthWrite: false,
+        opacity: 0.9,
+      }),
+    )
+    rabbit.scale.set(5, 5, 1)
+    rabbit.position.set(19, 13, -23.4)
+    scene.add(rabbit)
 
     // 地平线月霭：一条被拉长的柔光，让远山有可剪影的亮底。
     const haze = new THREE.Sprite(
@@ -259,7 +292,7 @@ import './HeroCanvas.css'
           material.dispose()
           mesh.geometry.dispose()
         }
-        for (const sprite of [moon, haze] as Sprite[]) {
+        for (const sprite of [moon, haze, rabbit] as Sprite[]) {
           const material = sprite.material as SpriteMaterial
           material.map?.dispose()
           material.dispose()
