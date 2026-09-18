@@ -1,0 +1,90 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+import '../../styles/writing.css'
+
+// 全部是真实已发布内容，链接是公众号永久链接。倒序，最新在前。
+// 暂不列日期：后台只对近一周显示「星期X」，其余是「07月20日」这类不含年份的格式，
+// 逐条推断日期会有猜的成分，宁可先不写。
+//
+// 小红书那 10 条没有逐条列出：它的卡片标题取的是正文首行，会被截断，
+// 照抄会改写作者的原文。所以小红书给主页入口，让读者自己去看。
+const articles = [
+  {
+    title: '用 AI 学习，为什么有人学得更快，有人只是更快抄完？',
+    href: 'https://mp.weixin.qq.com/s/TXXY8mF-R0SpYEPfIkeIAQ',
+  },
+  {
+    title: '近 9 成健康搜索出现 AI 摘要，排第一也不能直接信',
+    href: 'https://mp.weixin.qq.com/s/xTFSXX-GoId90nqUuyg57Q',
+  },
+  {
+    title: '简历、合同发给 AI 安全吗？最长可能留 5 年',
+    href: 'https://mp.weixin.qq.com/s/VmF8_zQNecOLFsumIF8gPw',
+  },
+  {
+    title: '50 款 AI 工具，普通人不用全装',
+    href: 'https://mp.weixin.qq.com/s/g_j_fP9HmOfHaw-stvEeZw',
+  },
+  {
+    title: '连续 5 年赚 30%，概率约 1/595,000',
+    href: 'https://mp.weixin.qq.com/s/ZXoxNGGSZkRXwWoFDAgKIQ',
+  },
+  {
+    title: '4 次全对，也不能证明你用 AI',
+    href: 'https://mp.weixin.qq.com/s/7NO4TQt9fV-zbW97Lz4Mtg',
+  },
+  {
+    title: '金价半年跌 25%：该慌的和该高兴的，不是同一批人',
+    href: 'https://mp.weixin.qq.com/s/RZyJpzKxvAf4FSKmNIO0Kw',
+  },
+]
+---
+
+<Base
+  title="写作 | 黑兔实验室"
+  description="黑兔实验室的文章：用数据和实测讲清 AI 时代里和普通人有关的变化。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="页面导航">
+      <a href="/">← 返回首页</a>
+      <a href="/#follow">关注</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">写作</p>
+      <h1>用数据和实测，讲清和你有关的那部分变化。</h1>
+      <p class="case-lead">
+        每篇只解决一个问题，尽量给出可核验的数字和一手实测，不转述二手观点。写错了会公开更正。
+      </p>
+    </header>
+
+    <section class="writing-section" aria-labelledby="writing-list-title">
+      <div>
+        <p class="case-label">公众号 · 长文</p>
+        <h2 id="writing-list-title">文章</h2>
+      </div>
+      <ol class="writing-list">
+        {
+          articles.map((a) => (
+            <li>
+              <a href={a.href} target="_blank" rel="noreferrer">
+                <span>{a.title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="case-cta">
+      <h2>短一点的内容在小红书。</h2>
+      <a
+        class="case-button"
+        href="https://www.xiaohongshu.com/user/profile/5cd9477800000000160116e4"
+        target="_blank"
+        rel="noreferrer">看小红书 →</a
+      >
+    </section>
+  </main>
+</Base>

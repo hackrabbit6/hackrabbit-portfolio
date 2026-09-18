@@ -14,11 +14,21 @@
   text-wrap: balance;
 }
 
-.contact-main > p:not(.eyebrow) {
+.contact-main > p:not(.eyebrow):not(.contact-secondary) {
   color: var(--ink-dim);
   font-size: var(--fs-lead);
   line-height: 1.8;
-  margin: var(--s5) 0 var(--s6);
+  margin: var(--s5) 0 var(--s4);
+  max-width: 720px;
+}
+
+/* 全职机会是次要项。字号必须比上面那句轻 —— 「独立优先」的顺序要能被一眼看出来，
+   不能两句并排等重让读者自己判断（见 CONTEXT.md「独立优先」）。 */
+.contact-secondary {
+  color: var(--ink-dim);
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  margin: 0 0 var(--s6);
   max-width: 720px;
 }
 

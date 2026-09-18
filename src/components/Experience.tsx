@@ -48,7 +48,7 @@ export function Experience() {
   return (
     <section className="experience" id="experience">
       <div className="section-kicker">
-        <p className="eyebrow">experience</p>
+        <p className="eyebrow">经历</p>
         <h2>工作经历</h2>
       </div>
       <div className="timeline">

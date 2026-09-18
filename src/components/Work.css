@@ -64,10 +64,6 @@
   aspect-ratio: 322 / 360;
 }
 
-.work-wide .work-visual {
-  aspect-ratio: 684 / 480;
-}
-
 /* hover 只允许两件事：图片 scale 与箭头 translate */
 .work-visual-link:hover .work-visual img {
   transform: scale(1.03);
@@ -109,8 +105,7 @@
 }
 
 .work-featured h3,
-.work-card h3,
-.work-also h3 {
+.work-card h3 {
   font-family: var(--font-display);
   line-height: 1.05;
   margin: var(--s3) 0 0;
@@ -120,8 +115,7 @@
   font-size: var(--fs-h3);
 }
 
-.work-card h3,
-.work-also h3 {
+.work-card h3 {
   font-size: var(--fs-h4);
 }
 
@@ -181,7 +175,7 @@
   margin-top: var(--s5);
 }
 
-/* ── 1 + 2 + 1 ──────────────────────────────────────── */
+/* ── 1 + 2 ──────────────────────────────────────────── */
 
 .work-pair {
   display: grid;
@@ -189,14 +183,22 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-/* 05：网格下方的一行纯文字，没有视觉位 */
-.work-also {
-  border-top: 1px solid var(--line);
-  padding-top: var(--s5);
+/* 完整列表的入口。首页只放精选，其余在 /work/（决定 2）。 */
+.work-more {
+  color: var(--accent);
+  display: inline-flex;
+  font-size: var(--fs-small);
 }
 
-.work-also .work-index {
-  margin-top: 0;
+.work-more::after {
+  content: '→';
+  display: inline-block;
+  margin-left: var(--s2);
+  transition: transform 0.25s var(--ease-cine);
+}
+
+.work-more:hover::after {
+  transform: translateX(4px);
 }
 
 /* sticky 标题 + 列表的两列只在桌面成立。再窄就把标题叠回列表上方，
@@ -231,15 +233,11 @@
     grid-template-columns: 1fr;
   }
 
-  /* 01 与 04 在这里换成窄屏专版，比例必须跟着换 ——
+  /* 01 在这里换成窄屏专版，比例必须跟着换 ——
      断点要和 Work.tsx 里 <source media> 的 767px 完全一致，
      否则换了图没换比例，object-fit: cover 会把图裁掉。
      02/03 本来就是 322 宽，手机上接近 1:1，不换。 */
   .work-featured .work-visual {
     aspect-ratio: 340 / 454;
-  }
-
-  .work-wide .work-visual {
-    aspect-ratio: 340 / 464;
   }
 }

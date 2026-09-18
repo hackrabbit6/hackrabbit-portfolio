@@ -1,4 +1,5 @@
-/* NOW · CREW —— 一条薄带，不是章节。桌面端高度受 25vh 约束。 */
+/* CREW —— 一条薄带，不是章节。桌面端高度受 25vh 约束。
+   NOW 那一行已拆掉（决定 3），状态并入首页的「在做什么」主角区块。 */
 .band {
   border-block: 1px solid var(--line);
   display: grid;
@@ -15,18 +16,12 @@
   grid-template-columns: 64px minmax(0, 1fr);
 }
 
+/* 同 .eyebrow：标签已是中文，不再用英文小标签那套等宽 + uppercase + 宽字距 */
 .band-label {
   color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: var(--fs-meta);
-  letter-spacing: 0.08em;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.band-now {
-  font-size: var(--fs-lead);
-  line-height: 1.5;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  letter-spacing: 0.02em;
   margin: 0;
 }
 

@@ -24,8 +24,8 @@
   --gutter: max(var(--s5), calc((100vw - var(--container)) / 2 + var(--s5)));
 
   /* 节奏：间距本身是层级信号，刻意不等距。
-     Hero → NOW·CREW 近（104）< NOW·CREW → Selected Work 远（160）
-     < 项目与项目之间 非常远（200）。Skills / Experience 内部保持紧凑。 */
+     进入「在做什么」与「关注入口」用 section 级间距，项目与项目之间最大（200）。
+     Skills / Experience 内部保持紧凑。 */
   --space-band: var(--s6);
   --space-section: var(--s8);
   --space-section-end: var(--s7);
@@ -86,12 +86,14 @@ img {
 
 /* 跨组件共用的两个排版件。Hero / Work / Skills / Experience / Contact 都在用，
    所以放这里而不是任何单个组件的 CSS 里。 */
+/* 首页段落标签已全部改成中文（ADR 0002）。等宽字体 + uppercase + 0.08em 字距
+   是给英文小标签设计的，套在中文上只会让字距发虚、uppercase 完全不起作用。 */
 .eyebrow {
   color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: var(--fs-meta);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  letter-spacing: 0.02em;
   margin: 0 0 var(--s4);
-  text-transform: uppercase;
 }
 
 /* CJK 可以在任意两字之间断行，词组和拉丁短语得自己锁住。Hero 与 Contact 都在用。 */

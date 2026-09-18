@@ -63,31 +63,7 @@ const projects: Project[] = [
       '数字亲人的 grounding 结构图：Memory 到 Knowledge 到 Grounding，有依据时进入 Conversation，没有依据时走虚线分支，回答「不知道」。',
     repo: 'https://github.com/hackrabbit6/digital-loved-one',
   },
-  {
-    name: 'onchain-research',
-    origin: '个人项目',
-    evidence: '开源代码',
-    type: '本地工具 / 链上研究 CLI',
-    summary:
-      '我做出本地优先的 EVM/BSC 研究 CLI,覆盖持有人聚类、集中度分析和钱包追踪,只输出可复核证据而非归因证明。',
-    stack: ['TypeScript', 'Bun', 'EVM', 'BSC', 'Moralis', 'CLI'],
-    cover: '/covers/onchain-research.webp',
-    coverNarrow: '/covers/onchain-research-narrow.webp',
-    coverAlt:
-      'onchain-research CLI 的真实终端输出：代币持有人集中度统计、Top 5 持有人表格、疑似协同聚类的置信度评分，以及两行说明聚类只是研究证据、不构成共同控制证明的警告。',
-    repo: 'https://github.com/hackrabbit6/onchain-research',
-  },
 ]
-
-const alsoDelivered = {
-  index: '05',
-  name: '广告买量系统',
-  origin: '工作项目',
-  evidence: '暂无公开材料',
-  type: '中后台 / 投放流程',
-  summary: '我交付了广告创建、投放操作、状态回显、国际化配置等页面,让运营能稳定完成日常投放调整。',
-  stack: ['Vue3', 'TypeScript', 'Element Plus', 'vue-i18n'],
-}
 
 function Meta({ origin, evidence }: { origin: string; evidence: string }) {
   return (
@@ -183,7 +159,7 @@ export function Work() {
       })
     })
 
-    gsap.utils.toArray<HTMLElement>('.work-card, .work-featured, .work-also').forEach((card) => {
+    gsap.utils.toArray<HTMLElement>('.work-card, .work-featured').forEach((card) => {
       gsap.from(card, {
         y: 48,
         opacity: 0,
@@ -199,7 +175,7 @@ export function Work() {
   return (
     <section className="work" id="work">
       <div className="work-heading">
-        <p className="eyebrow">selected work</p>
+        <p className="eyebrow">作品</p>
         <h2>作品不是陈列柜,是我怎么判断、分工、验收的证据。</h2>
       </div>
 
@@ -243,23 +219,10 @@ export function Work() {
           <Card project={projects[1]} index="03" />
         </div>
 
-        <div className="work-wide">
-          <Card project={projects[2]} index="04" />
-        </div>
-
-        <div className="work-also">
-          <p className="work-index">
-            {alsoDelivered.index} / {alsoDelivered.type}
-          </p>
-          <h3>{alsoDelivered.name}</h3>
-          <Meta origin={alsoDelivered.origin} evidence={alsoDelivered.evidence} />
-          <p className="work-summary">{alsoDelivered.summary}</p>
-          <div className="work-tags">
-            {alsoDelivered.stack.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
-        </div>
+        {/* 首页只放精选（决定 2）：完整列表在 /work/，包括没上首页的那几个。 */}
+        <a className="work-more" href="/work/">
+          看完整作品列表
+        </a>
       </div>
     </section>
   )

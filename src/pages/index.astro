@@ -1,7 +1,9 @@
 ---
 import Base from '../layouts/Base.astro'
 import Hero from '../components/Hero.astro'
+import Building from '../components/Building.astro'
 import { Crew } from '../components/Crew'
+import Follow from '../components/Follow.astro'
 import { Work } from '../components/Work'
 import { Skills } from '../components/Skills'
 import { Experience } from '../components/Experience'
@@ -10,7 +12,12 @@ import { Contact } from '../components/Contact'
 
 <Base>
   <main>
+    {/* 骨架顺序（PERSONAL-SITE.md）：Hero → 在做什么 → 关注入口 → CREW → 作品。
+        关注入口紧跟主角之后是决定 4；CREW 在关注入口之后是因为它服务的是
+        「用什么方式做」，比「去哪关注」次要。 */}
     <Hero />
+    <Building />
+    <Follow />
     <Crew client:visible />
     <Work client:visible />
     <Skills client:visible />

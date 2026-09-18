@@ -6,7 +6,7 @@ import './Crew.css'
 const crew = [
   { agent: 'Claude Code', role: '规划 / 大段重构 / code review' },
   { agent: 'Codex 桌面版', role: '执行 / GUI / 截图 / 高频重复' },
-  { agent: 'OpenSpec 工作流', role: '规范 / 边界 / 防跑偏' },
+  { agent: 'herdr', role: '多 agent 管理 / 运行状态' },
 ]
 
 export function Crew() {
@@ -26,12 +26,10 @@ export function Crew() {
 
   return (
     <section className="band" id="crew">
+      {/* NOW 薄带已拆掉（决定 3）：现在的状态并入「在做什么」主角区块，
+          这里只留 CREW —— 回答「用什么方式做」，不回答「在做什么」。 */}
       <div className="band-row">
-        <p className="band-label">now</p>
-        <p className="band-now">2026 起 · 独立开发 / AI 工具与前端实验</p>
-      </div>
-      <div className="band-row">
-        <p className="band-label">crew</p>
+        <p className="band-label">AI 工具</p>
         <ul className="crew-list">
           {crew.map((item) => (
             <li className="crew-item" key={item.agent}>

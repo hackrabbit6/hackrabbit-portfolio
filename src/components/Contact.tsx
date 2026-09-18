@@ -11,14 +11,17 @@ export function Contact() {
   return (
     <section className="contact" id="contact">
       <div className="contact-main">
-        <p className="eyebrow">contact</p>
-        {/* CJK 默认可在任意两字之间断行，会把「中级前端」拆成「中/级前端」。
-            职位名是词组，逐个锁住不许拆。 */}
+        <p className="eyebrow">联系</p>
+        {/* 合作在前、全职在后 —— 与首屏的「独立优先」口径一致，见 CONTEXT.md。
+            CJK 默认可在任意两字之间断行，词组要逐个锁住不许拆。 */}
         <h2>
-          我在找<span className="nowrap">前端</span>、<span className="nowrap">中级前端</span>、
-          <span className="nowrap">偏前端全栈</span>和<span className="nowrap">AI 应用前端</span>机会。
+          <span className="nowrap">接项目</span>，也<span className="nowrap">接合作</span>。
         </h2>
         <p>我能交付稳定业务,也能把 AI 流程做成可运行产品。</p>
+        <p className="contact-secondary">
+          也看合适的<span className="nowrap">全职机会</span>，
+          <span className="nowrap">AI 应用</span>与<span className="nowrap">远程</span>优先。
+        </p>
         <HackRabbitMark compact />
         <div className="contact-links">
           <a href="mailto:hackrabbit6@gmail.com">hackrabbit6@gmail.com</a>

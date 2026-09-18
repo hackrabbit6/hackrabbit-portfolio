@@ -1,0 +1,72 @@
+/* 写作列表。沿用 case-study 的排版刻度，只加列表本身需要的部分。 */
+.writing-section {
+  display: grid;
+  gap: var(--s6);
+  grid-template-columns: 0.55fr 1.45fr;
+  padding: var(--space-section) 0 0;
+}
+
+.writing-section h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  margin: var(--s3) 0 0;
+}
+
+.writing-list {
+  counter-reset: post;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.writing-list li {
+  border-bottom: 1px solid var(--line);
+  counter-increment: post;
+}
+
+/* 三列：序号 / 标题 / 外链箭头。箭头必须独占一列 ——
+   放进标题列会被挤成新的一行。 */
+.writing-list a {
+  align-items: baseline;
+  display: grid;
+  gap: var(--s4);
+  grid-template-columns: 40px 1fr auto;
+  padding: var(--s5) 0;
+  transition: color 0.2s var(--ease-cine);
+}
+
+.writing-list a::before {
+  color: var(--accent);
+  content: '0' counter(post);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+}
+
+.writing-list a span {
+  font-size: var(--fs-h4);
+  line-height: 1.4;
+}
+
+.writing-list a::after {
+  color: var(--ink-dim);
+  content: '↗';
+  font-size: var(--fs-small);
+}
+
+.writing-list a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .writing-section {
+    gap: var(--s5);
+    grid-template-columns: 1fr;
+    padding-top: var(--s7);
+  }
+
+  .writing-list a {
+    gap: var(--s3);
+    grid-template-columns: 32px 1fr;
+  }
+}
