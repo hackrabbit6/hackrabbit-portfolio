@@ -69,6 +69,7 @@ CONTACT        接项目 / 也看全职
 /writing/[slug]/     站内正文（Astro content collection）—— 有站内文章后再建
 /work/               完整作品集（保留现状，保留开发者审美）
 /work/h5-game-sdk/   案例：H5 游戏发行 SDK 与充值体系
+/work/game-hub/      案例：H5 游戏中心容器
 /work/ad-buying/     案例：广告买量系统
 /work/supply-chain/  案例：供应链数据管理平台
 /resume.pdf          保留
