@@ -27,11 +27,16 @@ import HeroField from './HeroField.astro'
     <div class="hero-copy">
       <p class="eyebrow hero-reveal">前端工程师 · hackrabbit</p>
       <h1 class="hero-title hero-reveal">HACKRABBIT</h1>
+      <img class="hero-brush" src="/brush.svg" alt="" aria-hidden="true" width="420" height="26" />
       {/* 首屏语序「现在 X。此前 4-5 年前端交付。」是决定 6 —— 语序本身编码优先级，
           X 走 B 口径（面向普通读者），技术可信度交给后半句兜住。 */}
       <p class="lead hero-reveal">
         现在，我在帮普通人看懂 <span class="nowrap">AI 时代</span>里和自己有关的变化。此前 4-5
         年前端交付。
+      </p>
+      {/* 自述：不露脸，用化身与语气立住「人」。风格对标站主喜欢的游戏/动漫（见 ORIENTAL-REDESIGN）。 */}
+      <p class="hero-motto hero-reveal">
+        白天拆需求，晚上拆战术。<span class="nowrap">做产品</span>和<span class="nowrap">打排位</span>是一回事 —— 先看清地图。
       </p>
       <div class="hero-cta hero-reveal">
         <a class="cta cta-primary" href="#building">在做什么 ↓</a>
@@ -41,7 +46,14 @@ import HeroField from './HeroField.astro'
       </div>
     </div>
     <div class="hero-mark hero-reveal">
-      <img src="/rabbit.svg" alt="黑兔实验室的玉兔标记" width="180" height="180" />
+      <img
+        class="hero-avatar"
+        src="/avatar.webp"
+        alt="hackrabbit 的化身：一只深夜在台灯下敲代码的白兔"
+        width="560"
+        height="560"
+        decoding="async"
+      />
     </div>
   </div>
 </section>

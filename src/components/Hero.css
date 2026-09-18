@@ -145,21 +145,34 @@
 }
 
 .hero-mark {
-  align-items: center;
   aspect-ratio: 1;
-  background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 50%;
   box-shadow: var(--glow);
-  display: grid;
-  justify-items: center;
-  padding: var(--s6);
+  overflow: hidden;
+  width: clamp(180px, 21vw, 300px);
 }
 
-.hero-mark img {
+.hero-avatar {
   display: block;
-  height: auto;
-  width: clamp(110px, 13vw, 170px);
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* 毛笔拖笔：雾山五行式的标题笔触（ORIENTAL-REDESIGN.md）。只是装饰，读屏忽略。 */
+.hero-brush {
+  display: block;
+  margin-top: var(--s3);
+  width: clamp(150px, 24vw, 340px);
+}
+
+.hero-motto {
+  color: var(--accent);
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  margin: var(--s5) 0 0;
+  max-width: 34em;
 }
 
 .hero-reveal {
@@ -176,6 +189,14 @@
 
 .hero-reveal:nth-child(4) {
   animation-delay: 0.24s;
+}
+
+.hero-reveal:nth-child(5) {
+  animation-delay: 0.32s;
+}
+
+.hero-reveal:nth-child(6) {
+  animation-delay: 0.4s;
 }
 
 @keyframes hero-rise {
@@ -220,9 +241,6 @@
 
   .hero-mark {
     justify-self: start;
-  }
-
-  .hero-mark {
-    padding: var(--s5);
+    width: min(58vw, 220px);
   }
 }
