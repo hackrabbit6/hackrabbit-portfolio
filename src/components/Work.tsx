@@ -26,12 +26,8 @@ const featured = {
   coverNarrow: '/covers/h5-game-sdk-narrow.webp',
   coverAlt:
     'H5 游戏发行 SDK 的脱敏结构图：登录、支付、角色上报、浮窗、实名、防沉迷六个能力模块汇入同一个 SDK，SDK 再分发给多款游戏，并向下连到 Reporting。',
-  direction:
-    '我看到每个游戏重复接账号、支付和活动能力会拖慢上线,所以把问题拆成稳定 SDK 接入链路。',
-  collaboration:
-    '这是工作期项目,核心难点我自己和团队一起排查:iframe 通信、微信/支付宝拉起、小游戏限制和移动端兼容。',
-  result:
-    '我交付并维护了登录、支付、角色上报、浮窗、实名、防沉迷等能力,支撑多款游戏和充值活动上线。',
+  summary:
+    '把重复的账号、支付收敛成一条 SDK 接入链路，交付登录、支付、角色上报、实名、防沉迷等能力。',
   stack: ['Vue3', 'TypeScript', 'Vite', 'H5', 'postMessage', 'WeixinJSBridge'],
   caseUrl: '/work/h5-game-sdk/',
 } as const
@@ -43,7 +39,7 @@ const projects: Project[] = [
     evidence: '开源代码',
     type: 'AI 应用 / Audio',
     summary:
-      '我做出了可运行的「提示词 -> 歌词 -> 音乐 -> 封面」控制台,作品可保存、可回放、可复核代码。',
+      '「提示词 → 歌词 → 音乐 → 封面」的可运行控制台，作品可保存回放。',
     stack: ['React', 'TypeScript', 'Bun', 'Hono', 'SQLite', 'MiniMax API'],
     cover: '/covers/ai-music.webp',
     coverAlt:
@@ -56,7 +52,7 @@ const projects: Project[] = [
     evidence: '开源代码',
     type: 'AI 对话 / RAG',
     summary:
-      '我交付了 Go + React 的记忆对话原型,代码里有可检查的 grounding 约束,证据不足时系统必须承认不知道。',
+      'Go + React 记忆对话原型，证据不足时会说「不知道」。',
     stack: ['Go', 'React', 'TypeScript', 'RAG', 'Grounding', 'AI Chat'],
     cover: '/covers/digital-loved-one.webp',
     coverAlt:
@@ -176,7 +172,8 @@ export function Work() {
     <section className="work" id="work">
       <div className="work-heading">
         <p className="eyebrow">作品</p>
-        <h2>作品不是陈列柜,是我怎么判断、分工、验收的证据。</h2>
+        <h2>做过的项目</h2>
+        <p className="work-lead">工作项目脱敏，个人项目开源。</p>
       </div>
 
       <div className="work-list">
@@ -192,18 +189,7 @@ export function Work() {
           </p>
           <h3>{featured.name}</h3>
           <Meta origin={featured.origin} evidence={featured.evidence} />
-          <div className="work-points">
-            {[
-              ['方向', featured.direction],
-              ['协作', featured.collaboration],
-              ['结果', featured.result],
-            ].map(([label, text]) => (
-              <div className="work-point" key={label}>
-                <strong>{label}</strong>
-                <p>{text}</p>
-              </div>
-            ))}
-          </div>
+          <p className="work-summary">{featured.summary}</p>
           <div className="work-tags">
             {featured.stack.map((item) => (
               <span key={item}>{item}</span>

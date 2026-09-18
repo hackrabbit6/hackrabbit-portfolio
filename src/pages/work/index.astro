@@ -15,10 +15,9 @@ import '../../styles/case-study.css'
 
     <header class="case-hero">
       <p class="case-kicker">selected case studies</p>
-      <h1>不只展示结果，也展示我怎么判断和交付。</h1>
+      <h1>不只结果，还有过程和判断。</h1>
       <p class="case-lead">
-        工作项目遵守脱敏边界，不公开公司代码与业务数据；重点说明问题、职责、约束和可复核的交付范围。
-        个人项目公开代码，可以直接看仓库。
+        工作项目脱敏，不公开代码与业务数据；个人项目开源，可直接看仓库。
       </p>
     </header>
 
@@ -31,15 +30,28 @@ import '../../styles/case-study.css'
         <article class="case-card">
           <p class="case-label">SDK · PAYMENT · HYBRID</p>
           <h3>H5 游戏发行 SDK 与充值体系</h3>
-          <p>把分散在多款游戏里的账号、支付、实名、防沉迷和跨端通信能力收敛成稳定接入链路。</p>
+          <p>把多款游戏重复的账号、支付、实名、防沉迷收敛成一条接入链路。</p>
           <a class="case-button" href="/work/h5-game-sdk/">阅读案例 →</a>
+        </article>
+        <article class="case-card">
+          <p class="case-label">HUB · POSTMESSAGE</p>
+          <h3>H5 游戏中心容器</h3>
+          <p>用一套 postMessage 协议挂载多款游戏，账号、实名、防沉迷、礼包与客服由容器统一提供。</p>
+          <a class="case-button" href="/work/game-hub/">阅读案例 →</a>
         </article>
         <article class="case-card">
           <p class="case-label">ADMIN · WORKFLOW</p>
           <h3>广告买量系统</h3>
           <p>
-            投放系统最怕误操作和状态不一致。我把复杂流程拆成可确认、可回显、可追踪的界面，交付了广告创建、投放操作、状态回显与国际化配置等页面，让运营能稳定完成日常投放调整。
+            投放系统最怕误操作和状态不一致。把复杂流程拆成可确认、可回显、可追踪的界面。
           </p>
+          <a class="case-button" href="/work/ad-buying/">阅读案例 →</a>
+        </article>
+        <article class="case-card">
+          <p class="case-label">DATA GRID · PERFORMANCE</p>
+          <h3>供应链数据管理平台</h3>
+          <p>网页版电子表格：动态表格、公式计算、报表与渲染性能优化。</p>
+          <a class="case-button" href="/work/supply-chain/">阅读案例 →</a>
         </article>
       </div>
     </section>
@@ -53,7 +65,7 @@ import '../../styles/case-study.css'
         <article class="case-card">
           <p class="case-label">AI · AUDIO</p>
           <h3>AI 音乐生成工具</h3>
-          <p>提示词 → 歌词 → 音乐 → 封面，作品可保存、可回放，代码可复核。</p>
+          <p>提示词 → 歌词 → 音乐 → 封面，作品可保存回放。</p>
           <a
             class="case-button"
             href="https://github.com/hackrabbit6/music"
@@ -64,9 +76,7 @@ import '../../styles/case-study.css'
         <article class="case-card">
           <p class="case-label">AI · RAG</p>
           <h3>数字亲人 / 家庭记忆 AI</h3>
-          <p>
-            Go + React 的记忆对话原型，代码里有可检查的 grounding 约束，证据不足时系统必须承认不知道。
-          </p>
+          <p>Go + React 记忆对话原型，证据不足时会说「不知道」。</p>
           <a
             class="case-button"
             href="https://github.com/hackrabbit6/digital-loved-one"
@@ -75,9 +85,64 @@ import '../../styles/case-study.css'
           >
         </article>
         <article class="case-card">
+          <p class="case-label">AI · FULLSTACK</p>
+          <h3>AI Workbench</h3>
+          <p>Bun + Elysia + React 的 RAG 工作台：导入链接或文章、向量检索、引用笔记对话。</p>
+          <a
+            class="case-button"
+            href="https://github.com/hackrabbit6/ai-workbench"
+            target="_blank"
+            rel="noreferrer">查看代码 →</a
+          >
+        </article>
+        <article class="case-card">
+          <p class="case-label">AI · AGENT</p>
+          <h3>Hermes Agent Lab</h3>
+          <p>把 prompt 链、路由、工具调用、记忆、规划、RAG 拆成可运行的小例子。</p>
+          <a
+            class="case-button"
+            href="https://github.com/hackrabbit6/hermes"
+            target="_blank"
+            rel="noreferrer">查看代码 →</a
+          >
+        </article>
+        <article class="case-card">
+          <p class="case-label">ADMIN · API</p>
+          <h3>Lumen Admin + API</h3>
+          <p>Next.js 中后台模板搭配 Go / Gin / Postgres 接口，面向 CRM 与运营后台。</p>
+          <a
+            class="case-button"
+            href="https://github.com/hackrabbit6/lumen"
+            target="_blank"
+            rel="noreferrer">查看代码 →</a
+          >
+        </article>
+        <article class="case-card">
+          <p class="case-label">DESKTOP · MULTI</p>
+          <h3>今日待办</h3>
+          <p>Tauri 多端 Todo，一套代码跑到 Web / macOS / Windows / Linux / Android / iOS。</p>
+          <a
+            class="case-button"
+            href="https://github.com/hackrabbit6/today-todo"
+            target="_blank"
+            rel="noreferrer">查看代码 →</a
+          >
+        </article>
+        <article class="case-card">
+          <p class="case-label">MINI-APP · STORE</p>
+          <h3>电商小程序</h3>
+          <p>uni-app + Vue3 多端商城（H5 / 微信小程序 / App），含独立运营后台。</p>
+          <a
+            class="case-button"
+            href="https://github.com/hackrabbit6/dianshang-demo"
+            target="_blank"
+            rel="noreferrer">查看代码 →</a
+          >
+        </article>
+        <article class="case-card">
           <p class="case-label">LOCAL TOOL · CLI</p>
           <h3>onchain-research</h3>
-          <p>本地优先的 EVM/BSC 研究 CLI，覆盖持有人聚类、集中度分析和钱包追踪，只输出可复核证据。</p>
+          <p>本地优先的 EVM/BSC 研究 CLI：持有人聚类、集中度与钱包追踪。</p>
           <a
             class="case-button"
             href="https://github.com/hackrabbit6/onchain-research"

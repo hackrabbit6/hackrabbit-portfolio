@@ -10,11 +10,28 @@
 }
 
 .skill-card {
-  background: rgba(20, 20, 24, 0.74);
+  background: linear-gradient(160deg, rgba(36, 31, 22, 0.92), rgba(16, 14, 10, 0.96));
   border: 1px solid var(--line);
   border-radius: var(--s4);
   min-height: 280px;
+  overflow: hidden;
   padding: var(--s6);
+  position: relative;
+  transition: border-color 0.3s var(--ease-cine), box-shadow 0.3s var(--ease-cine);
+}
+
+.skill-card::before {
+  background: linear-gradient(90deg, var(--accent), rgba(214, 74, 50, 0));
+  content: '';
+  height: 2px;
+  inset: 0 auto auto 0;
+  position: absolute;
+  width: 72px;
+}
+
+.skill-card:hover {
+  border-color: rgba(214, 74, 50, 0.45);
+  box-shadow: 0 0 34px rgba(214, 74, 50, 0.12);
 }
 
 .skill-card h3 {

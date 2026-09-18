@@ -9,24 +9,24 @@ const items = [
   {
     label: '内容',
     title: '黑兔实验室',
-    text: '用数据和实测，讲清 AI 时代里和普通人有关的变化。公众号发长文，小红书发图文笔记。',
+    text: '用数据和实测，讲清 AI 时代的变化。',
     href: '/writing/',
     action: '看我写过什么',
   },
   {
     label: '工具',
     title: '私人阅读站',
-    text: '把书和文章丢进文件夹，就有排版好的阅读页，EPUB 和 PDF 都能记住读到哪。本地运行，自己每天在用。',
+    text: '书和文章丢进文件夹就有阅读页，本地运行。',
   },
   {
     label: '产品',
     title: '计费重量计算器',
-    text: '帮跨境卖家算清实际重量、体积重和计费重量，并说明运费为什么差一截。独立站刚起步，正在做。',
+    text: '帮跨境卖家算清计费重量，独立站刚起步。',
   },
   {
     label: '产品',
     title: 'App Store 小工具',
-    text: '在准备一个自己上架的小工具 App，从开发到发布都自己走一遍。',
+    text: '在准备一个自己上架的小工具 App。',
   },
 ]
 ---
@@ -35,15 +35,12 @@ const items = [
   <div class="building-head">
     <p class="eyebrow">在做什么</p>
     <h2>我在造的东西</h2>
-    <p class="building-lead">
-      下面这些都不是接来的活，是我自己想清楚之后自己动手做、自己验收的。
-    </p>
   </div>
 
   <ul class="building-list">
     {
-      items.map((item) => (
-        <li class="building-card">
+      items.map((item, i) => (
+        <li class="building-card" data-tilt data-index={['壹', '贰', '叁', '肆'][i]}>
           <p class="building-label">{item.label}</p>
           <h3>{item.title}</h3>
           <p class="building-text">{item.text}</p>

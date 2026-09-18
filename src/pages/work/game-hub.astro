@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+---
+
+<Base
+  title="H5 游戏中心容器 | hackrabbit"
+  description="脱敏案例：H5 游戏中心容器、postMessage 协议、悬浮球安全中心与 Vue 3 重写。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="案例导航">
+      <a href="/work/">← 全部案例</a>
+      <a href="/">返回首页</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">sanitized case study · h5 game hub</p>
+      <h1>H5 游戏中心容器</h1>
+      <p class="case-lead">
+        让第三方游戏用一套协议挂进来，账号、实名、防沉迷、礼包、客服与支付都由容器统一提供。
+      </p>
+      <div class="case-meta">
+        <div><strong>角色</strong><span>前端开发 / 容器与协议</span></div>
+        <div><strong>场景</strong><span>H5、iframe、postMessage、微信</span></div>
+        <div><strong>边界</strong><span>脱敏案例，不公开公司代码与业务数据</span></div>
+      </div>
+    </header>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">01 / problem</p>
+        <h2>协议必须比页面稳定。</h2>
+      </div>
+      <div class="case-copy">
+        <p>游戏以 iframe 挂进容器，容器负责登录、实名、防沉迷、礼包、公告、客服和支付；每个游戏又带着自己的标识、渠道与运行环境，还可能是横屏或竖屏。</p>
+        <p><strong>核心风险</strong>是协议漂移：容器和游戏靠隐式约定通信，改一次就可能把所有接入的游戏一起弄坏。老容器还是 React 16 + Redux Saga + Webpack 4，维护成本只会越来越高。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">02 / decisions</p>
+        <h2>我负责的关键判断</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <h3>协议优先于页面</h3>
+          <p>用 window.postMessage 明确激活、登录、支付等事件与消息结构，让容器和游戏解耦，改 UI 不动协议。</p>
+        </article>
+        <article class="case-card">
+          <h3>安全中心收进悬浮球</h3>
+          <p>实名、防沉迷、礼包、消息、客服做成可挂载的悬浮球能力，游戏不必各自实现。</p>
+        </article>
+        <article class="case-card">
+          <h3>主链路显式化</h3>
+          <p>把登录、账号找回、支付等流程的状态与失败分支写清楚，不用“看起来能点”当验收。</p>
+        </article>
+        <article class="case-card">
+          <h3>保留协议、重写实现</h3>
+          <p>用 Vue 3 + TypeScript + Pinia 重写老容器，但保留原有通信协议，把组件、接口与状态拆清。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">03 / delivery</p>
+        <h2>从维护到重写</h2>
+      </div>
+      <div class="case-copy">
+        <ol class="case-flow">
+          <li><span>维护旧容器，梳理 postMessage 协议、登录与支付主链路。</span></li>
+          <li><span>把实名、防沉迷、礼包、公告、客服收进悬浮球安全中心。</span></li>
+          <li><span>用 Vue 3 + TypeScript + Pinia + Vant 重写，覆盖登录 / 注册 / 找回密码、实名、礼包、公告、客服、支付等模块。</span></li>
+          <li><span>处理横竖屏切换（横屏 / 竖屏两套布局）与自动登录、账号态恢复。</span></li>
+          <li><span>与后端联调接口，跟进上线问题并维护公共链路。</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">04 / result</p>
+        <h2>可确认的结果</h2>
+      </div>
+      <div class="case-copy">
+        <p>交付并维护了两代 H5 游戏中心容器，保留 window.MKSDK 与 postMessage 协议，覆盖登录、实名、防沉迷、礼包、公告、客服与支付等能力，让后续游戏接入复用同一套已验证的链路。</p>
+        <p>由于这是工作期脱敏案例，我不展示公司代码、客户名称、接口域名、游戏标识或业务数据。</p>
+      </div>
+    </section>
+
+    <section class="case-cta">
+      <h2>需要聊实现细节？</h2>
+      <a class="case-button" href="mailto:hackrabbit6@gmail.com">hackrabbit6@gmail.com →</a>
+    </section>
+  </main>
+</Base>

@@ -11,6 +11,7 @@
   font-size: var(--fs-h2);
   line-height: 1.05;
   margin: var(--s3) 0 0;
+  text-wrap: balance;
 }
 
 .writing-list {
@@ -67,6 +68,7 @@
 
   .writing-list a {
     gap: var(--s3);
-    grid-template-columns: 32px 1fr;
+    /* 仍要保留第三列，否则外链箭头会被挤到下一行、跑到左边。 */
+    grid-template-columns: 28px 1fr auto;
   }
 }

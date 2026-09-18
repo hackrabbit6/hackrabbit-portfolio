@@ -2,18 +2,18 @@
    数值取自 src/styles/tokens.css，字号按「在页面上 1:1 显示」来定，不做二次缩放。 */
 
 :root {
-  --bg: #0b0b0e;
-  --ink: #f5f3ef;
-  --dim: #a9abb0;
-  /* 4.5:1 是 WCAG AA 对正文级字号的下限；#6b6e74 只有 3.84，Cover 里的说明行
-     和图注是画进位图的，DOM 对比度审计查不到，只能在这里定死。 */
-  --faint: #84878e;
-  --accent: #39ff8b;
-  --cyan: #22d3ee;
-  --amber: #e8b44a;
-  --line: rgba(255, 255, 255, 0.09);
-  --chip: rgba(255, 255, 255, 0.03);
-  --rule: rgba(255, 255, 255, 0.2);
+  --bg: #0b0a08;
+  --ink: #ede4d3;
+  --dim: #a79e8c;
+  /* 4.5:1 是 WCAG AA 对正文级字号的下限；Cover 里的说明行和图注是画进位图的，
+     DOM 对比度审计查不到，只能在这里定死（--faint 对 --bg 约 5.6:1）。 */
+  --faint: #928a7a;
+  --accent: #d64a32;
+  --cyan: #3e8e7e;
+  --amber: #c9a227;
+  --line: rgba(237, 228, 211, 0.1);
+  --chip: rgba(237, 228, 211, 0.03);
+  --rule: rgba(237, 228, 211, 0.2);
   --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -30,8 +30,8 @@ body {
 
 .cover {
   background:
-    radial-gradient(120% 90% at 6% -12%, rgba(57, 255, 139, 0.1), transparent 58%),
-    radial-gradient(90% 80% at 102% 18%, rgba(34, 211, 238, 0.05), transparent 60%), var(--bg);
+    radial-gradient(120% 90% at 6% -12%, rgba(214, 74, 50, 0.12), transparent 58%),
+    radial-gradient(90% 80% at 102% 18%, rgba(62, 142, 126, 0.07), transparent 60%), var(--bg);
   color: var(--ink);
   display: flex;
   flex-direction: column;
@@ -168,8 +168,8 @@ body {
 }
 
 .n-key {
-  fill: rgba(57, 255, 139, 0.07);
-  stroke: rgba(57, 255, 139, 0.34);
+  fill: rgba(214, 74, 50, 0.1);
+  stroke: rgba(214, 74, 50, 0.42);
 }
 
 .n-ghost {
@@ -212,7 +212,7 @@ body {
 
 .ln-ghost {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.14);
+  stroke: rgba(237, 228, 211, 0.16);
   stroke-dasharray: 3 3;
   stroke-width: 1;
 }
@@ -220,7 +220,7 @@ body {
 /* ── 04 的终端面板 ──────────────────────────────────── */
 
 .term {
-  background: rgba(20, 20, 24, 0.86);
+  background: rgba(22, 19, 13, 0.86);
   border: 1px solid var(--line);
   border-radius: 10px;
   display: flex;
@@ -240,7 +240,7 @@ body {
 }
 
 .term-bar b {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(237, 228, 211, 0.18);
   border-radius: 50%;
   display: block;
   height: 7px;

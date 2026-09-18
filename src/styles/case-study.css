@@ -67,7 +67,7 @@
 
 .case-meta div,
 .case-card {
-  background: rgba(20, 20, 24, 0.78);
+  background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--s4);
   padding: var(--s5);
@@ -95,6 +95,7 @@
   font-size: var(--fs-h2);
   line-height: 1.05;
   margin: var(--s3) 0 0;
+  text-wrap: balance;
 }
 
 .case-copy {
@@ -156,7 +157,7 @@
 
 .case-cta {
   align-items: center;
-  background: linear-gradient(135deg, rgba(57, 255, 139, 0.12), rgba(20, 20, 24, 0.86));
+  background: linear-gradient(135deg, rgba(214, 74, 50, 0.12), rgba(22, 19, 13, 0.86));
   border: 1px solid var(--line);
   border-radius: var(--s4);
   display: flex;

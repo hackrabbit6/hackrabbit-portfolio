@@ -2,69 +2,317 @@
 import './HeroCanvas.css'
 ---
 
-<canvas class="hero-canvas" data-hero-field aria-hidden="true"></canvas>
+{/* 东方水墨实时 3D 背景（ADR 0003）。无 WebGL / JS 时退回 .ink-fallback 静态画面。 */}
+<div class="ink-scene" data-ink-scene aria-hidden="true">
+  <div class="ink-fallback"></div>
+  <canvas class="hero-canvas" data-ink-canvas></canvas>
+</div>
 
 <script>
-  const canvas = document.querySelector<HTMLCanvasElement>('[data-hero-field]')
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-  const desktop = window.matchMedia('(min-width: 768px)')
+  import type { BufferAttribute, Mesh, MeshBasicMaterial, Sprite, SpriteMaterial } from 'three'
 
-  if (canvas && desktop.matches && !reduceMotion.matches) {
-    const context = canvas.getContext('2d', { alpha: false })
-    let frame = 0
-    let width = 0
-    let height = 0
+  const root = document.querySelector<HTMLElement>('[data-ink-scene]')
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-ink-canvas]')
+
+  const webglAvailable = () => {
+    try {
+      const probe = document.createElement('canvas')
+      return Boolean(
+        window.WebGLRenderingContext && (probe.getContext('webgl2') || probe.getContext('webgl')),
+      )
+    } catch {
+      return false
+    }
+  }
+
+  // three 用动态 import 拆成独立 chunk，并在浏览器空闲时才拉取 —— 不阻塞首屏。
+  const boot = async (host: HTMLElement, cv: HTMLCanvasElement) => {
+    const THREE = await import('three')
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const coarse = window.matchMedia('(pointer: coarse)').matches
+    const PAPER = 0xede4d3
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: cv,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'low-power',
+    })
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5))
+
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 300)
+    camera.position.set(0, 1.6, 30)
+
+    const seed = (n: number) => () => {
+      n |= 0
+      n = (n + 0x6d2b79f5) | 0
+      let t = Math.imul(n ^ (n >>> 15), 1 | n)
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+    }
+
+    const softDisc = (stops: Array<[number, string]>) => {
+      const size = 512
+      const c = document.createElement('canvas')
+      c.width = c.height = size
+      const ctx = c.getContext('2d')!
+      const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2)
+      for (const [offset, color] of stops) g.addColorStop(offset, color)
+      ctx.fillStyle = g
+      ctx.fillRect(0, 0, size, size)
+      return new THREE.CanvasTexture(c)
+    }
+
+    const moon = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: softDisc([
+          [0, 'rgba(237,228,211,0.9)'],
+          [0.3, 'rgba(237,228,211,0.8)'],
+          [0.4, 'rgba(237,228,211,0.2)'],
+          [0.62, 'rgba(214,74,50,0.12)'],
+          [1, 'rgba(214,74,50,0)'],
+        ]),
+        transparent: true,
+        depthWrite: false,
+      }),
+    )
+    moon.scale.set(20, 20, 1)
+    moon.position.set(19, 13, -24)
+    scene.add(moon)
+
+    // 月兔：月亮上的侧身坐姿剪影，呼应站主「黑兔」身份与头像（ORIENTAL-REDESIGN.md）。
+    const rabbitTexture = () => {
+      const size = 256
+      const c = document.createElement('canvas')
+      c.width = c.height = size
+      const ctx = c.getContext('2d')!
+      ctx.fillStyle = '#12100c'
+      const ellipse = (x: number, y: number, rx: number, ry: number, rot = 0) => {
+        ctx.beginPath()
+        ctx.ellipse(x, y, rx, ry, rot, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      // 侧身坐姿：后身 → 头 → 一竖一后倾的耳朵 → 尾巴。
+      ellipse(126, 188, 48, 54)
+      ellipse(150, 122, 34, 32)
+      ellipse(162, 66, 10, 40, 0.08)
+      ellipse(126, 74, 9, 34, -0.5)
+      ellipse(82, 206, 15, 15)
+      return new THREE.CanvasTexture(c)
+    }
+    const rabbit = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: rabbitTexture(),
+        transparent: true,
+        depthWrite: false,
+        opacity: 0.9,
+      }),
+    )
+    rabbit.scale.set(5, 5, 1)
+    rabbit.position.set(19, 13, -23.4)
+    scene.add(rabbit)
+
+    // 地平线月霭：一条被拉长的柔光，让远山有可剪影的亮底。
+    const haze = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: softDisc([
+          [0, 'rgba(214,74,50,0.22)'],
+          [0.45, 'rgba(214,74,50,0.08)'],
+          [1, 'rgba(214,74,50,0)'],
+        ]),
+        transparent: true,
+        depthWrite: false,
+        opacity: 0.5,
+      }),
+    )
+    haze.scale.set(150, 28, 1)
+    haze.position.set(0, -3, -30)
+    scene.add(haze)
+
+    const mountainTexture = (top: string, bottom: string, s: number) => {
+      const w = 1024
+      const h = 512
+      const c = document.createElement('canvas')
+      c.width = w
+      c.height = h
+      const ctx = c.getContext('2d')!
+      const rnd = seed(s)
+      ctx.filter = 'blur(6px)'
+      const g = ctx.createLinearGradient(0, 0, 0, h)
+      g.addColorStop(0, top)
+      g.addColorStop(1, bottom)
+      ctx.fillStyle = g
+      ctx.beginPath()
+      ctx.moveTo(-20, h + 20)
+      let x = -20
+      let y = h * 0.7
+      ctx.lineTo(-20, y)
+      while (x < w + 60) {
+        x += 60 + rnd() * 130
+        y = h * 0.42 + rnd() * h * 0.42
+        ctx.lineTo(x, y)
+      }
+      ctx.lineTo(w + 20, h * 0.72)
+      ctx.lineTo(w + 20, h + 20)
+      ctx.closePath()
+      ctx.fill()
+      const tex = new THREE.CanvasTexture(c)
+      tex.colorSpace = THREE.SRGBColorSpace
+      return tex
+    }
+
+    const layers = [
+      { z: -26, y: -4.0, w: 100, h: 30, top: 'rgba(150,166,152,0.2)', bottom: 'rgba(150,166,152,0.02)', s: 11 },
+      { z: -17, y: -4.8, w: 92, h: 27, top: 'rgba(160,136,104,0.34)', bottom: 'rgba(160,136,104,0.03)', s: 29 },
+      { z: -9, y: -5.6, w: 84, h: 24, top: 'rgba(140,116,88,0.55)', bottom: 'rgba(140,116,88,0.05)', s: 47 },
+    ]
+    const mountains: Mesh[] = []
+    for (const layer of layers) {
+      const mesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(layer.w, layer.h),
+        new THREE.MeshBasicMaterial({
+          map: mountainTexture(layer.top, layer.bottom, layer.s),
+          transparent: true,
+          depthWrite: false,
+        }),
+      )
+      mesh.position.set(0, layer.y, layer.z)
+      scene.add(mesh)
+      mountains.push(mesh)
+    }
+
+    const count = coarse ? 40 : 70
+    const positions = new Float32Array(count * 3)
+    const speeds = new Float32Array(count)
+    for (let i = 0; i < count; i += 1) {
+      positions[i * 3] = (Math.random() - 0.5) * 92
+      positions[i * 3 + 1] = -12 + Math.random() * 18
+      positions[i * 3 + 2] = -6 - Math.random() * 26
+      speeds[i] = 0.4 + Math.random() * 0.9
+    }
+    const mistGeometry = new THREE.BufferGeometry()
+    mistGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    const mist = new THREE.Points(
+      mistGeometry,
+      new THREE.PointsMaterial({
+        map: softDisc([
+          [0, 'rgba(237,228,211,0.9)'],
+          [1, 'rgba(237,228,211,0)'],
+        ]),
+        size: 4,
+        color: PAPER,
+        transparent: true,
+        opacity: 0.09,
+        depthWrite: false,
+        sizeAttenuation: true,
+      }),
+    )
+    scene.add(mist)
 
     const resize = () => {
-      const ratio = Math.min(window.devicePixelRatio || 1, 1.5)
-      width = window.innerWidth
-      height = window.innerHeight
-      canvas.width = Math.round(width * ratio)
-      canvas.height = Math.round(height * ratio)
-      canvas.style.width = `${width}px`
-      canvas.style.height = `${height}px`
-      context?.setTransform(ratio, 0, 0, ratio, 0, 0)
+      const w = host.clientWidth || window.innerWidth
+      const h = host.clientHeight || window.innerHeight
+      renderer.setSize(w, h, false)
+      camera.aspect = w / h
+      camera.updateProjectionMatrix()
+      renderer.render(scene, camera)
     }
 
-    const draw = (time: number) => {
-      if (!context) return
-      context.fillStyle = '#0b0b0e'
-      context.fillRect(0, 0, width, height)
+    const pointer = { x: 0, y: 0 }
+    const target = { x: 0, y: 0 }
+    if (!reduceMotion && !coarse) {
+      window.addEventListener(
+        'pointermove',
+        (event) => {
+          target.x = (event.clientX / window.innerWidth) * 2 - 1
+          target.y = (event.clientY / window.innerHeight) * 2 - 1
+        },
+        { passive: true },
+      )
+    }
 
-      const phase = time * 0.00018
-      const fields = [
-        { x: 0.72 + Math.sin(phase) * 0.06, y: 0.4, radius: 0.34, color: '57,255,139' },
-        { x: 0.18, y: 0.82 + Math.cos(phase * 0.8) * 0.04, radius: 0.28, color: '34,211,238' },
-      ]
+    let visible = true
+    const observer = new IntersectionObserver(
+      (entries) => {
+        visible = entries[0]?.isIntersecting ?? true
+      },
+      { threshold: 0 },
+    )
+    observer.observe(host)
 
-      for (const field of fields) {
-        const radius = Math.max(width, height) * field.radius
-        const gradient = context.createRadialGradient(
-          width * field.x,
-          height * field.y,
-          0,
-          width * field.x,
-          height * field.y,
-          radius,
-        )
-        gradient.addColorStop(0, `rgba(${field.color},0.2)`)
-        gradient.addColorStop(0.48, `rgba(${field.color},0.07)`)
-        gradient.addColorStop(1, `rgba(${field.color},0)`)
-        context.fillStyle = gradient
-        context.fillRect(0, 0, width, height)
+    const mistAttribute = mistGeometry.getAttribute('position') as BufferAttribute
+    let time = 0
+    const update = () => {
+      time += 0.0016
+      pointer.x += (target.x - pointer.x) * 0.045
+      pointer.y += (target.y - pointer.y) * 0.045
+      camera.position.x = pointer.x * 2.6
+      camera.position.y = 1.6 - pointer.y * 1.8
+      camera.lookAt(0, 0, -10)
+
+      for (let i = 0; i < count; i += 1) {
+        let x = mistAttribute.getX(i) - speeds[i] * 0.02
+        if (x < -46) x = 46
+        mistAttribute.setX(i, x)
+        mistAttribute.setY(i, mistAttribute.getY(i) + Math.sin(time + i) * 0.002)
       }
-
-      frame = requestAnimationFrame(draw)
+      mistAttribute.needsUpdate = true
+      mist.rotation.z = Math.sin(time * 0.6) * 0.02
+      ;(moon.material as SpriteMaterial).opacity = 0.9 + Math.sin(time * 1.3) * 0.06
     }
 
+    let frame = 0
+    const loop = () => {
+      frame = requestAnimationFrame(loop)
+      if (!visible) return
+      update()
+      renderer.render(scene, camera)
+    }
+
+    host.setAttribute('data-webgl', 'on')
     resize()
     window.addEventListener('resize', resize, { passive: true })
-    frame = requestAnimationFrame(draw)
+    if (reduceMotion) {
+      renderer.render(scene, camera)
+    } else {
+      loop()
+    }
 
-    document.addEventListener('astro:before-swap', () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener('resize', resize)
-    }, { once: true })
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        cancelAnimationFrame(frame)
+        observer.disconnect()
+        window.removeEventListener('resize', resize)
+        for (const mesh of mountains) {
+          const material = mesh.material as MeshBasicMaterial
+          material.map?.dispose()
+          material.dispose()
+          mesh.geometry.dispose()
+        }
+        for (const sprite of [moon, haze, rabbit] as Sprite[]) {
+          const material = sprite.material as SpriteMaterial
+          material.map?.dispose()
+          material.dispose()
+        }
+        renderer.dispose()
+      },
+      { once: true },
+    )
+  }
+
+  if (root && canvas && webglAvailable()) {
+    const run = () => {
+      boot(root, canvas).catch(() => canvas.remove())
+    }
+    const idleCallback = window.requestIdleCallback?.bind(window)
+    if (idleCallback) {
+      idleCallback(run, { timeout: 2000 })
+    } else {
+      window.setTimeout(run, 200)
+    }
   } else {
     canvas?.remove()
   }

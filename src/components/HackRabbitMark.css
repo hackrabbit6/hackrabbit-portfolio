@@ -1,14 +1,10 @@
-/* ASCII 兔子的 font-size 是图形缩放参数，不是排版层级，
-   所以不走 --fs-* 那套刻度。 */
+/* 玉兔标记：矢量图，尺寸由类控制（原 ASCII 版的 font-size 缩放参数已作废）。 */
 .hackrabbit-mark {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: clamp(24px, 5vw, 56px);
-  line-height: 1.04;
-  margin: 0;
-  text-shadow: var(--glow);
+  display: block;
+  height: clamp(64px, 8vw, 88px);
+  width: auto;
 }
 
 .hackrabbit-mark.compact {
-  font-size: 18px;
+  height: 44px;
 }

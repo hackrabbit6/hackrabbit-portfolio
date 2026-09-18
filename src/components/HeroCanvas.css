@@ -1,8 +1,30 @@
+/* 东方水墨 3D 背景容器（ADR 0003）。整层不接管指针，不消费滚动。 */
+.ink-scene {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+/* 无 WebGL / JS 时的静态月与墨山。WebGL 就绪后由 data-webgl 隐藏。 */
+.ink-fallback {
+  background:
+    radial-gradient(circle at 78% 24%, rgba(237, 228, 211, 0.14), transparent 15rem),
+    radial-gradient(circle at 78% 24%, rgba(214, 74, 50, 0.1), transparent 28rem),
+    linear-gradient(180deg, transparent 50%, rgba(20, 17, 12, 0.92) 100%);
+  inset: 0;
+  position: absolute;
+}
+
+.ink-scene[data-webgl='on'] .ink-fallback {
+  display: none;
+}
+
 .hero-canvas {
   display: block;
   height: 100%;
   inset: 0;
-  opacity: 0.9;
   pointer-events: none;
   position: absolute;
   width: 100%;

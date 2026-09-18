@@ -45,11 +45,16 @@
 HERO           现在 X。此前 4-5 年前端交付。   [ 在做什么 ↓ ] [ GitHub ↗ ]
 在做什么   ★    主角 —— 在造的东西
 关注入口        自媒体账号
-CREW           Claude Code / Codex / herdr
-SELECTED WORK  精选 2–3 个 → /work/
-EXPERIENCE     履历（数据不动）
+SELECTED WORK  精选 2–3 个 → /work/（2026-09-18 上移）
+能力           能交付什么
+EXPERIENCE     履历（数据不动，宣纸底）
+CREW           Claude Code / Codex / herdr（2026-09-18 下移到尾部）
 CONTACT        接项目 / 也看全职
 ```
+
+> **2026-09-18 结构重构**：CREW 从原来的第 4 位下移到尾部（它信息量最低），Selected Work
+> 与能力上移，让「真东西」更早出现；关注入口仍紧跟主角（决定 4 不变）。履历改为宣纸底区块，
+> 在墨黑长页里制造一次明暗呼吸。
 
 `/now/` 与 `/writing/` 是二级页，首页只留入口。
 
@@ -63,7 +68,10 @@ CONTACT        接项目 / 也看全职
 /writing/            列表：站内长文 + 外链短内容混排（当前只有外链）
 /writing/[slug]/     站内正文（Astro content collection）—— 有站内文章后再建
 /work/               完整作品集（保留现状，保留开发者审美）
-/work/h5-game-sdk/   保留现状
+/work/h5-game-sdk/   案例：H5 游戏发行 SDK 与充值体系
+/work/game-hub/      案例：H5 游戏中心容器
+/work/ad-buying/     案例：广告买量系统
+/work/supply-chain/  案例：供应链数据管理平台
 /resume.pdf          保留
 ```
 

@@ -18,6 +18,14 @@
   text-wrap: balance;
 }
 
+.work-lead {
+  color: var(--ink-dim);
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  margin: var(--s4) 0 0;
+  max-width: 24em;
+}
+
 /* 项目与项目之间是全站最大的间距 —— 每个项目要能当成独立一页读，
    而不是一串卡片。这条比「进入 Selected Work」的 160 还要大。 */
 .work-list {
@@ -28,7 +36,7 @@
 /* ── 视觉位 ─────────────────────────────────────────── */
 
 .work-visual {
-  background: rgba(20, 20, 24, 0.86);
+  background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--s4);
   overflow: hidden;
@@ -92,8 +100,7 @@
 .work-index,
 .work-meta,
 .work-tags,
-.work-link,
-.work-point strong {
+.work-link {
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
 }
@@ -133,26 +140,6 @@
   max-width: 62ch;
 }
 
-.work-points {
-  margin-top: var(--s5);
-}
-
-.work-point {
-  border-left: 1px solid var(--line);
-  margin-top: var(--s4);
-  padding-left: var(--s4);
-}
-
-.work-point strong {
-  color: var(--accent);
-}
-
-.work-point p {
-  color: var(--ink-dim);
-  line-height: 1.75;
-  margin: var(--s2) 0 0;
-}
-
 .work-tags {
   display: flex;
   flex-wrap: wrap;
@@ -161,7 +148,7 @@
 }
 
 .work-tags span {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--line);
   border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--ink-dim);
