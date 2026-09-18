@@ -1,12 +1,16 @@
 :root {
-  --bg: #0B0B0E;
-  --bg-elev: #141418;
-  --ink: #F5F3EF;
-  --ink-dim: #A9ABB0;
-  --accent: #39FF8B;
-  --accent-2: #22D3EE;
-  --line: rgba(255, 255, 255, 0.08);
-  --glow: 0 0 40px rgba(57, 255, 139, 0.25);
+  /* 东方水墨色板（ADR 0003 / ORIENTAL-REDESIGN.md）。
+     朱砂 --accent 与青玉 --accent-2 都按 AA 校准过，可直接用于 15px 小字。 */
+  --bg: #0B0A08;
+  --bg-elev: #16130D;
+  --panel: rgba(22, 19, 13, 0.72);
+  --ink: #EDE4D3;
+  --ink-dim: #A79E8C;
+  --accent: #D64A32;
+  --accent-2: #3E8E7E;
+  --gold: #C9A227;
+  --line: rgba(237, 228, 211, 0.1);
+  --glow: 0 0 40px rgba(214, 74, 50, 0.22);
   --blur-depth: 24px;
   --s1: 4px;
   --s2: 8px;
@@ -46,8 +50,9 @@
   --fs-meta: 13px;
 
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-display: system-ui, -apple-system, 'PingFang SC', sans-serif;
-  --font-body: system-ui, -apple-system, 'PingFang SC', sans-serif;
+  /* 拉丁字形走 Georgia，中文字形落到宋体系 —— 逐字回退，无需字体包。 */
+  --font-display: Georgia, 'Songti SC', 'STSong', 'Noto Serif SC', 'Source Han Serif SC', serif;
+  --font-body: system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
   --ease-cine: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: dark;
 }
@@ -70,8 +75,8 @@ body {
 
 body {
   background:
-    radial-gradient(circle at 20% 0%, rgba(57, 255, 139, 0.08), transparent 28rem),
-    radial-gradient(circle at 90% 12%, rgba(34, 211, 238, 0.06), transparent 24rem),
+    radial-gradient(circle at 80% 6%, rgba(214, 74, 50, 0.1), transparent 26rem),
+    radial-gradient(circle at 10% 90%, rgba(62, 142, 126, 0.08), transparent 24rem),
     var(--bg);
 }
 
@@ -122,6 +127,20 @@ a {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: var(--s2);
+}
+
+/* 卡片 3D 倾斜（ORIENTAL-REDESIGN.md）。变量由 Base 里的指针脚本写入；
+   触摸设备与 reduced-motion 下不启用（脚本不注册，CSS 也归零）。 */
+[data-tilt] {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.35s var(--ease-cine);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tilt] {
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

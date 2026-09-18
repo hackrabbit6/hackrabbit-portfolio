@@ -1,0 +1,85 @@
+# ORIENTAL-REDESIGN ·「墨韵 · 月下玉兔」
+
+全站视觉改版规范。依据 `docs/adr/0003-oriental-ink-webgl.md`（取代 ADR 0002）。
+本文档定义**视觉层**；角色、作品、履历、账号等事实内容不改。
+
+## 概念
+
+**墨韵 · 月下玉兔**。呼应站主身份「黑兔」：一轮月、几重水墨远山、浮雾、朱砂印章。
+不是把游戏 / 动漫画面搬上来，而是提炼东方审美的**配色与母题**，用现代排版与实时 3D 重新表达（版权边界：只用风格暗示）。
+
+## 色板
+
+| Token | 值 | 用途 |
+|---|---|---|
+| `--bg` | `#0B0A08` | 墨底 |
+| `--bg-elev` | `#16130D` | 抬升底 |
+| `--panel` | `rgba(22, 19, 13, 0.72)` | 卡片 / 面板（替代原 `rgba(20,20,24,…)` 硬编码） |
+| `--ink` | `#EDE4D3` | 宣纸白正文 |
+| `--ink-dim` | `#A79E8C` | 次级文字 |
+| `--accent` | `#D64A32` | 朱砂（CTA / 印章 / 强调 / 小标签，已按 AA 校准） |
+| `--accent-2` | `#3E8E7E` | 青玉（次强调 / 链接 hover / 渐变） |
+| `--gold` | `#C9A227` | 鎏金（分隔线 / 小面积点缀） |
+| `--line` | `rgba(237, 228, 211, 0.10)` | 描边 |
+| `--glow` | `0 0 40px rgba(214, 74, 50, 0.22)` | 朱砂辉光 |
+
+正文对比度需满足 WCAG AA：`--ink` 于 `--bg`、`--ink-dim` 于 `--bg` 均 ≥ 4.5:1（`--ink` 实际 ~14:1，`--ink-dim` ~6:1）。
+朱砂用于大号或非正文，不用于小字正文。
+
+## 字体
+
+- `--font-display`：中文衬线（宋体系）——`'Songti SC', 'STSong', 'Noto Serif SC', 'Source Han Serif SC', Georgia, serif`。
+  用于大标题、区块标题，字形本身承担「东方」气质。
+- `--font-body`：`system-ui, -apple-system, 'PingFang SC', sans-serif`（正文可读性优先，不改）。
+- `--font-mono`：保留给极少量技术标签；东方风格下减少等宽使用面积。
+- **不引入任何字体包**（系统字体栈），避免额外网络请求与许可问题。
+
+## 母题
+
+- **月亮**：3D 场景主光源，右上，暖白圆盘 + 柔光晕。
+- **水墨远山**：3D 场景的多层山形；层数 3–4，越远越淡（雾感靠颜色与透明度，不靠 postprocessing）。
+- **云纹 / 浮雾**：轻粒子，缓慢漂移。
+- **朱砂印章**：区块标签、CTA、页脚使用方形 / 圆角朱砂块作为落款语汇；不使用任何第三方 Logo。
+- **圆窗**：卡片圆角与局部遮罩可借用圆窗 / 月洞门意象。
+
+## 3D 场景规格（`InkScene`）
+
+- 技术：`three`（唯一新增运行时依赖），原生 WebGL，**不使用 r3f 等 React 渲染层**。
+- 位置：Hero 区块内的背景画布，`position:absolute; inset:0; z-index:0; pointer-events:none`。
+- 组成：月盘 + 3–4 层山形（`ShapeGeometry`，不同 z 与色）+ 浮雾粒子（`Points`，软圆形贴图）。
+- 交互：鼠标 / 指针视差 —— 相机向指针方向做小幅缓动（lerp），不改变滚动。
+- 生命周期：`IntersectionObserver` 仅在 Hero 可见时渲染；离屏暂停；`astro:before-swap` 与组件卸载时 `dispose()`。
+- 降级：
+  - 无 WebGL → 显示 CSS 水墨渐变 + SVG 山形静态背景（`.ink-fallback`）。
+  - `prefers-reduced-motion: reduce` → 只渲染一帧静态画面，不跑动画、不接指针。
+  - 移动端（`pointer: coarse`）→ 粒子数减半、关闭指针视差，只留缓慢漂移。
+- 性能预算：像素比 `min(devicePixelRatio, 1.5)`；粒子 ≤ 240（移动端 ≤ 120）；每帧无 postprocessing；
+  目标桌面 ≥ 55fps、移动端 ≥ 30fps。
+
+## 3D 倾斜（卡片）
+
+区块卡片（在做什么 / 作品）在指针悬停时按指针位置做小幅 CSS 3D 倾斜（`perspective` + `rotateX/rotateY`，±4°），
+`prefers-reduced-motion` 与触摸设备下禁用。用原生 CSS 变量驱动，不引入库。
+
+## 动效边界（承 ADR 0001）
+
+- 不重新引入平滑滚动、不 re-enable `pin + scrub`。
+- 只保留四类进场动画（Fade / Translate / Image Reveal / Subtle Scale）+ 指针视差 + 卡片倾斜。
+- 所有动画在 `prefers-reduced-motion` 下一律降为静态。
+
+## 实施阶段
+
+1. **Tokens**：`tokens.css` 换色板 / 字体 / `--panel` / body 背景。
+2. **3D**：`HeroField.astro` 重写为 Three.js `InkScene`；`Hero.css` 适配。
+3. **组件**：把各组件硬编码的 `rgba(20,20,24,…)` 换成 `var(--panel)`；朱砂 / 青玉替换原绿 / 青。
+4. **二级页**：`case-study.css`、`/writing/` 统一到新色板。
+5. **倾斜**：卡片 3D 倾斜。
+6. **验收**：`bun run lint`、`bun run build` 全绿；桌面 + 移动端截图核对；对比度与降级路径实测。
+
+## 验收条件
+
+- lint / build 全绿。
+- 桌面、移动端、`prefers-reduced-motion`、无 WebGL 四种路径均有合理呈现，无空白 / 报错。
+- 正文对比度满足 AA；导航、CTA、锚点跳转不因 3D 层失效。
+- 3D 层不拦截任何指针事件，不消费滚动。
+- 事实内容（账号、作品、履历、`Experience.tsx` 数据）零改动。

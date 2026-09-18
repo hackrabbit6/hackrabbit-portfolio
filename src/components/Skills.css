@@ -10,7 +10,7 @@
 }
 
 .skill-card {
-  background: rgba(20, 20, 24, 0.74);
+  background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--s4);
   min-height: 280px;

@@ -22,5 +22,29 @@ const {
   </head>
   <body>
     <slot />
+    <script>
+      // 卡片 3D 倾斜（ORIENTAL-REDESIGN.md）。只写 CSS 变量，不动布局与滚动。
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+      const coarsePointer = window.matchMedia('(pointer: coarse)')
+      if (!reduceMotion.matches && !coarsePointer.matches) {
+        const MAX_DEG = 4
+        const cards = document.querySelectorAll<HTMLElement>('[data-tilt]')
+        cards.forEach((card) => {
+          const reset = () => {
+            card.style.setProperty('--rx', '0deg')
+            card.style.setProperty('--ry', '0deg')
+          }
+          card.addEventListener('pointermove', (event) => {
+            const rect = card.getBoundingClientRect()
+            const px = (event.clientX - rect.left) / rect.width - 0.5
+            const py = (event.clientY - rect.top) / rect.height - 0.5
+            card.style.setProperty('--ry', `${px * MAX_DEG * 2}deg`)
+            card.style.setProperty('--rx', `${-py * MAX_DEG * 2}deg`)
+          })
+          card.addEventListener('pointerleave', reset)
+          card.addEventListener('blur', reset)
+        })
+      }
+    </script>
   </body>
 </html>
