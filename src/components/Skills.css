@@ -2,6 +2,15 @@
   padding: var(--space-section) var(--gutter) var(--space-section-end);
 }
 
+/* 核心能力那句话：先给判断，再给证据。 */
+.skills-lead {
+  color: var(--ink-dim);
+  font-size: var(--fs-lead);
+  line-height: 1.7;
+  margin: var(--s4) 0 0;
+  max-width: 44em;
+}
+
 /* Skills 内部保持紧凑 —— 章节之间才拉开距离 */
 .skills-grid {
   display: grid;
