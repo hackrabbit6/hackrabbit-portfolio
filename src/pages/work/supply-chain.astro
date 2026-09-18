@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+---
+
+<Base
+  title="供应链数据管理平台 | hackrabbit"
+  description="脱敏案例：网页版电子表格、公式计算、报表与数据密集页面的渲染性能优化。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="案例导航">
+      <a href="/work/">← 全部案例</a>
+      <a href="/">返回首页</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">sanitized case study · data grid platform</p>
+      <h1>供应链数据管理平台</h1>
+      <p class="case-lead">
+        把业务文档里的表格、公式与数据加工，做成人能稳定操作的网页版电子表格。
+      </p>
+      <div class="case-meta">
+        <div><strong>角色</strong><span>前端开发 / 数据密集型页面</span></div>
+        <div><strong>场景</strong><span>中后台、复杂表格、公式计算</span></div>
+        <div><strong>边界</strong><span>脱敏案例，不公开公司代码与业务数据</span></div>
+      </div>
+    </header>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">01 / problem</p>
+        <h2>表格系统的难点不在画表格，而在数据、公式与性能。</h2>
+      </div>
+      <div class="case-copy">
+        <p>物流与供应链信息都以表格承载：动态列、公式计算、数据加工和报表展示混在一起，数据量还不小。网页端既要算得对，也要滚得动、点得动。</p>
+        <p><strong>核心风险</strong>是数据与展示对不上：公式算错了、字段映射错了，表格看起来正常，业务却会据此做错判断。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">02 / decisions</p>
+        <h2>我负责的关键判断</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <h3>动态表格结构</h3>
+          <p>按业务文档生成列与行，而不是把表格硬编码进页面，让业务规则变化时改配置就能跟。</p>
+        </article>
+        <article class="case-card">
+          <h3>公式与数据加工归一</h3>
+          <p>把计算逻辑收成可复用的一块，保证展示值和计算值来自同一处，不做两套。</p>
+        </article>
+        <article class="case-card">
+          <h3>渲染性能优先</h3>
+          <p>针对大数据量的表格场景做渲染与交互优化，先保证滚动与响应不掉帧，再谈视觉。</p>
+        </article>
+        <article class="case-card">
+          <h3>校验与字段映射</h3>
+          <p>与后端联调时显式处理字段映射、异常与数据展示校验，不靠猜字段名。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">03 / delivery</p>
+        <h2>从业务文档到可用页面</h2>
+      </div>
+      <div class="case-copy">
+        <ol class="case-flow">
+          <li><span>根据业务文档梳理表格结构、公式规则与数据来源。</span></li>
+          <li><span>实现动态表格页面、数据展示、报表与数据管理相关功能。</span></li>
+          <li><span>完成公式计算、数据加工与页面交互，保证展示与计算一致。</span></li>
+          <li><span>针对表格类场景优化数据渲染、交互响应，并与后端完成字段映射与异常处理。</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">04 / result</p>
+        <h2>可确认的结果</h2>
+      </div>
+      <div class="case-copy">
+        <p>交付了复杂表格、报表、公式计算与数据管理功能，并优化了表格渲染与交互性能，提升了页面的可用性。</p>
+        <p>由于这是工作期脱敏案例，我不展示公司代码、客户名称、接口域名或业务数据。</p>
+      </div>
+    </section>
+
+    <section class="case-cta">
+      <h2>需要聊实现细节？</h2>
+      <a class="case-button" href="mailto:hackrabbit6@gmail.com">hackrabbit6@gmail.com →</a>
+    </section>
+  </main>
+</Base>

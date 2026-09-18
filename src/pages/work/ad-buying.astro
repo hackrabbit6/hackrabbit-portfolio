@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+---
+
+<Base
+  title="广告买量系统 | hackrabbit"
+  description="脱敏案例：自动化广告投放系统的复杂表单、状态回显、多平台配置与国际化交付。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="案例导航">
+      <a href="/work/">← 全部案例</a>
+      <a href="/">返回首页</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">sanitized case study · ad delivery system</p>
+      <h1>广告买量系统</h1>
+      <p class="case-lead">
+        把投放人员高频、易错的日常操作，做成可确认、可回显、可追踪的业务界面。
+      </p>
+      <div class="case-meta">
+        <div><strong>角色</strong><span>前端开发 / 业务交付</span></div>
+        <div><strong>场景</strong><span>中后台、复杂表单、多平台投放</span></div>
+        <div><strong>边界</strong><span>脱敏案例，不公开公司代码与业务数据</span></div>
+      </div>
+    </header>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">01 / problem</p>
+        <h2>投放系统最怕两件事：误操作和状态不一致。</h2>
+      </div>
+      <div class="case-copy">
+        <p>创建、推送、暂停、删除都是代价不低的操作，误触一次就可能影响正在跑的投放。同一条广告又可能同时分布在多个平台、多个渠道，任何一处状态没回显清楚，业务人员就不敢下手。</p>
+        <p><strong>核心要求</strong>是让每一步操作都可确认、可回显、可追踪，而不是把接口堆到页面上。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">02 / decisions</p>
+        <h2>我负责的关键判断</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <h3>状态以服务端为准</h3>
+          <p>界面不做乐观假设。操作后按接口回显真实状态，避免用户以为改成功了、实际没有。</p>
+        </article>
+        <article class="case-card">
+          <h3>破坏性操作先确认</h3>
+          <p>暂停、删除等操作加确认与结果反馈，异常时给出可理解的提示而不是静默失败。</p>
+        </article>
+        <article class="case-card">
+          <h3>复杂表单拆解</h3>
+          <p>把多平台、多渠道的配置拆成清晰的字段分组与校验，降低填写出错率。</p>
+        </article>
+        <article class="case-card">
+          <h3>国际化与构建</h3>
+          <p>用 vue-i18n 管理多语言文案，参与构建压缩与环境配置调整，支撑多业务场景交付。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">03 / delivery</p>
+        <h2>从需求到上线</h2>
+      </div>
+      <div class="case-copy">
+        <ol class="case-flow">
+          <li><span>参与需求评审，理清多平台投放的字段差异、状态流转与验收边界。</span></li>
+          <li><span>基于 Vue3、TypeScript、Vite、Element Plus 搭建业务页面。</span></li>
+          <li><span>实现广告创建、推送、暂停、删除等核心操作流程与状态回显。</span></li>
+          <li><span>处理复杂表单、操作确认、接口异常提示等交互细节，并与后端、测试联调。</span></li>
+          <li><span>参与国际化配置与构建优化，完成自测与上线验收。</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">04 / result</p>
+        <h2>可确认的结果</h2>
+      </div>
+      <div class="case-copy">
+        <p>交付并维护了广告创建、推送、暂停、删除等核心流程页面，支撑多平台、多渠道的投放配置与执行，并参与了国际化与构建优化。</p>
+        <p>由于这是工作期脱敏案例，我不展示公司代码、客户名称、接口域名、投放数据或未经授权的业务指标。</p>
+      </div>
+    </section>
+
+    <section class="case-cta">
+      <h2>需要聊实现细节？</h2>
+      <a class="case-button" href="mailto:hackrabbit6@gmail.com">hackrabbit6@gmail.com →</a>
+    </section>
+  </main>
+</Base>
