@@ -33,18 +33,55 @@
 
 .building-card {
   align-content: start;
-  background: var(--panel);
+  background: linear-gradient(160deg, rgba(36, 31, 22, 0.92), rgba(16, 14, 10, 0.96));
   border: 1px solid var(--line);
   border-radius: var(--s4);
   display: grid;
   gap: var(--s3);
+  overflow: hidden;
   padding: var(--s6);
+  position: relative;
+  transition: border-color 0.3s var(--ease-cine), box-shadow 0.3s var(--ease-cine);
 }
 
+/* 左上角朱砂顶线：给卡片一个方向感。 */
+.building-card::before {
+  background: linear-gradient(90deg, var(--accent), rgba(214, 74, 50, 0));
+  content: '';
+  height: 2px;
+  inset: 0 auto auto 0;
+  position: absolute;
+  width: 72px;
+}
+
+/* 右上角汉字编号，低透明度，作为国风落款。 */
+.building-card::after {
+  color: var(--ink);
+  content: attr(data-index);
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  line-height: 1;
+  opacity: 0.08;
+  position: absolute;
+  right: var(--s5);
+  top: var(--s4);
+}
+
+.building-card:hover {
+  border-color: rgba(214, 74, 50, 0.45);
+  box-shadow: 0 0 34px rgba(214, 74, 50, 0.12);
+}
+
+/* 印章式标签：小方块朱砂边，取落款感。 */
 .building-label {
-  color: var(--ink-dim);
-  font-size: var(--fs-small);
+  border: 1px solid rgba(214, 74, 50, 0.5);
+  border-radius: 4px;
+  color: var(--accent);
+  font-size: var(--fs-meta);
+  justify-self: start;
+  letter-spacing: 0.08em;
   margin: 0;
+  padding: 2px 8px;
 }
 
 .building-card h3 {
