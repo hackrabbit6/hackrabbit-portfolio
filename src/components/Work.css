@@ -18,6 +18,14 @@
   text-wrap: balance;
 }
 
+.work-lead {
+  color: var(--ink-dim);
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  margin: var(--s4) 0 0;
+  max-width: 24em;
+}
+
 /* 项目与项目之间是全站最大的间距 —— 每个项目要能当成独立一页读，
    而不是一串卡片。这条比「进入 Selected Work」的 160 还要大。 */
 .work-list {

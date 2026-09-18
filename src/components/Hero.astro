@@ -1,6 +1,5 @@
 ---
 import './Hero.css'
-import './HackRabbitMark.css'
 import HeroField from './HeroField.astro'
 ---
 
@@ -8,16 +7,18 @@ import HeroField from './HeroField.astro'
   <HeroField />
   <nav class="site-nav" aria-label="主导航">
     <a class="brand" href="#top">
-      <span>hackrabbit</span>
-      <small>frontend operator</small>
+      <img class="brand-mark" src="/rabbit.svg" alt="" width="26" height="26" aria-hidden="true" />
+      <span class="brand-name">
+        <span>hackrabbit</span>
+        <small>frontend operator</small>
+      </span>
     </a>
     <div>
       <a href="#building">在做什么</a>
-      <a href="#crew">AI 工具</a>
+      <a href="#follow">关注</a>
       <a href="#work">作品</a>
       <a href="#skills">能力</a>
       <a href="#experience">经历</a>
-      <a href="/work/">案例</a>
       <a href="/writing/">写作</a>
       <a href="#contact">联系</a>
     </div>
@@ -40,9 +41,7 @@ import HeroField from './HeroField.astro'
       </div>
     </div>
     <div class="hero-mark hero-reveal">
-      <pre class="hackrabbit-mark" role="img" aria-label="hackrabbit 的 ASCII 兔子标记">(\(\
-(•ᴥ•)
-/ づ</pre>
+      <img src="/rabbit.svg" alt="黑兔实验室的玉兔标记" width="180" height="180" />
     </div>
   </div>
 </section>

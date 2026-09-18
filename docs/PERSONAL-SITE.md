@@ -45,11 +45,16 @@
 HERO           现在 X。此前 4-5 年前端交付。   [ 在做什么 ↓ ] [ GitHub ↗ ]
 在做什么   ★    主角 —— 在造的东西
 关注入口        自媒体账号
-CREW           Claude Code / Codex / herdr
-SELECTED WORK  精选 2–3 个 → /work/
-EXPERIENCE     履历（数据不动）
+SELECTED WORK  精选 2–3 个 → /work/（2026-09-18 上移）
+能力           能交付什么
+EXPERIENCE     履历（数据不动，宣纸底）
+CREW           Claude Code / Codex / herdr（2026-09-18 下移到尾部）
 CONTACT        接项目 / 也看全职
 ```
+
+> **2026-09-18 结构重构**：CREW 从原来的第 4 位下移到尾部（它信息量最低），Selected Work
+> 与能力上移，让「真东西」更早出现；关注入口仍紧跟主角（决定 4 不变）。履历改为宣纸底区块，
+> 在墨黑长页里制造一次明暗呼吸。
 
 `/now/` 与 `/writing/` 是二级页，首页只留入口。
 

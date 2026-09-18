@@ -176,7 +176,8 @@ export function Work() {
     <section className="work" id="work">
       <div className="work-heading">
         <p className="eyebrow">作品</p>
-        <h2>作品不是陈列柜,是我怎么判断、分工、验收的证据。</h2>
+        <h2>做过的项目</h2>
+        <p className="work-lead">工作项目按脱敏边界展示过程与判断，个人项目公开代码。</p>
       </div>
 
       <div className="work-list">

@@ -143,6 +143,19 @@ a {
   }
 }
 
+/* 宣纸底区块：在墨黑长页里插一段暖白，制造明暗呼吸（ORIENTAL-REDESIGN.md）。
+   局部反转色板变量，子组件无需改动即可适配。 */
+.paper {
+  --ink: #1c1712;
+  --ink-dim: #5b5142;
+  --line: rgba(28, 23, 18, 0.16);
+  --panel: rgba(255, 255, 255, 0.42);
+  --accent: #b23a2e;
+  --glow: none;
+  background: #ede4d3;
+  color: var(--ink);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

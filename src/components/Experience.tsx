@@ -46,7 +46,7 @@ export function Experience() {
   }, [])
 
   return (
-    <section className="experience" id="experience">
+    <section className="experience paper" id="experience">
       <div className="section-kicker">
         <p className="eyebrow">经历</p>
         <h2>工作经历</h2>

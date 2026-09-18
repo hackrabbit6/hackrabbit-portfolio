@@ -26,9 +26,21 @@
 }
 
 .brand {
-  display: grid;
+  align-items: center;
+  display: flex;
   font-family: var(--font-display);
   font-weight: 700;
+  gap: var(--s3);
+}
+
+.brand-mark {
+  display: block;
+  height: 26px;
+  width: 26px;
+}
+
+.brand-name {
+  display: grid;
   gap: var(--s1);
 }
 
@@ -133,11 +145,21 @@
 }
 
 .hero-mark {
+  align-items: center;
+  aspect-ratio: 1;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: var(--s4);
+  border-radius: 50%;
   box-shadow: var(--glow);
+  display: grid;
+  justify-items: center;
   padding: var(--s6);
+}
+
+.hero-mark img {
+  display: block;
+  height: auto;
+  width: clamp(110px, 13vw, 170px);
 }
 
 .hero-reveal {
