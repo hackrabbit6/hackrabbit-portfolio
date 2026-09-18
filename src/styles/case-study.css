@@ -95,6 +95,7 @@
   font-size: var(--fs-h2);
   line-height: 1.05;
   margin: var(--s3) 0 0;
+  text-wrap: balance;
 }
 
 .case-copy {
