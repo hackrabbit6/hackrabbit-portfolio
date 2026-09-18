@@ -1,0 +1,59 @@
+---
+import './Building.css'
+
+// 「在做什么」是首页主角区块（见 CONTEXT.md）：只放**在造的东西**，
+// 不放「在看什么、在想什么」—— 那是 /now/ 的事（决定 5）。
+// 它取代了原来的 NOW · CREW 薄带，NOW 并入这里（决定 3）。
+// 措辞只能来自事实：没有公开链接的就不给链接，未上线就直说在起步。
+const items = [
+  {
+    label: '内容',
+    title: '黑兔实验室',
+    text: '用数据和实测，讲清 AI 时代里和普通人有关的变化。公众号发长文，小红书发图文笔记。',
+    href: '/writing/',
+    action: '看我写过什么',
+  },
+  {
+    label: '工具',
+    title: '私人阅读站',
+    text: '把书和文章丢进文件夹，就有排版好的阅读页，EPUB 和 PDF 都能记住读到哪。本地运行，自己每天在用。',
+  },
+  {
+    label: '产品',
+    title: '计费重量计算器',
+    text: '帮跨境卖家算清实际重量、体积重和计费重量，并说明运费为什么差一截。独立站刚起步，正在做。',
+  },
+  {
+    label: '产品',
+    title: 'App Store 小工具',
+    text: '在准备一个自己上架的小工具 App，从开发到发布都自己走一遍。',
+  },
+]
+---
+
+<section class="building" id="building">
+  <div class="building-head">
+    <p class="eyebrow">在做什么</p>
+    <h2>我在造的东西</h2>
+    <p class="building-lead">
+      下面这些都不是接来的活，是我自己想清楚之后自己动手做、自己验收的。
+    </p>
+  </div>
+
+  <ul class="building-list">
+    {
+      items.map((item) => (
+        <li class="building-card">
+          <p class="building-label">{item.label}</p>
+          <h3>{item.title}</h3>
+          <p class="building-text">{item.text}</p>
+          {item.href ? (
+            <a class="building-link" href={item.href}>
+              {item.action} →
+            </a>
+          ) : null}
+        </li>
+      ))
+    }
+  </ul>
+</section>

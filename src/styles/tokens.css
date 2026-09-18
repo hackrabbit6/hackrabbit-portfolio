@@ -24,8 +24,8 @@
   --gutter: max(var(--s5), calc((100vw - var(--container)) / 2 + var(--s5)));
 
   /* 节奏：间距本身是层级信号，刻意不等距。
-     Hero → NOW·CREW 近（104）< NOW·CREW → Selected Work 远（160）
-     < 项目与项目之间 非常远（200）。Skills / Experience 内部保持紧凑。 */
+     进入「在做什么」与「关注入口」用 section 级间距，项目与项目之间最大（200）。
+     Skills / Experience 内部保持紧凑。 */
   --space-band: var(--s6);
   --space-section: var(--s8);
   --space-section-end: var(--s7);

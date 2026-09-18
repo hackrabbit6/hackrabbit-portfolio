@@ -1,0 +1,84 @@
+/* 「在做什么」是首页主角区块，承接 NOW 的位置（CONTEXT.md 决定 2、3）。
+   首页已降技术味（ADR 0002）：中文段落标签、不用等宽字体、口语化文案。 */
+.building {
+  padding: var(--space-section) var(--gutter) var(--space-section-end);
+}
+
+.building-head h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.building-lead {
+  color: var(--ink-dim);
+  font-size: var(--fs-lead);
+  line-height: 1.7;
+  margin: var(--s4) 0 0;
+  max-width: 42em;
+}
+
+.building-list {
+  align-items: start;
+  display: grid;
+  gap: var(--s5);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: var(--s7) 0 0;
+  padding: 0;
+}
+
+.building-card {
+  align-content: start;
+  background: rgba(20, 20, 24, 0.74);
+  border: 1px solid var(--line);
+  border-radius: var(--s4);
+  display: grid;
+  gap: var(--s3);
+  padding: var(--s6);
+}
+
+.building-label {
+  color: var(--ink-dim);
+  font-size: var(--fs-small);
+  margin: 0;
+}
+
+.building-card h3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  margin: 0;
+}
+
+.building-text {
+  color: var(--ink-dim);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.building-link {
+  color: var(--accent);
+  font-size: var(--fs-small);
+  margin-top: var(--s2);
+}
+
+.building-link:hover {
+  opacity: 0.75;
+}
+
+@media (max-width: 767px) {
+  .building {
+    padding: var(--s7) var(--s5) var(--s6);
+  }
+
+  .building-list {
+    grid-template-columns: 1fr;
+    margin-top: var(--s6);
+  }
+
+  .building-card {
+    padding: var(--s5);
+  }
+}

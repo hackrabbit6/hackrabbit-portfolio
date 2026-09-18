@@ -26,10 +26,8 @@ export function Crew() {
 
   return (
     <section className="band" id="crew">
-      <div className="band-row">
-        <p className="band-label">现在</p>
-        <p className="band-now">2026 起 · 独立开发 / AI 工具与前端实验</p>
-      </div>
+      {/* NOW 薄带已拆掉（决定 3）：现在的状态并入「在做什么」主角区块，
+          这里只留 CREW —— 回答「用什么方式做」，不回答「在做什么」。 */}
       <div className="band-row">
         <p className="band-label">AI 工具</p>
         <ul className="crew-list">
