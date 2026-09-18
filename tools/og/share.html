@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        background: #0b0a08;
+      }
+      .og {
+        align-items: center;
+        background: #0b0a08;
+        display: flex;
+        height: 630px;
+        justify-content: space-between;
+        overflow: hidden;
+        padding: 76px 84px;
+        position: relative;
+        width: 1200px;
+      }
+      .glow-a,
+      .glow-b {
+        border-radius: 50%;
+        position: absolute;
+      }
+      .glow-a {
+        background: radial-gradient(circle, rgba(214, 74, 50, 0.28), rgba(214, 74, 50, 0) 70%);
+        height: 620px;
+        right: -120px;
+        top: -180px;
+        width: 620px;
+      }
+      .glow-b {
+        background: radial-gradient(circle, rgba(62, 142, 126, 0.18), rgba(62, 142, 126, 0) 70%);
+        bottom: -220px;
+        height: 520px;
+        left: -140px;
+        width: 520px;
+      }
+      .left {
+        max-width: 640px;
+        position: relative;
+        z-index: 1;
+      }
+      .brand {
+        color: #ede4d3;
+        font-family: Georgia, 'Songti SC', 'STSong', serif;
+        font-size: 96px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+      .brush {
+        display: block;
+        margin: 14px 0 0;
+        width: 300px;
+      }
+      .tagline {
+        color: #ede4d3;
+        font-family: 'Songti SC', 'STSong', Georgia, serif;
+        font-size: 42px;
+        line-height: 1.4;
+        margin-top: 34px;
+      }
+      .tagline b {
+        color: #d64a32;
+        font-weight: 600;
+      }
+      .meta {
+        color: #a79e8c;
+        font-family: -apple-system, 'PingFang SC', sans-serif;
+        font-size: 22px;
+        letter-spacing: 0.02em;
+        margin-top: 30px;
+      }
+      .right {
+        align-items: center;
+        display: flex;
+        flex: none;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+      }
+      .ring {
+        border: 1px solid rgba(237, 228, 211, 0.14);
+        border-radius: 50%;
+        box-shadow: 0 0 80px rgba(214, 74, 50, 0.28);
+        height: 380px;
+        overflow: hidden;
+        width: 380px;
+      }
+      .ring img {
+        display: block;
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="og">
+      <div class="glow-a"></div>
+      <div class="glow-b"></div>
+      <div class="left">
+        <div class="brand">hackrabbit</div>
+        <img class="brush" src="../../public/brush.svg" alt="" />
+        <p class="tagline">帮普通人看懂 <b>AI 时代</b>里<br />和自己有关的变化。</p>
+        <p class="meta">前端工程师 / 独立开发 · hackrabbit.cc.cd</p>
+      </div>
+      <div class="right">
+        <div class="ring"><img src="../../public/avatar.webp" alt="" /></div>
+      </div>
+    </div>
+  </body>
+</html>

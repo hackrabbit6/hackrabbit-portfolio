@@ -2,9 +2,13 @@
 import '../styles/tokens.css'
 
 const {
-  title = 'hackrabbit | 前端交付与 AI 应用',
-  description = 'hackrabbit 的个人作品集：前端业务交付、H5 游戏 SDK、支付链路与 AI 应用实践。',
+  title = 'hackrabbit · 前端工程师 / 独立开发',
+  description = 'hackrabbit 的个人主页：前端工程师、独立开发。做前端交付、H5 SDK、AI 应用与独立产品，也写 AI 时代里和普通人有关的变化。',
 } = Astro.props
+
+// canonical 去掉 query，避免可分享 URL 产生重复规范页。
+const canonical = new URL(Astro.url.pathname, Astro.site)
+const ogImage = new URL('/og.png', Astro.site)
 ---
 
 <!doctype html>
@@ -13,12 +17,26 @@ const {
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content={description}
-    />
-    <meta name="theme-color" content="#0B0B0E" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0B0A08" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="hackrabbit" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="hackrabbit：帮普通人看懂 AI 时代里和自己有关的变化。" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
     <slot />
