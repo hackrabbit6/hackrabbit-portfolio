@@ -12,14 +12,6 @@
   text-wrap: balance;
 }
 
-.building-lead {
-  color: var(--ink-dim);
-  font-size: var(--fs-lead);
-  line-height: 1.7;
-  margin: var(--s4) 0 0;
-  max-width: 42em;
-}
-
 .building-list {
   /* 同一行两张卡等高：去掉 align-items:start，让矮的那张撑到行高，底边对齐。 */
   align-items: stretch;

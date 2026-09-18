@@ -6,23 +6,23 @@ import './Skills.css'
 const capabilities = [
   {
     title: '前端业务交付',
-    text: '我用 Vue2 / Vue3、React、TypeScript、Vite、Webpack、Element Plus、Vant 交付页面、组件、接口联调和上线。',
-    ai: '我让 agent 先搭常规结构,我集中审业务状态、异常分支和验收路径。',
+    text: 'Vue / React / TypeScript 交付页面、组件、接口联调与上线。',
+    ai: 'agent 搭常规结构，我审业务状态与验收。',
   },
   {
     title: 'H5 / SDK / 支付链路',
-    text: '我做过游戏发行 SDK、公众号充值、微信/支付宝支付、小游戏适配、iframe 通信、移动端兼容和线上问题排查。',
-    ai: '我让 agent 帮我列兼容矩阵和回归点,我自己盯支付链路和线上风险。',
+    text: '游戏发行 SDK、公众号充值、微信/支付宝支付、小游戏与移动端适配。',
+    ai: 'agent 列兼容矩阵，我盯支付链路与线上风险。',
   },
   {
     title: '工具与全栈补位',
-    text: '我用 Node.js、Bun、Elysia、Go、Gin、REST API、WebSocket 和基础 CRUD 把业务原型推进到可联调版本。',
-    ai: '我让 agent 补样板接口和数据处理,我检查边界、错误处理和真实可用性。',
+    text: 'Node / Bun / Go 把业务原型推到可联调。',
+    ai: 'agent 补样板接口，我查边界与可用性。',
   },
   {
     title: 'AI 应用接入',
-    text: '我接 RAG、Function Calling / Tool Use、Prompt、AI 聊天应用和 AI 协同开发,重点盯应用层产品体验。',
-    ai: '我让 agent 快速试实现路线,我用 grounding、任务状态和产品判断收口。',
+    text: 'RAG、Function Calling、AI 聊天应用落地。',
+    ai: 'agent 试实现路线，我用 grounding 与产品判断收口。',
   },
 ]
 
