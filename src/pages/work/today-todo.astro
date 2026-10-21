@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+---
+
+<Base
+  title="今日待办：一份代码，六个平台 | hackrabbit"
+  description="个人项目案例：Tauri 打包的多端待办应用，Web / macOS / Windows / Linux / Android / iOS 六端运行，构建全部交给 CI。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="案例导航">
+      <a href="/work/">← 全部案例</a>
+      <a href="/">返回首页</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">open source case study · multi-platform delivery</p>
+      <h1>今日待办：一份代码，六个平台</h1>
+      <p class="case-lead">
+        Tauri 打包的中文待办应用，Web、macOS、Windows、Linux、Android、iOS 六端运行，各平台安装包由 CI 自动产出。
+      </p>
+      <div class="case-meta">
+        <div><strong>来源</strong><span>个人项目</span></div>
+        <div><strong>证据</strong><span><a href="https://github.com/hackrabbit6/today-todo" target="_blank" rel="noreferrer">开源代码 ↗</a></span></div>
+        <div><strong>适合谁</strong><span>预算有限但想覆盖桌面与移动端的产品</span></div>
+      </div>
+    </header>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">01 / problem</p>
+        <h2>多端覆盖为什么这么贵？</h2>
+      </div>
+      <div class="case-copy">
+        <p>一个工具想同时出现在用户的电脑和手机上，传统做法是每端一个技术栈、一个团队：Web 一套、桌面一套、iOS 一套、Android 一套。功能在几份代码里互相追赶，每发一个版本要在每端手动打包、手动分发。</p>
+        <p>对大多数工具类产品来说，用户要的其实不是「每端都极致」，而是「想用的时候哪都能用」。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">02 / decisions</p>
+        <h2>关键判断</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <h3>一套代码跑六端</h3>
+          <p>Tauri 打包：Web 直接部署，macOS / Windows / Linux 出安装包，Android 出 APK，iOS 真机调通。功能写一遍，六端同时有。</p>
+        </article>
+        <article class="case-card">
+          <h3>打包交给 CI</h3>
+          <p>桌面与移动的构建挂在 GitHub Actions 上，手动触发一次，各平台安装包在 artifacts 里自取。不把时间花在重复的打包操作上。</p>
+        </article>
+        <article class="case-card">
+          <h3>本地优先，不背服务器</h3>
+          <p>数据存本地存储，没有账号体系，不做云同步。没有服务器成本，用户数据不出设备。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">03 / evidence</p>
+        <h2>你能核查什么</h2>
+      </div>
+      <div class="case-copy">
+        <p>两个构建 workflow（<code>Desktop Build</code> / <code>Mobile Build</code>）就写在仓库里，点开可以看到各平台怎么打包；安装包产物在每次 run 的 artifacts 中可下载。iOS 本机安装的完整步骤单独有文档（<code>docs/ios-local-install.md</code>）。</p>
+        <p>应用本身支持键盘操作与响应式布局，网页版可直接访问体验。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">04 / fit</p>
+        <h2>怎么用到你的项目里</h2>
+      </div>
+      <div class="case-copy">
+        <p>内部效率工具、面向特定人群的小工具、想先全端验证需求再加大投入的产品——这套「一套代码 + CI 出包 + 本地优先」的组合，都能直接套用。先把六端铺出去验证，需要云同步或账号体系时再往上加。</p>
+      </div>
+    </section>
+
+    <section class="case-cta">
+      <h2>想一次覆盖六端？</h2>
+      <a class="case-button" href="https://github.com/hackrabbit6/today-todo" target="_blank" rel="noreferrer">查看代码 →</a>
+      <a class="case-button" href="mailto:hackrabbit6@gmail.com">聊一聊 →</a>
+    </section>
+  </main>
+</Base>

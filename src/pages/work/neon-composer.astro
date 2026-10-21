@@ -1,0 +1,92 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+---
+
+<Base
+  title="Neon Composer：AI 生成流水线，提示词进、成品出 | hackrabbit"
+  description="个人项目案例：AI 音乐生成控制台，四步生成流水线、独立错误处理、SQLite 持久化与可回放作品库，附端到端测试。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="案例导航">
+      <a href="/work/">← 全部案例</a>
+      <a href="/">返回首页</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">open source case study · ai generation pipeline</p>
+      <h1>Neon Composer：AI 生成流水线，提示词进、成品出</h1>
+      <p class="case-lead">
+        一段提示词生成歌词、音乐与封面。每一步是独立服务、独立失败，作品落库可回放——把 AI API 变成可用产品的完整工程。
+      </p>
+      <div class="case-meta">
+        <div><strong>来源</strong><span>个人项目</span></div>
+        <div><strong>证据</strong><span><a href="https://github.com/hackrabbit6/music" target="_blank" rel="noreferrer">开源代码 ↗</a></span></div>
+        <div><strong>适合谁</strong><span>想把 AI 能力做成可运营产品的团队与个人</span></div>
+      </div>
+    </header>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">01 / problem</p>
+        <h2>从「能调通接口」到「用户能用」，隔着一条工程鸿沟。</h2>
+      </div>
+      <div class="case-copy">
+        <p>拿到 AI 的 API key，一个晚上就能跑出 demo。但 demo 和产品之间是一整条产品工程：多个生成步骤怎么编排？某一步失败了怎么办，是全部作废还是只重试那一步？生成结果怎么保存、怎么在下次会话里找回来？</p>
+        <p>Neon Composer 把这一整条跑通：输入提示词，输出歌词、音乐、封面三样成品，并且每一件都能留下来、找回来、再听一遍。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">02 / decisions</p>
+        <h2>关键判断</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <h3>四步流水线各自独立</h3>
+          <p>提示词 → 歌词 → 音乐 → 封面，每步是独立服务，各有自己的供应商密钥与错误处理。某一步失败只重试那一步；换供应商不动架构。</p>
+        </article>
+        <article class="case-card">
+          <h3>每次生成都落库</h3>
+          <p>全部生成写入 SQLite，配套可搜索的作品库，跨会话可回放。用户关掉页面再回来，之前的东西还在。</p>
+        </article>
+        <article class="case-card">
+          <h3>音频本地优先</h3>
+          <p>生成的 mp3 与元数据直接落磁盘，前端从后端流式播放，带完整播放控制。文件是自己的，不锁在第三方。</p>
+        </article>
+        <article class="case-card">
+          <h3>前后端类型化分离</h3>
+          <p>React + Vite 界面与 Hono（Bun）API 之间走类型化路由，接口改了前端立刻编译报错，不靠人肉对字段。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">03 / evidence</p>
+        <h2>你能核查什么</h2>
+      </div>
+      <div class="case-copy">
+        <p>仓库里有单元、集成与 Playwright 端到端三层测试，覆盖核心生成流程；README 写明架构分层与目录职责。API 密钥不进仓库，<code>.env.example</code> 记录了需要配置什么。</p>
+        <p>这不是跑一次截图发朋友圈的 demo——每个生成步骤的失败分支都有对应处理，作品库有完整的增查与回放。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">04 / fit</p>
+        <h2>怎么用到你的项目里</h2>
+      </div>
+      <div class="case-copy">
+        <p>内容生成、素材生产类需求的结构和这里完全同构：多步 AI 流水线、异步任务、结果持久化、可检索回放。把生成目标换成你的业务内容（文案、图片、报告），这条流水线直接复用。</p>
+      </div>
+    </section>
+
+    <section class="case-cta">
+      <h2>想把 AI 能力做成产品？</h2>
+      <a class="case-button" href="https://github.com/hackrabbit6/music" target="_blank" rel="noreferrer">查看代码 →</a>
+      <a class="case-button" href="mailto:hackrabbit6@gmail.com">聊一聊 →</a>
+    </section>
+  </main>
+</Base>

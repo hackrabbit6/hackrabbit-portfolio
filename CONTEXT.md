@@ -75,7 +75,10 @@ _Avoid_: 联系我、求职、Hire me、我在找机会
 _Avoid_: 社交链接、Follow me、Links、联系方式
 
 **Case Study**：
-站内 `/work/` 下的独立案例页面，讲问题、职责、约束与交付范围。目前只有 H5 SDK 有。
+站内 `/work/` 下的独立案例页面，讲问题、职责、约束与交付范围。工作项目目前只有 H5 SDK 有；
+个人项目中有食光（`/work/shiguang/`）、Neon Composer（`/work/neon-composer/`）、
+今日待办（`/work/today-todo/`）、数字亲人（`/work/digital-loved-one/`），
+个人案例页的段落结构固定为：问题 → 关键判断 → 证据 → 适用场景。
 _Avoid_: 详情页、项目介绍、案例详情
 
 ## 链接文案

@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+---
+
+<Base
+  title="食光：一套业务逻辑，小程序和网页同时跑 | hackrabbit"
+  description="个人项目案例：微信小程序与 Next.js 网页双端交付，业务逻辑收敛为单一 core 包，设计规格单一来源。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="案例导航">
+      <a href="/work/">← 全部案例</a>
+      <a href="/">返回首页</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">open source case study · mini-app + web</p>
+      <h1>食光：一套业务逻辑，小程序和网页同时跑</h1>
+      <p class="case-lead">
+        排一周吃什么、买什么的工具。排菜、采购、预算的全部逻辑只写一遍，微信小程序和 Next.js 网页共用同一份核心。
+      </p>
+      <div class="case-meta">
+        <div><strong>来源</strong><span>个人项目</span></div>
+        <div><strong>证据</strong><span><a href="https://github.com/hackrabbit6/shiguang" target="_blank" rel="noreferrer">开源代码 ↗</a></span></div>
+        <div><strong>适合谁</strong><span>需要小程序与网页同步上线的商家与工具创业者</span></div>
+      </div>
+    </header>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">01 / problem</p>
+        <h2>想要小程序，也想要网页，然后呢？</h2>
+      </div>
+      <div class="case-copy">
+        <p>多数业务的答案是做两遍：小程序一套代码，网页一套代码。代价不只是两份开发费——上线以后，同一个功能要在两边各改一次，改一个 bug 要改两遍，时间一长两边长得越来越不像，客户在小程序看到的和网页看到的对不上。</p>
+        <p>食光就是为了验证另一条路：双端只写一份业务逻辑，界面各管各的。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">02 / decisions</p>
+        <h2>关键判断</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <h3>业务逻辑单独成包</h3>
+          <p>排菜、按人数缩放、换菜、省钱、预算档位全部收进一个零平台依赖的 core 包：不出现 wx、window、document，某端的能力由那一端自己注入。小程序和网页只是两件外衣。</p>
+        </article>
+        <article class="case-card">
+          <h3>设计规格单一来源</h3>
+          <p>色板、分类配色、食物插画只在 design 包里定义一份，网页和小程序的样式文件由它自动生成。改颜色只改一处，不会出现网页一个蓝、小程序另一个蓝。</p>
+        </article>
+        <article class="case-card">
+          <h3>用测试守住边界</h3>
+          <p>core 与 design 里有测试守着：一旦有人把平台代码混进核心层，或生成产物与源码不一致，测试直接失败。结构不靠自觉，靠检查。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">03 / evidence</p>
+        <h2>你能核查什么</h2>
+      </div>
+      <div class="case-copy">
+        <p>仓库按 monorepo 组织：<code>packages/core</code>（业务逻辑）、<code>packages/design</code>（设计规格）、<code>apps/weapp</code>（微信小程序）、<code>apps/web</code>（Next.js 网页），两层一壳的分工在目录结构里直接可见。</p>
+        <p><code>bun run test</code> 跑类型检查、core 测试、小程序页面测试与网页测试，并比对自动生成的产物与源码是否一致。微信小程序与网页两端的项目历史用 git subtree 保留，重构过程可回溯。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">04 / fit</p>
+        <h2>怎么用到你的项目里</h2>
+      </div>
+      <div class="case-copy">
+        <p>如果你的业务需要小程序加网页同时上线、又不想为两份重复逻辑长期付维护费，这个结构可以直接搬：核心层放你的业务规则，两端壳层只做界面和平台适配。后续加功能只写一遍，两端同时生效。</p>
+      </div>
+    </section>
+
+    <section class="case-cta">
+      <h2>想做类似的双端产品？</h2>
+      <a class="case-button" href="https://github.com/hackrabbit6/shiguang" target="_blank" rel="noreferrer">查看代码 →</a>
+      <a class="case-button" href="mailto:hackrabbit6@gmail.com">聊一聊 →</a>
+    </section>
+  </main>
+</Base>

@@ -1,0 +1,92 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+---
+
+<Base
+  title="数字亲人：会说「我不知道」的记忆 AI | hackrabbit"
+  description="个人项目案例：Go + RAG + React 的记忆对话系统，把「不编造」写进代码层——证据不足或来源冲突时拒绝生成。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="案例导航">
+      <a href="/work/">← 全部案例</a>
+      <a href="/">返回首页</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">open source case study · grounded rag</p>
+      <h1>数字亲人：会说「我不知道」的记忆 AI</h1>
+      <p class="case-lead">
+        上传聊天记录、笔记与录音，系统构建可对话的私有记忆库。硬约束只有一条：证据不足就明确说「我不知道」，不编造——并且这一点写在代码里，不是写在提示词里。
+      </p>
+      <div class="case-meta">
+        <div><strong>来源</strong><span>个人项目</span></div>
+        <div><strong>证据</strong><span><a href="https://github.com/hackrabbit6/digital-loved-one" target="_blank" rel="noreferrer">开源代码 ↗</a> · 附工程案例文档</span></div>
+        <div><strong>适合谁</strong><span>在意答案可信度的 AI 客服与私有知识库项目</span></div>
+      </div>
+    </header>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">01 / problem</p>
+        <h2>AI 问答系统最怕的不是答不出，是编。</h2>
+      </div>
+      <div class="case-copy">
+        <p>做 AI 客服或知识库，最伤的时刻是系统一本正经地给出一个错误答案。用户被坑一次，就不再信任整个系统。常见做法是在提示词里写「请不要编造」——但提示词约束在长对话里会被冲掉，模型该编还是编。</p>
+        <p>数字亲人换了条路：让系统在证据不足时根本没有生成这个动作。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">02 / decisions</p>
+        <h2>关键判断</h2>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <h3>先校验，后生成</h3>
+          <p>每次回答前过一道 grounding 校验：检索不充分、或来源互相矛盾，代码层直接阻断生成、回复「我不知道」并标注原因。这是代码保证，不依赖模型自觉。</p>
+        </article>
+        <article class="case-card">
+          <h3>证据与解读分开存</h3>
+          <p>原文摘录逐字保存，并与主题节点关联；不同来源的事实冲突会被检测、标出，而不是被模型悄悄平均成一个「看起来合理」的答案。</p>
+        </article>
+        <article class="case-card">
+          <h3>记忆有版本</h3>
+          <p>主题节点每次更新都归档（_v1、_v2……），知识有历史、可回溯，改了什么、什么时候改的查得到。</p>
+        </article>
+        <article class="case-card">
+          <h3>存储层接口化</h3>
+          <p>全部代码通过 memory.Store 接口读写，默认落 JSON 文件，可切换到嵌入式数据库。单机起步，需要时平滑升级。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">03 / evidence</p>
+        <h2>你能核查什么</h2>
+      </div>
+      <div class="case-copy">
+        <p>「我不知道」如何在代码里强制，作者写了完整的工程案例文档（仓库内 <code>docs/CASE_STUDY.md</code>），逐层讲校验时机与阻断逻辑。后端用 Go 标准库 HTTP，不用框架，依赖少、可读性高。</p>
+        <p>资料导入支持 WhatsApp / 微信聊天记录、音频与纯文本，解析、摘录、冲突检测的流水线在仓库结构中直接可见。</p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <div>
+        <p class="case-label">04 / fit</p>
+        <h2>怎么用到你的项目里</h2>
+      </div>
+      <div class="case-copy">
+        <p>企业级 AI 问答的核心不是「答得多」，而是「错得少、可追溯」。这套「先校验后生成 + 冲突检测 + 版本化记忆」的机制，可以直接复用到你的 AI 客服、私有知识库或合规敏感的问答场景：换掉资料源和领域，grounding 层照搬。</p>
+      </div>
+    </section>
+
+    <section class="case-cta">
+      <h2>在意答案的可信度？</h2>
+      <a class="case-button" href="https://github.com/hackrabbit6/digital-loved-one" target="_blank" rel="noreferrer">查看代码 →</a>
+      <a class="case-button" href="mailto:hackrabbit6@gmail.com">聊一聊 →</a>
+    </section>
+  </main>
+</Base>
