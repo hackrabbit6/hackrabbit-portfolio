@@ -2,6 +2,7 @@ import { HackRabbitMark } from './HackRabbitMark'
 import './Contact.css'
 
 const next = [
+  { label: '服务与报价', meta: '能做什么、怎么合作', href: '/services/' },
   { label: '项目案例', meta: '过程与判断', href: '/work/' },
   { label: 'GitHub', meta: '公开代码', href: 'https://github.com/hackrabbit6' },
   { label: '下载简历', meta: 'PDF', href: '/resume.pdf' },
