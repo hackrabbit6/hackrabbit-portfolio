@@ -2,18 +2,18 @@
    数值取自 src/styles/tokens.css，字号按「在页面上 1:1 显示」来定，不做二次缩放。 */
 
 :root {
-  --bg: #0b0a08;
-  --ink: #ede4d3;
-  --dim: #a79e8c;
+  --bg: #08090c;
+  --ink: #eceae4;
+  --dim: #a3a6ae;
   /* 4.5:1 是 WCAG AA 对正文级字号的下限；Cover 里的说明行和图注是画进位图的，
      DOM 对比度审计查不到，只能在这里定死（--faint 对 --bg 约 5.6:1）。 */
-  --faint: #928a7a;
-  --accent: #d64a32;
-  --cyan: #3e8e7e;
-  --amber: #c9a227;
-  --line: rgba(237, 228, 211, 0.1);
-  --chip: rgba(237, 228, 211, 0.03);
-  --rule: rgba(237, 228, 211, 0.2);
+  --faint: #858a94;
+  --accent: #f2b266;
+  --cyan: #5fbfae;
+  --amber: #f2b266;
+  --line: rgba(236, 234, 228, 0.1);
+  --chip: rgba(236, 234, 228, 0.03);
+  --rule: rgba(236, 234, 228, 0.2);
   --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -30,8 +30,8 @@ body {
 
 .cover {
   background:
-    radial-gradient(120% 90% at 6% -12%, rgba(214, 74, 50, 0.12), transparent 58%),
-    radial-gradient(90% 80% at 102% 18%, rgba(62, 142, 126, 0.07), transparent 60%), var(--bg);
+    radial-gradient(120% 90% at 6% -12%, rgba(242, 178, 102, 0.12), transparent 58%),
+    radial-gradient(90% 80% at 102% 18%, rgba(95, 191, 174, 0.07), transparent 60%), var(--bg);
   color: var(--ink);
   display: flex;
   flex-direction: column;
@@ -168,8 +168,8 @@ body {
 }
 
 .n-key {
-  fill: rgba(214, 74, 50, 0.1);
-  stroke: rgba(214, 74, 50, 0.42);
+  fill: rgba(242, 178, 102, 0.1);
+  stroke: rgba(242, 178, 102, 0.42);
 }
 
 .n-ghost {
@@ -212,7 +212,7 @@ body {
 
 .ln-ghost {
   fill: none;
-  stroke: rgba(237, 228, 211, 0.16);
+  stroke: rgba(236, 234, 228, 0.16);
   stroke-dasharray: 3 3;
   stroke-width: 1;
 }
@@ -240,7 +240,7 @@ body {
 }
 
 .term-bar b {
-  background: rgba(237, 228, 211, 0.18);
+  background: rgba(236, 234, 228, 0.18);
   border-radius: 50%;
   display: block;
   height: 7px;

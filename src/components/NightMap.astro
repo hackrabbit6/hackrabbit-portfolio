@@ -1,0 +1,206 @@
+---
+import './NightMap.css'
+import type { StopKey } from '../lib/night-map'
+
+// 全站共用的夜间地图（ADR 0004 / NIGHT-MAP.md）。
+// 首页：读到哪个带 data-map-stop 的区块，镜头就飞到哪个地标；
+// 子页面：停在 stop 指定的地标，随滚动绕行。
+type Props = { stop?: StopKey }
+const { stop = 'start' } = Astro.props
+
+const names: Record<StopKey, string> = {
+  start: '起点',
+  workshop: '工坊',
+  lab: '黑兔实验室',
+  tower: '作品塔',
+  pillars: '四柱',
+  stairs: '升级台阶',
+  desk: '台灯工作台',
+  portal: '传送门',
+}
+const legend: Array<{ key: StopKey; label: string }> = [
+  { key: 'start', label: '全图' },
+  { key: 'workshop', label: '工坊 · 在做什么' },
+  { key: 'lab', label: '实验室 · 关注' },
+  { key: 'tower', label: '作品塔 · 作品' },
+  { key: 'pillars', label: '四柱 · 能力' },
+  { key: 'stairs', label: '台阶 · 经历' },
+  { key: 'desk', label: '工作台 · AI 工具' },
+  { key: 'portal', label: '传送门 · 联系' },
+]
+---
+
+<div class="night-map" data-night-map data-stop={stop} data-names={JSON.stringify(names)}>
+  <div class="night-fallback" aria-hidden="true"></div>
+  <canvas class="night-canvas" data-night-canvas aria-hidden="true"></canvas>
+  <div class="night-veil" aria-hidden="true"></div>
+</div>
+
+<nav class="map-legend" data-map-legend aria-label="地图图例" hidden>
+  <span class="map-legend-title">图例 · 路线</span>
+  {
+    legend.map((item) => (
+      <button type="button" data-go={item.key}>
+        <span>{item.label}</span>
+        <i aria-hidden="true" />
+      </button>
+    ))
+  }
+</nav>
+
+<a class="map-here" data-map-here href="/" hidden>
+  <span class="map-here-dot" aria-hidden="true"></span>
+  <span>你在 · <strong data-map-here-name>{names[stop]}</strong></span>
+  <span class="map-here-back">回到全图 →</span>
+</a>
+
+<div class="map-tip" data-map-tip aria-hidden="true"></div>
+
+<script>
+  import type { NightMapHandle, StopKey } from '../lib/night-map'
+
+  const root = document.querySelector<HTMLElement>('[data-night-map]')
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-night-canvas]')
+  const legend = document.querySelector<HTMLElement>('[data-map-legend]')
+  const here = document.querySelector<HTMLElement>('[data-map-here]')
+  const tip = document.querySelector<HTMLElement>('[data-map-tip]')
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const coarse = window.matchMedia('(pointer: coarse)').matches
+
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-map-stop]'))
+  const tour = sections.length > 0
+  const pageStop = (root?.dataset.stop ?? 'start') as StopKey
+  const names = JSON.parse(root?.dataset.names ?? '{}') as Record<StopKey, string>
+
+  // 首页区块与地标一一对应；子页面点地标时跳到对应页面或首页区块。
+  const sectionFor = (key: StopKey) => sections.find((s) => s.dataset.mapStop === key)
+  const pageHref: Record<StopKey, string> = {
+    start: '/',
+    workshop: '/#building',
+    lab: '/writing/',
+    tower: '/work/',
+    pillars: '/services/',
+    stairs: '/#experience',
+    desk: '/#crew',
+    portal: '/#contact',
+  }
+
+  const scrollToStop = (key: StopKey) => {
+    const target = sectionFor(key)
+    if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
+  }
+
+  // 当前阅读位置：顶边越过视口 40% 的最后一个区块。
+  const readingStop = (): StopKey => {
+    const line = window.innerHeight * 0.4
+    let key = (sections[0]?.dataset.mapStop ?? 'start') as StopKey
+    for (const s of sections) {
+      if (s.getBoundingClientRect().top <= line) key = s.dataset.mapStop as StopKey
+    }
+    return key
+  }
+
+  const markLegend = (key: StopKey) => {
+    legend?.querySelectorAll<HTMLButtonElement>('button').forEach((b) => {
+      if (b.dataset.go === key) b.setAttribute('aria-current', 'step')
+      else b.removeAttribute('aria-current')
+    })
+  }
+
+  if (tour && legend) {
+    legend.hidden = false
+    legend.querySelectorAll<HTMLButtonElement>('button').forEach((b) => {
+      b.addEventListener('click', () => scrollToStop(b.dataset.go as StopKey))
+    })
+    markLegend(readingStop())
+  }
+  if (!tour && here && pageStop !== 'start') here.hidden = false
+
+  // 指针在文字、链接、图片、卡片上时，地标不响应，避免误跳转、不影响选字。
+  const overContent = (el: Element | null) =>
+    Boolean(
+      el?.closest(
+        'a,button,input,textarea,select,label,summary,p,h1,h2,h3,h4,h5,li,img,picture,figure,blockquote,table,pre,code,article,time,small,strong,nav,[data-tilt]',
+      ),
+    )
+
+  const webglAvailable = () => {
+    try {
+      const probe = document.createElement('canvas')
+      return Boolean(window.WebGLRenderingContext && (probe.getContext('webgl2') || probe.getContext('webgl')))
+    } catch {
+      return false
+    }
+  }
+
+  const boot = async (host: HTMLElement, cv: HTMLCanvasElement) => {
+    const { bootNightMap } = await import('../lib/night-map')
+    const map: NightMapHandle = bootNightMap(cv, {
+      initial: tour ? readingStop() : pageStop,
+      reduceMotion,
+      coarse,
+    })
+    host.dataset.webgl = 'on'
+
+    let ticking = false
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        ticking = false
+        if (tour) {
+          const key = readingStop()
+          map.setStop(key)
+          markLegend(key)
+        } else {
+          const max = document.documentElement.scrollHeight - window.innerHeight
+          map.setOrbit(max > 0 ? (window.scrollY / max) * 2 - 1 : 0)
+        }
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+
+    if (coarse) return
+
+    let hovered: StopKey | null = null
+    window.addEventListener(
+      'pointermove',
+      (event) => {
+        const nx = (event.clientX / window.innerWidth) * 2 - 1
+        const ny = -(event.clientY / window.innerHeight) * 2 + 1
+        if (!reduceMotion) map.setParallax(nx * 0.5, -ny * 0.5)
+        const key = overContent(event.target as Element) ? null : map.pick(nx, ny)
+        if (key !== hovered) {
+          hovered = key
+          map.setHover(key)
+          document.documentElement.classList.toggle('map-pointing', Boolean(key))
+          if (tip) {
+            tip.textContent = key ? `${names[key]} · 点击前往` : ''
+            tip.classList.toggle('on', Boolean(key))
+          }
+        }
+        if (tip && key) tip.style.transform = `translate(${event.clientX + 14}px, ${event.clientY + 14}px)`
+      },
+      { passive: true },
+    )
+    window.addEventListener('click', (event) => {
+      if (!hovered || overContent(event.target as Element)) return
+      if (window.getSelection()?.toString()) return
+      if (tour && sectionFor(hovered)) scrollToStop(hovered)
+      else window.location.href = pageHref[hovered]
+    })
+  }
+
+  if (root && canvas && webglAvailable()) {
+    const run = () => {
+      boot(root, canvas).catch(() => canvas.remove())
+    }
+    const idle = window.requestIdleCallback?.bind(window)
+    if (idle) idle(run, { timeout: 1500 })
+    else window.setTimeout(run, 120)
+  } else {
+    canvas?.remove()
+  }
+</script>
