@@ -1,5 +1,7 @@
 # ORIENTAL-REDESIGN ·「墨韵 · 月下玉兔」
 
+> 历史记录：本规范的视觉部分已由 `docs/adr/0004-night-map.md` 与 `docs/NIGHT-MAP.md` 取代。
+
 全站视觉改版规范。依据 `docs/adr/0003-oriental-ink-webgl.md`（取代 ADR 0002）。
 本文档定义**视觉层**；角色、作品、履历、账号等事实内容不改。
 
