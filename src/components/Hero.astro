@@ -1,10 +1,8 @@
 ---
 import './Hero.css'
-import HeroField from './HeroField.astro'
 ---
 
-<section class="hero-act static" id="top">
-  <HeroField />
+<section class="hero-act" id="top" data-map-stop="start">
   <nav class="site-nav" aria-label="主导航">
     <a class="brand" href="#top">
       <img class="brand-mark" src="/rabbit.svg" alt="" width="26" height="26" aria-hidden="true" />
@@ -26,17 +24,16 @@ import HeroField from './HeroField.astro'
   <div class="hero-inner">
     <div class="hero-copy">
       <p class="eyebrow hero-reveal">前端工程师 · hackrabbit</p>
-      <h1 class="hero-title hero-reveal">HACKRABBIT</h1>
-      <img class="hero-brush" src="/brush.svg" alt="" aria-hidden="true" width="420" height="26" />
+      <h1 class="hero-title hero-reveal">HACK<span>RABBIT</span></h1>
       {/* 首屏语序「现在 X。此前 4-5 年前端交付。」是决定 6 —— 语序本身编码优先级，
           X 走 B 口径（面向普通读者），技术可信度交给后半句兜住。 */}
       <p class="lead hero-reveal">
         现在，我在帮普通人看懂 <span class="nowrap">AI 时代</span>里和自己有关的变化。此前 4-5
         年前端交付。
       </p>
-      {/* 自述：不露脸，用化身与语气立住「人」。风格对标站主喜欢的游戏/动漫（见 ORIENTAL-REDESIGN）。 */}
+      {/* 自述：不露脸，用化身与语气立住「人」。「先看清地图」也是整站夜间地图的由来（NIGHT-MAP.md）。 */}
       <p class="hero-motto hero-reveal">
-        白天拆需求，晚上拆排位。先看清地图，再动手。
+        <span class="nowrap">白天拆需求，晚上拆排位。</span><span class="nowrap">先看清地图，再动手。</span>
       </p>
       <div class="hero-cta hero-reveal">
         <a class="cta cta-primary" href="#building">在做什么 ↓</a>

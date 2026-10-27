@@ -144,17 +144,7 @@ export function Work() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     gsap.registerPlugin(ScrollTrigger)
 
-    // 只在两列布局成立时 pin 标题；单列下 pin 会把标题压在内容上。
-    const mm = gsap.matchMedia()
-    mm.add('(min-width: 1024px)', () => {
-      ScrollTrigger.create({
-        trigger: '.work',
-        start: 'top top',
-        end: 'bottom bottom',
-        pin: '.work-heading',
-      })
-    })
-
+    // 夜间地图版改为单栏（NIGHT-MAP.md），不再 pin 标题。
     gsap.utils.toArray<HTMLElement>('.work-card, .work-featured').forEach((card) => {
       gsap.from(card, {
         y: 48,
@@ -164,12 +154,10 @@ export function Work() {
         scrollTrigger: { trigger: card, start: 'top 88%' },
       })
     })
-
-    return () => mm.revert()
   }, [])
 
   return (
-    <section className="work" id="work">
+    <section className="work" id="work" data-map-stop="tower">
       <div className="work-heading">
         <p className="eyebrow">作品</p>
         <h2>做过的项目</h2>

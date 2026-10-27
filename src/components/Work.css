@@ -1,13 +1,14 @@
+/* 夜间地图版：标题在上、列表在下的单栏。宽屏下这一栏正好容纳 684px 的 Cover，
+   右侧留给作品塔（NIGHT-MAP.md）。 */
 .work {
   display: grid;
-  gap: var(--s7);
-  grid-template-columns: 0.72fr 1.28fr;
+  gap: var(--s6);
+  grid-template-columns: minmax(0, 1fr);
   padding: var(--space-section) var(--gutter) var(--space-section-end);
 }
 
 .work-heading {
   align-self: start;
-  padding-top: var(--s6);
 }
 
 .work-heading h2 {
@@ -31,6 +32,7 @@
 .work-list {
   display: grid;
   gap: var(--space-project);
+  max-width: 684px;
 }
 
 /* ── 视觉位 ─────────────────────────────────────────── */
@@ -38,7 +40,7 @@
 .work-visual {
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: var(--s4);
+  border-radius: 2px;
   overflow: hidden;
   position: relative;
 }
@@ -148,9 +150,9 @@
 }
 
 .work-tags span {
-  background: var(--line);
+  background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 2px;
   color: var(--ink-dim);
   padding: var(--s2) var(--s3);
 }
@@ -186,24 +188,6 @@
 
 .work-more:hover::after {
   transform: translateX(4px);
-}
-
-/* sticky 标题 + 列表的两列只在桌面成立。再窄就把标题叠回列表上方，
-   把整个容器宽度让给 Cover，否则视觉位会窄到图里的字看不清。 */
-@media (max-width: 1023px) {
-  .work {
-    gap: var(--s6);
-    grid-template-columns: 1fr;
-  }
-
-  .work-heading {
-    padding-top: 0;
-  }
-
-  /* Cover 按 684 出图，列表再宽就只是把位图拉糊，没有额外信息。 */
-  .work-list {
-    max-width: 684px;
-  }
 }
 
 @media (max-width: 767px) {

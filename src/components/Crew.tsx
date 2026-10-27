@@ -25,7 +25,7 @@ export function Crew() {
   }, [])
 
   return (
-    <section className="band" id="crew">
+    <section className="band" id="crew" data-map-stop="desk">
       {/* NOW 薄带已拆掉（决定 3）：现在的状态并入「在做什么」主角区块，
           这里只留 CREW —— 回答「用什么方式做」，不回答「在做什么」。 */}
       <div className="band-row">

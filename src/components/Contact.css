@@ -1,8 +1,8 @@
 .contact {
   display: grid;
   gap: var(--s7);
-  grid-template-columns: 1fr 0.9fr;
-  min-height: 100vh;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 90vh;
   padding: var(--space-section) var(--gutter) var(--space-section-end);
 }
 
@@ -41,8 +41,11 @@
 
 .contact-links a,
 .next-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 2px;
   color: var(--ink);
   font-family: var(--font-mono);
   font-size: var(--fs-small);
@@ -53,14 +56,24 @@
   align-self: end;
   display: grid;
   gap: var(--s4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .next-card {
-  background: var(--panel);
-  border-radius: var(--s4);
   display: grid;
   gap: var(--s3);
-  min-height: 160px;
+  min-height: 140px;
+  position: relative;
+  transition: border-color 0.25s var(--ease-cine);
+}
+
+.next-card:hover {
+  border-color: rgba(242, 178, 102, 0.55);
+}
+
+.contact-links a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .next-card span {
@@ -80,8 +93,11 @@
 }
 
 @media (max-width: 767px) {
-  .contact {
+  .next-grid {
     grid-template-columns: 1fr;
+  }
+
+  .contact {
     min-height: auto;
     padding: var(--s7) var(--s5) var(--s6);
   }
