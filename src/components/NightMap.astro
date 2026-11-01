@@ -247,6 +247,7 @@ const legend: Array<{ key: StopKey; label: string }> = [
     map.onFrame(syncAnchors)
 
     let ticking = false
+    let live = true
     const onScroll = () => {
       if (ticking) return
       ticking = true
@@ -271,12 +272,27 @@ const legend: Array<{ key: StopKey; label: string }> = [
     onScroll()
     syncAnchorRects()
 
+    // iOS Safari 会在内存吃紧时回收 WebGL context。地图是全站固定背景，
+    // canvas 一旦冻住就等于整站变成一张静态图。这里不尝试重建（重建会连带重排整个场景），
+    // 而是直接回退到 .night-fallback，并把 canvas 拿掉 —— 回退层、引线、地标钉
+    // 都由 data-webgl 驱动，拿掉属性就全部回到静态路径。
+    cv.addEventListener('webglcontextlost', (event) => {
+      event.preventDefault()
+      if (!live) return
+      live = false
+      window.removeEventListener('scroll', onScroll)
+      map.dispose()
+      delete host.dataset.webgl
+      cv.remove()
+    })
+
     if (coarse) return
 
     let hovered: StopKey | null = null
     window.addEventListener(
       'pointermove',
       (event) => {
+        if (!live) return
         const nx = (event.clientX / window.innerWidth) * 2 - 1
         const ny = -(event.clientY / window.innerHeight) * 2 + 1
         if (!reduceMotion) map.setParallax(nx * 0.5, -ny * 0.5)
@@ -295,7 +311,7 @@ const legend: Array<{ key: StopKey; label: string }> = [
       { passive: true },
     )
     window.addEventListener('click', (event) => {
-      if (!hovered || overContent(event.target as Element)) return
+      if (!live || !hovered || overContent(event.target as Element)) return
       if (window.getSelection()?.toString()) return
       if (tour && sectionFor(hovered)) scrollToStop(hovered)
       else window.location.href = pageHref[hovered]

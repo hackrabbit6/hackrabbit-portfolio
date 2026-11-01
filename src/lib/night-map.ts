@@ -65,6 +65,9 @@ const smooth = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t)
 }
 
+// 拾取用的归一化设备坐标。pointermove 每帧都在调 pick()，提到模块作用域复用。
+const pointerNdc = new THREE.Vector2()
+
 // 起伏地形，地标周围压平，让建筑稳稳落地。
 const height = (x: number, z: number) => {
   const h =
@@ -726,7 +729,7 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
       parallax.set(x, y)
     },
     pick(nx, ny) {
-      ray.setFromCamera(new THREE.Vector2(nx, ny), camera)
+      ray.setFromCamera(pointerNdc.set(nx, ny), camera)
       const hit = ray.intersectObjects(pickers, false)[0]
       return hit ? (hit.object.userData.key as StopKey) : null
     },
