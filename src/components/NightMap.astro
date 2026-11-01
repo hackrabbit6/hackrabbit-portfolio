@@ -1,6 +1,7 @@
 ---
 import './NightMap.css'
 import type { StopKey } from '../lib/night-map'
+import { STOP_META } from '../lib/map-stops'
 
 // 全站共用的夜间地图（ADR 0004 / NIGHT-MAP.md）。
 // 首页：读到哪个带 data-map-stop 的区块，镜头就飞到哪个地标；
@@ -8,16 +9,10 @@ import type { StopKey } from '../lib/night-map'
 type Props = { stop?: StopKey }
 const { stop = 'start' } = Astro.props
 
-const names: Record<StopKey, string> = {
-  start: '起点',
-  workshop: '工坊',
-  lab: '黑兔实验室',
-  tower: '作品塔',
-  pillars: '四柱',
-  stairs: '升级台阶',
-  desk: '台灯工作台',
-  portal: '传送门',
-}
+// 地标名与方位只有一份定义（src/lib/map-stops.ts），图例与区块标注都读它。
+const names = Object.fromEntries(
+  Object.entries(STOP_META).map(([key, meta]) => [key, meta.name]),
+) as Record<StopKey, string>
 const legend: Array<{ key: StopKey; label: string }> = [
   { key: 'start', label: '全图' },
   { key: 'workshop', label: '工坊 · 在做什么' },
@@ -54,6 +49,9 @@ const legend: Array<{ key: StopKey; label: string }> = [
   <span class="map-here-back">回到全图 →</span>
 </a>
 
+{/* 地标钉：当前地标的屏幕投影点，引线的终点。纯装饰，不拦指针。 */}
+<span class="map-pin" data-map-pin data-on="0" aria-hidden="true"></span>
+
 <div class="map-tip" data-map-tip aria-hidden="true"></div>
 
 <script>
@@ -64,6 +62,7 @@ const legend: Array<{ key: StopKey; label: string }> = [
   const legend = document.querySelector<HTMLElement>('[data-map-legend]')
   const here = document.querySelector<HTMLElement>('[data-map-here]')
   const tip = document.querySelector<HTMLElement>('[data-map-tip]')
+  const pin = document.querySelector<HTMLElement>('[data-map-pin]')
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const coarse = window.matchMedia('(pointer: coarse)').matches
@@ -150,14 +149,102 @@ const legend: Array<{ key: StopKey; label: string }> = [
     new ResizeObserver(syncBand).observe(title)
   }
 
+  // 正文栏的右边界（窗口坐标）：化身的安全线与引线的拐点都读它。
+  // 首页各区块用 --map-col 把右边让给地图；子页面（case-shell）正文更窄 —— 所以量，不猜 token。
+  // 首屏 #top 不算：它没有这条右留白，而且标题要跨到地图上。
+  const contentEdge = () => {
+    if (window.innerWidth < 1100) return 0
+    let edge = 0
+    for (const el of document.querySelectorAll<HTMLElement>('main [data-map-stop]:not(#top), main.case-shell')) {
+      const rect = el.getBoundingClientRect()
+      const pad = parseFloat(getComputedStyle(el).paddingRight) || 0
+      edge = Math.max(edge, rect.right - pad)
+    }
+    return edge
+  }
+
+  // ── 引线：区块标注 → 地标投影 ────────────────────────────────
+  // 布局（标注在哪、正文栏右边界在哪）只在滚动那一帧读一次，投影每帧算（相机一直在动）。
+  const wide = window.matchMedia('(min-width: 1100px)')
+  const anchors = Array.from(document.querySelectorAll<HTMLElement>('[data-map-leader]')).map((el) => ({
+    el,
+    key: (el.closest('[data-map-stop]') as HTMLElement | null)?.dataset.mapStop as StopKey,
+    x: 0,
+    y: 0,
+    visible: false,
+  }))
+
+  // 引线的拐点就是正文栏右边界：过了这条线才是地图，斜段不穿过任何字。
+  let elbowX = 0
+  let measuredWidth = 0
+  const measureElbow = () => {
+    if (window.innerWidth === measuredWidth) return
+    measuredWidth = window.innerWidth
+    elbowX = contentEdge() + 12
+  }
+
+  const syncAnchorRects = () => {
+    measureElbow()
+    const height = window.innerHeight
+    for (const a of anchors) {
+      const rect = a.el.getBoundingClientRect()
+      a.x = rect.right + 10
+      a.y = rect.top + rect.height / 2
+      a.visible = rect.bottom > 0 && rect.top < height
+    }
+  }
+
+  const setVar = (el: HTMLElement, name: string, value: string) => {
+    if (el.style.getPropertyValue(name) !== value) el.style.setProperty(name, value)
+  }
+
+  const setOn = (el: HTMLElement, on: boolean) => {
+    const next = on ? '1' : '0'
+    if (el.dataset.on !== next) el.dataset.on = next
+  }
+
   const boot = async (host: HTMLElement, cv: HTMLCanvasElement) => {
     const { bootNightMap } = await import('../lib/night-map')
     const map: NightMapHandle = bootNightMap(cv, {
       initial: tour ? readingStop() : pageStop,
       reduceMotion,
       coarse,
+      contentRight: contentEdge,
     })
     host.dataset.webgl = 'on'
+
+    // 当前地标：首页跟着阅读位置，子页面就停在页面地标。
+    let active: StopKey = tour ? readingStop() : pageStop
+
+    // 引线与地标钉：投影每帧算（相机一直在动），布局只在滚动那一帧读。
+    const syncAnchors = () => {
+      if (!wide.matches || coarse) return
+      const here = map.project(active)
+      if (pin) {
+        if (here) {
+          setVar(pin, '--stop-x', `${Math.round(here.x)}px`)
+          setVar(pin, '--stop-y', `${Math.round(here.y)}px`)
+        }
+        setOn(pin, Boolean(here))
+      }
+      for (const a of anchors) {
+        // 只有当前这一段亮引线：八个区块同时连线就不是标注，是一团网。
+        const point = a.visible && a.key === active ? map.project(a.key) : null
+        // 先水平拉到正文栏边界，再斜拉到地标（两段引线，拐点不穿过正文）。
+        const run = Math.max(0, Math.min(elbowX - a.x, 640))
+        const elbow = { x: a.x + run, y: a.y }
+        const length = point ? Math.hypot(point.x - elbow.x, point.y - elbow.y) - 12 : 0
+        if (!point || length < 20 || length > 900) {
+          setVar(a.el, '--leader-opacity', '0')
+          continue
+        }
+        setVar(a.el, '--leader-run', `${Math.round(run)}px`)
+        setVar(a.el, '--leader-length', `${Math.round(length)}px`)
+        setVar(a.el, '--leader-angle', `${Math.atan2(point.y - elbow.y, point.x - elbow.x)}rad`)
+        setVar(a.el, '--leader-opacity', '1')
+      }
+    }
+    map.onFrame(syncAnchors)
 
     let ticking = false
     const onScroll = () => {
@@ -166,8 +253,10 @@ const legend: Array<{ key: StopKey; label: string }> = [
       requestAnimationFrame(() => {
         ticking = false
         syncBand()
+        syncAnchorRects()
         if (tour) {
           const key = readingStop()
+          active = key
           map.setStop(key)
           markLegend(key)
         } else {
@@ -177,7 +266,10 @@ const legend: Array<{ key: StopKey; label: string }> = [
       })
     }
     window.addEventListener('scroll', onScroll, { passive: true })
+    // 标注位置也会因为换行、字体重算而变，不只因为滚动。
+    new ResizeObserver(syncAnchorRects).observe(document.documentElement)
     onScroll()
+    syncAnchorRects()
 
     if (coarse) return
 

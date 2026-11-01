@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { MapMark } from './MapMark'
 import './Experience.css'
 
 const experience = [
@@ -57,7 +58,7 @@ export function Experience() {
   return (
     <section className="experience paper" id="experience" data-map-stop="stairs">
       <div className="section-kicker">
-        <p className="eyebrow">经历</p>
+        <MapMark stop="stairs" />
         <h2>工作经历</h2>
       </div>
       <div className="timeline">

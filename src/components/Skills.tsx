@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { MapMark } from './MapMark'
 import './Skills.css'
 
 const lead =
@@ -46,7 +47,7 @@ export function Skills() {
   return (
     <section className="skills" id="skills" data-map-stop="pillars">
       <div className="section-kicker">
-        <p className="eyebrow">能力</p>
+        <MapMark stop="pillars" />
         <h2>我能交付什么</h2>
         <p className="skills-lead">{lead}</p>
       </div>

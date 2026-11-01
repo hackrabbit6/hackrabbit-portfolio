@@ -194,6 +194,29 @@
   }
 }
 
+/* ── 地标钉 ────────────────────────────────────────────────
+   当前地标的屏幕投影点，也是引线的终点。坐标由 NightMap.astro 每帧写进 --stop-x/y。
+   纯装饰：不拦指针、不拦选字；只在 3D 就绪时显示。 */
+.map-pin {
+  border: 1px solid rgba(242, 178, 102, 0.75);
+  border-radius: 50%;
+  box-shadow: 0 0 14px rgba(242, 178, 102, 0.3);
+  height: 9px;
+  left: var(--stop-x, -50px);
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: var(--stop-y, -50px);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.35s var(--ease-cine);
+  width: 9px;
+  z-index: 4;
+}
+
+.night-map[data-webgl='on'] ~ .map-pin[data-on='1'] {
+  opacity: 1;
+}
+
 /* ── 地标悬停提示 ────────────────────────────────────────── */
 .map-tip {
   background: var(--accent);

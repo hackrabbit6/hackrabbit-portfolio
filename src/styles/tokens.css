@@ -159,6 +159,73 @@ img {
   max-width: 100%;
 }
 
+/* ── 地图标注体 ────────────────────────────────────────────────────
+   每个区块标题前是一枚标注：编号 · 地标名 · 方位，等宽字体、1px 细边。
+   它取代了原来的圆角标题块 —— 区块读起来像地图上贴的一张注记，而不是一页 PPT。 */
+.map-mark {
+  align-items: center;
+  border: 1px solid var(--panel-line);
+  border-left-color: var(--accent);
+  color: var(--ink-dim);
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  gap: 6px;
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--s4);
+  padding: 3px var(--s3) 3px 10px;
+  position: relative;
+}
+
+.map-mark-code {
+  color: var(--accent);
+}
+
+.map-mark-bearing,
+.map-mark-sep {
+  color: var(--ink-faint);
+}
+
+.map-mark-bearing {
+  letter-spacing: 0.14em;
+}
+
+/* 引线：从标注右端水平拉到正文栏右边界，再从那里斜拉到地标的屏幕投影，
+   终点由 .map-pin 画成一个小环。两段是有意的：单段斜线会横穿区块标题与正文。
+   --leader-* 由 NightMap.astro 在渲染循环里写入（只写可见的那几条）。
+   纯装饰：不拦点击、不遮选字；没有 WebGL 或窄屏不渲染 —— 地标不在，引线就指向空气。 */
+.map-leader,
+.map-leader-arm {
+  background: rgba(242, 178, 102, 0.32);
+  height: 1px;
+  opacity: var(--leader-opacity, 0);
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transition: opacity 0.35s var(--ease-cine);
+}
+
+.map-leader {
+  left: 100%;
+  margin-left: 10px;
+  width: var(--leader-run, 0px);
+}
+
+.map-leader-arm {
+  left: calc(100% + 10px + var(--leader-run, 0px));
+  transform: rotate(var(--leader-angle, 0rad));
+  transform-origin: 0 50%;
+  width: var(--leader-length, 0px);
+}
+
+@media (max-width: 1099px) {
+  .map-leader,
+  .map-leader-arm,
+  .map-pin {
+    display: none;
+  }
+}
+
 /* 跨组件共用的两个排版件。Hero / Work / Skills / Experience / Contact 都在用，
    所以放这里而不是任何单个组件的 CSS 里。 */
 /* 首页段落标签已全部改成中文（ADR 0002）。等宽字体 + uppercase + 0.08em 字距
