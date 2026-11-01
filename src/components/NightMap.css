@@ -71,16 +71,19 @@
 }
 
 @media (max-width: 1099px) {
+  /* 窄屏正文铺满整幅，化身没有「正文区之外」可站（安全线只在 ≥1100px 生效），
+     面板的 0.42 会让它透成一团白。所以小屏上把夜色压重一点：地图在这里本来就是背景，
+     不是阅读面。 */
   .night-veil {
     background:
       radial-gradient(120% 90% at 50% 30%, transparent 40%, rgba(8, 9, 12, 0.85) 100%),
-      rgba(8, 9, 12, 0.25);
+      rgba(8, 9, 12, 0.42);
   }
 
   .night-map:not([data-stop='start']) .night-veil {
     background:
       radial-gradient(120% 90% at 50% 30%, transparent 40%, rgba(8, 9, 12, 0.85) 100%),
-      rgba(8, 9, 12, 0.45);
+      rgba(8, 9, 12, 0.55);
   }
 }
 
