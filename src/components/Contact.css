@@ -14,7 +14,8 @@
   text-wrap: balance;
 }
 
-.contact-main > p:not(.eyebrow):not(.contact-secondary) {
+/* 两段正话：不是地图标注体，也不是次要项。 */
+.contact-main > p:not(.contact-secondary):not(.map-mark) {
   color: var(--ink-dim);
   font-size: var(--fs-lead);
   line-height: 1.8;

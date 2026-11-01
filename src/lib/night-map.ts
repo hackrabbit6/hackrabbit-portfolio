@@ -520,7 +520,7 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
   // ── 化身不许站到正文上 ────────────────────────────────────────
   // 化身是全站唯一的亮实体，它一旦飘到卡片上，半透明面板就漏出一团白，像贴纸粘在字上
   // （/services/ 的「案例 · 站内 8 篇」是已知反例）。
-  // 落点先按地标旁的设定位置算，只在它的屏幕投影越过正文栏右边时，沿镜头右把它推回来。
+  // 规则：着地点的屏幕投影必须落在正文栏右边之外，越过时沿镜头右把它推回来。
   // 推得很少（一般几十像素）—— 推多了会把「站在建筑旁边」变成「站在建筑里」。
   const CONTENT_GAP = 72
   const safe = { x: 0 }
@@ -540,22 +540,26 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     return { x: (scratch.x * 0.5 + 0.5) * window.innerWidth, y: (-scratch.y * 0.5 + 0.5) * window.innerHeight }
   }
 
-  const guardedSpot = (key: StopKey) => {
-    const v = rabbitSpot(key)
-    if (!safe.x) return v
+  // 就地推：地标旁的站位与跳跃中的位置都走这一个函数，路径也不会从卡片背后穿过去。
+  const keepOffContent = (v: THREE.Vector3, elevated: boolean) => {
+    if (!safe.x) return
     camera.updateMatrixWorld()
-
     // 用头部高度算投影：字坐在地上，但屏幕上要算到它的头，否则还是压着字。
     const own = toScreen(probe.copy(v).setY(v.y + 1.1))
-    if (!own || own.x >= safe.x) return v
+    if (!own || own.x >= safe.x) return
 
     // 屏幕像素 → 该深度上的世界单位，沿镜头右方向推。
     camRight.setFromMatrixColumn(camera.matrixWorld, 0).normalize()
     const dist = camera.position.distanceTo(v)
     const unitsPerPx = (2 * Math.tan((camera.fov * Math.PI) / 360) * dist) / window.innerHeight
     v.addScaledVector(camRight, Math.min(safe.x - own.x, 260) * unitsPerPx)
-    // 地面上的地标推出后重新落地；工作台与台阶是作者摆好的高台，保持原高度。
-    if (key !== 'desk' && key !== 'stairs') v.y = Math.max(0, height(v.x, v.z))
+    // 地面上的地标推完重新贴地；工作台与台阶是作者摆好的高台，保持原高度。
+    if (!elevated) v.y = Math.max(0, height(v.x, v.z))
+  }
+
+  const guardedSpot = (key: StopKey) => {
+    const v = rabbitSpot(key)
+    keepOffContent(v, key === 'desk' || key === 'stairs')
     return v
   }
 
@@ -644,6 +648,8 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     if (reduceMotion) rabbitPos.copy(spot)
     else if (moving) rabbitPos.add(d.multiplyScalar(Math.min(1, Math.max(dt * 9, dist * dt * 2.5) / dist)))
     const hop = !reduceMotion && moving ? Math.abs(Math.sin(t * 9)) * 0.55 : 0
+    // 跳跃途中也要守线：只约束落点的话，半路会从卡片背后穿过去。
+    keepOffContent(rabbitPos, current === 'desk' || current === 'stairs')
     rabbit.position.set(rabbitPos.x, rabbitPos.y + hop, rabbitPos.z)
     let face: number
     if (moving && !reduceMotion) face = Math.atan2(spot.x - rabbitPos.x, spot.z - rabbitPos.z)
