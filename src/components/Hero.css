@@ -1,4 +1,5 @@
-/* 首屏 = 地图全景（NIGHT-MAP.md）。左侧放文字，右侧留给 3D 地图本身。 */
+/* 首屏 = 地图全景（NIGHT-MAP.md）。左侧放文字，右侧留给 3D 地图本身。
+   首屏只有三层：身份 / 名字 / 一句自述 + 一个主 CTA（NIGHT-MAP.md「排版与地图的耦合」）。 */
 .hero-act {
   isolation: isolate;
   min-height: 92vh;
@@ -118,15 +119,25 @@
   color: var(--accent);
 }
 
-.lead {
-  color: var(--ink-dim);
-  font-size: var(--fs-lead);
-  line-height: 1.75;
-  margin: var(--s5) 0 0;
-  max-width: 34em;
+/* ── 标题与地图分层 ──────────────────────────────────────────────
+   上半截由 .hero-title-ghost 画在 canvas 之下（Hero 脚本克隆并定位到同一位置），
+   下半截由正文标题画在内容层。两者是同一段文字、同一套字号，所以拼起来没有接缝；
+   中间相交 4px，避免抗锯齿出现一条亮线。
+   上半截的亮度靠夜色遮罩的开口保回来（NightMap.css 的 --band-*），不靠 filter —— 
+   brightness 会把台灯色截顶，上下两半颜色对不上。
+   只在 3D 就绪时才裁 —— 没有 WebGL 时地标不存在，裁一半就只是缺字。 */
+.night-map[data-webgl='on'] ~ main .hero-title:not(.hero-title-ghost) {
+  clip-path: inset(calc(50% - 2px) 0 0 0);
 }
 
-/* 自述同时是整站的命题：先看清地图。 */
+.hero-title-ghost {
+  clip-path: inset(0 0 calc(50% - 2px) 0);
+  pointer-events: none;
+  position: absolute;
+  user-select: none;
+  z-index: -1;
+}
+
 .hero-motto {
   color: var(--ink);
   font-family: var(--font-display);
@@ -140,9 +151,10 @@
 }
 
 .hero-cta {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--s4);
+  gap: var(--s5);
   margin-top: var(--s6);
 }
 
@@ -180,6 +192,24 @@
   color: var(--accent);
 }
 
+/* 次要入口：只有文字重量，没有按钮边框。 */
+.hero-elsewhere {
+  color: var(--ink-dim);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  transition: color 0.2s var(--ease-cine);
+}
+
+.hero-elsewhere:hover {
+  color: var(--accent);
+}
+
+@media (pointer: coarse) {
+  .hero-elsewhere {
+    padding-block: var(--s3);
+  }
+}
+
 .hero-reveal {
   animation: hero-rise 0.9s var(--ease-cine) both;
 }
@@ -198,10 +228,6 @@
 
 .hero-reveal:nth-child(5) {
   animation-delay: 0.32s;
-}
-
-.hero-reveal:nth-child(6) {
-  animation-delay: 0.4s;
 }
 
 @keyframes hero-rise {
@@ -238,13 +264,11 @@
     font-size: clamp(40px, 13vw, 64px);
   }
 
-  .lead {
-    font-size: var(--fs-body);
-    line-height: 1.7;
-    max-width: none;
-  }
-
   .hero-mark {
     width: 64px;
+  }
+
+  .hero-cta {
+    gap: var(--s4);
   }
 }

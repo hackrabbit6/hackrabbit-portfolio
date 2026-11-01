@@ -86,9 +86,12 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     return item
   }
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !coarse, powerPreference: 'low-power' })
+  // alpha 透明 + 清除色带 0 alpha：地图只是一层线，夜色来自页面底色。
+  // 这样首屏标题的上半截能画在 canvas 之下（NIGHT-MAP.md「排版与地图的耦合」），
+  // 地形线才会从字中间穿过去；canvas 不透明就永远只能当壁纸。
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !coarse, alpha: true, powerPreference: 'low-power' })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 2))
-  renderer.setClearColor(NIGHT, 1)
+  renderer.setClearColor(NIGHT, 0)
 
   const scene = new THREE.Scene()
   scene.fog = new THREE.FogExp2(NIGHT, 0.03)
@@ -504,6 +507,65 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     return v
   }
 
+  // ── 化身不许站到正文上 ────────────────────────────────────────
+  // 宽屏时内容收在左侧一栏，右边那一栏才是地图（tokens.css 的 --map-col）。
+  // 化身是全站唯一的亮实体，它一旦飘到卡片上，半透明面板就漏出一团白，像贴纸粘在字上
+  // （/services/ 的「案例 · 站内 8 篇」是已知反例）。所以落点先按地标旁的设定位置算，
+  // 再把它的屏幕投影推到正文栏右边之外，并至少离地标 RABBIT_LANDMARK_GAP。
+  const CONTENT_GAP = 40
+  const LANDMARK_GAP = 110
+  const safe = { x: 0 }
+  const scratch = new THREE.Vector3()
+  const probe = new THREE.Vector3()
+  const camRight = new THREE.Vector3()
+
+  const measureSafe = () => {
+    const w = window.innerWidth
+    // 窄屏正文铺满整幅，没有「正文区之外」可言，不约束（地图本来就是背景）。
+    if (w < 1100) {
+      safe.x = 0
+      return
+    }
+    const css = getComputedStyle(document.documentElement)
+    const container = parseFloat(css.getPropertyValue('--container')) || 1180
+    const gap = parseFloat(css.getPropertyValue('--s5')) || 24
+    const mapCol = parseFloat(css.getPropertyValue('--map-col')) || 720
+    const gutter = Math.max(gap, (w - container) / 2 + gap)
+    safe.x = Math.min(w - gutter, gutter + mapCol) + CONTENT_GAP
+  }
+
+  // 屏幕坐标投影（窗口像素），背后或超出远平面时返回 null。
+  const toScreen = (v: THREE.Vector3) => {
+    scratch.copy(v).project(camera)
+    if (scratch.z > 1) return null
+    return { x: (scratch.x * 0.5 + 0.5) * window.innerWidth, y: (-scratch.y * 0.5 + 0.5) * window.innerHeight }
+  }
+
+  const guardedSpot = (key: StopKey) => {
+    const v = rabbitSpot(key)
+    if (!safe.x) return v
+    camera.updateMatrixWorld()
+
+    // 用头部高度算投影：字坐在地上，但屏幕上要算到它的头，否则还是压着字。
+    const own = toScreen(probe.copy(v).setY(v.y + 1.1))
+    if (!own) return v
+
+    // 地标也在正文栏里时，跟着地标一起往右推，保证「站在地标旁边」这个关系不变。
+    const lmScreen = toScreen(probe.copy(STOPS[key].p).setY(STOPS[key].p.y + 1))
+    const lmInView = lmScreen !== null && lmScreen.x > 0 && lmScreen.x < window.innerWidth
+    const needX = lmInView ? Math.max(safe.x, lmScreen.x + LANDMARK_GAP) : safe.x
+    if (own.x >= needX) return v
+
+    // 屏幕像素 → 该深度上的世界单位，沿镜头右方向推。
+    camRight.setFromMatrixColumn(camera.matrixWorld, 0).normalize()
+    const dist = camera.position.distanceTo(v)
+    const unitsPerPx = (2 * Math.tan((camera.fov * Math.PI) / 360) * dist) / window.innerHeight
+    v.addScaledVector(camRight, (needX - own.x) * unitsPerPx)
+    // 地面上的地标推出后重新落地；工作台与台阶是作者摆好的高台，保持原高度。
+    if (key !== 'desk' && key !== 'stairs') v.y = Math.max(0, height(v.x, v.z))
+    return v
+  }
+
   // ── 镜头 ───────────────────────────────────────────────────────
   const shot = (key: StopKey, orbit: number, narrow: boolean) => {
     if (key === 'start') {
@@ -544,6 +606,7 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     camera.aspect = w / h
     camera.fov = w < 760 ? 58 : 45
     camera.updateProjectionMatrix()
+    measureSafe()
   }
   resize()
 
@@ -580,7 +643,7 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     walked.setDrawRange(0, Math.max(1, Math.round(walkedCount)))
 
     // 化身：匀速跳到目标点，近了再减速
-    const spot = rabbitSpot(current)
+    const spot = guardedSpot(current)
     const d = spot.clone().sub(rabbitPos)
     const dist = d.length()
     const moving = dist > 0.08

@@ -46,6 +46,23 @@
   position: absolute;
 }
 
+/* 首屏标题那一带把夜色挖开。
+   标题上半截画在 canvas 之下（NIGHT-MAP.md「排版与地图的耦合」），如果这里照旧压暗，
+   上半截会被压成灰、和下半截之间出现一道亮度台阶 —— 看着像脏，不像纵深。
+   软边的洞 = 渐变过渡，地形线在字上保持满亮度。坐标由 NightMap.astro 按标题实际位置写入。 */
+.night-map[data-webgl='on'][data-stop='start'] .night-veil {
+  -webkit-mask-image: radial-gradient(
+    ellipse var(--band-rx, 48vw) var(--band-ry, 110px) at var(--band-x, 36%) var(--band-y, 48%),
+    transparent 0 74%,
+    #000 100%
+  );
+  mask-image: radial-gradient(
+    ellipse var(--band-rx, 48vw) var(--band-ry, 110px) at var(--band-x, 36%) var(--band-y, 48%),
+    transparent 0 74%,
+    #000 100%
+  );
+}
+
 /* 子页面是长文：左侧压得更暗，正文更好读，地标在右侧照样亮。 */
 .night-map:not([data-stop='start']) .night-veil {
   background:
@@ -132,9 +149,9 @@
 /* ── 子页面「你在」标记 ────────────────────────────────────── */
 .map-here:not([hidden]) {
   align-items: center;
-  background: var(--panel);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: var(--panel-strong);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--line);
   bottom: calc(18px + env(safe-area-inset-bottom, 0px));
   color: var(--ink-dim);

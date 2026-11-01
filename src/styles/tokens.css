@@ -4,8 +4,16 @@
      四个文字色于 --bg 都 ≥ 4.5:1，可直接用于小字。 */
   --bg: #08090C;
   --bg-elev: #111318;
-  --panel: rgba(12, 13, 17, 0.78);
-  --panel-strong: rgba(12, 13, 17, 0.9);
+  /* 内容面板压在 3D 地图上（NIGHT-MAP.md「排版与地图的耦合」）。
+     透明度上限 0.45：再高线框地图就整块被盖住，退化成普通深色卡片；再低正文下面的地形线会显形。
+     0.42 + 12px 模糊下，最亮的地形线是涣散的，不会穿过笔画：--ink 对比度 ≈ 10:1，--ink-dim ≈ 5.3:1，
+     均 ≥ AA（底边渐隐到 0.26 时 --ink 仍有 ≈ 9:1）。 */
+  --panel: rgba(12, 13, 17, 0.42);
+  /* 面板底边渐隐到的值：卡片不封口，下半部分让地图透出来一点。 */
+  --panel-fade: rgba(12, 13, 17, 0.26);
+  /* 小面积文字块用的更强遮罩（图例、标签、页尾 CTA）。大面积面板不得用它 —— 会把地图盖掉。 */
+  --panel-strong: rgba(12, 13, 17, 0.72);
+  --panel-line: rgba(236, 234, 228, 0.22);
   --ink: #ECEAE4;
   --ink-dim: #A3A6AE;
   --ink-faint: #858A94;
@@ -67,9 +75,14 @@
   box-sizing: border-box;
 }
 
+/* 底色只给 html：body 再涂一层不透明背景会把 z-index: -1 的层级（首屏标题上半截）盖掉。
+   html 的背景本来就是页面背景，body 保持透明即可。 */
+html {
+  background: var(--bg);
+}
+
 html,
 body {
-  background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--fs-body);
@@ -80,7 +93,6 @@ body {
 }
 
 body {
-  background: var(--bg);
   line-height: 1.7;
 }
 
@@ -119,12 +131,23 @@ body > footer {
   width: 14px;
 }
 
-/* 压在 3D 地图上的内容面板：半透明夜色 + 模糊，地图隐约透出来。 */
-.map-panel {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: var(--panel);
-  border: 1px solid var(--line);
+/* 压在 3D 地图上的内容面板：去矩形化 —— 四边不封口，只留上边一条细描边、
+   左下角那个台灯色直角（见下方 ::before）与自上而下的渐隐底色。
+   读起来像是从地图上拉出来的一张标注，而不是一个盒子。
+   地图透得出来，但地形线被 12px 模糊涣散了，不会穿过任何笔画。 */
+.building-card,
+.skill-card,
+.follow-card,
+.next-card,
+.case-card,
+.case-meta div {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background: linear-gradient(180deg, var(--panel), var(--panel-fade));
+  border: 0;
+  border-radius: 0;
+  border-top: 1px solid var(--panel-line);
+  position: relative;
 }
 
 a {

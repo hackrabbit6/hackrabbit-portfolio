@@ -37,10 +37,11 @@
 
 /* ── 视觉位 ─────────────────────────────────────────── */
 
+/* 图像框本身是个矩形（里面是一张不透明的图），但还是拆掉封口边框：
+   只留上边一条细线，别的都交给图片自己。 */
 .work-visual {
   background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 2px;
+  border-top: 1px solid var(--panel-line);
   overflow: hidden;
   position: relative;
 }
@@ -150,8 +151,7 @@
 }
 
 .work-tags span {
-  background: var(--panel);
-  border: 1px solid var(--line);
+  background: var(--panel-strong);
   border-radius: 2px;
   color: var(--ink-dim);
   padding: var(--s2) var(--s3);

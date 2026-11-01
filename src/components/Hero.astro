@@ -23,22 +23,20 @@ import './Hero.css'
   </nav>
   <div class="hero-inner">
     <div class="hero-copy">
+      {/* 首屏只留三层（NIGHT-MAP.md「排版与地图的耦合」）：身份、名字、一句自述 + 一个主 CTA。
+          自我介绍那句（现在我在做什么）挪到「在做什么」区块开头 —— 那里才是它要回答的问题。 */}
       <p class="eyebrow hero-reveal">前端工程师 · hackrabbit</p>
-      <h1 class="hero-title hero-reveal">HACK<span>RABBIT</span></h1>
-      {/* 首屏语序「现在 X。此前 4-5 年前端交付。」是决定 6 —— 语序本身编码优先级，
-          X 走 B 口径（面向普通读者），技术可信度交给后半句兜住。 */}
-      <p class="lead hero-reveal">
-        现在，我在帮普通人看懂 <span class="nowrap">AI 时代</span>里和自己有关的变化。此前 4-5
-        年前端交付。
-      </p>
-      {/* 自述：不露脸，用化身与语气立住「人」。「先看清地图」也是整站夜间地图的由来（NIGHT-MAP.md）。 */}
+      <h1 class="hero-title">HACK<span>RABBIT</span></h1>
+      {/* 自述：不露脸，用化身与语气立住「人」。「先看清地图」也是整站夜间地图的由来（NIGHT-MAP.md）。
+          标题与 3D 分层由 Hero 脚本处理（地形线从字中间穿过），所以标题自己不做进场动画。 */}
       <p class="hero-motto hero-reveal">
         <span class="nowrap">白天拆需求，晚上拆排位。</span><span class="nowrap">先看清地图，再动手。</span>
       </p>
       <div class="hero-cta hero-reveal">
         <a class="cta cta-primary" href="#building">在做什么 ↓</a>
-        <a class="cta" href="https://github.com/hackrabbit6" target="_blank" rel="noreferrer">
-          GitHub ↗
+        {/* 次要入口降级成文字链接：首屏只许一个按钮重量的东西。 */}
+        <a class="hero-elsewhere" href="https://github.com/hackrabbit6" target="_blank" rel="noreferrer">
+          github.com/hackrabbit6 ↗
         </a>
       </div>
     </div>
@@ -54,3 +52,50 @@ import './Hero.css'
     </div>
   </div>
 </section>
+
+<script>
+  // 首屏标题与 3D 分层：把标题复制一份贴到 body 顶层（z-index: -1，在 canvas 之下），
+  // 再由 CSS 把正文标题裁到下半截 —— 地形线就从字中间穿过去，标题不再像贴在壁纸上。
+  // 没有 WebGL 时不建这一层、也不裁，标题照常完整可读。
+  const title = document.querySelector<HTMLElement>('.hero-title')
+  const mark = document.querySelector<HTMLElement>('[data-night-map]')
+
+  if (title && mark) {
+    let ghost: HTMLElement | null = null
+
+    const place = () => {
+      if (!ghost) return
+      const rect = title.getBoundingClientRect()
+      ghost.style.left = `${rect.left + window.scrollX}px`
+      ghost.style.top = `${rect.top + window.scrollY}px`
+      ghost.style.width = `${rect.width}px`
+    }
+
+    const dispose = () => {
+      ghost?.remove()
+      ghost = null
+    }
+
+    const build = () => {
+      if (ghost) return
+      ghost = document.createElement('div')
+      ghost.className = 'hero-title hero-title-ghost'
+      ghost.setAttribute('aria-hidden', 'true')
+      ghost.innerHTML = title.innerHTML
+      document.body.append(ghost)
+      place()
+    }
+
+    // canvas 可能比这次脚本晚上线（idle 之后才 boot），所以盯着 data-webgl 的变化。
+    // 裁切本身只由 `.night-map[data-webgl='on'] ~ main` 触发，没有 WebGL 时标题完整。
+    new MutationObserver(() => {
+      if (mark.dataset.webgl === 'on') build()
+      else dispose()
+    }).observe(mark, { attributes: true, attributeFilter: ['data-webgl'] })
+
+    new ResizeObserver(place).observe(title)
+    window.addEventListener('resize', place, { passive: true })
+    document.fonts?.ready.then(place)
+    if (mark.dataset.webgl === 'on') build()
+  }
+</script>

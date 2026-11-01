@@ -20,20 +20,14 @@
 }
 
 .skill-card {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 2px;
   min-height: 240px;
   overflow: hidden;
   padding: var(--s6);
-  position: relative;
   transition: border-color 0.3s var(--ease-cine), box-shadow 0.3s var(--ease-cine);
 }
 
 .skill-card:hover {
-  border-color: rgba(242, 178, 102, 0.45);
+  border-top-color: rgba(242, 178, 102, 0.55);
   box-shadow: var(--glow);
 }
 

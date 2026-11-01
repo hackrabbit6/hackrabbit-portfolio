@@ -134,6 +134,22 @@ const legend: Array<{ key: StopKey; label: string }> = [
     }
   }
 
+  // 首屏标题的位置 → 夜色遮罩的开口（NIGHT-MAP.css）。
+  // 只在滚动那一帧读一次布局，不和相机同步。
+  const title = document.querySelector<HTMLElement>('.hero-title:not(.hero-title-ghost)')
+  const syncBand = () => {
+    if (!title) return
+    const rect = title.getBoundingClientRect()
+    const style = document.documentElement.style
+    style.setProperty('--band-x', `${Math.round(rect.left + rect.width / 2)}px`)
+    style.setProperty('--band-y', `${Math.round(rect.top + rect.height / 2)}px`)
+    style.setProperty('--band-rx', `${Math.round(rect.width / 2 + 70)}px`)
+    style.setProperty('--band-ry', `${Math.round(rect.height / 2 + 46)}px`)
+  }
+  if (title) {
+    new ResizeObserver(syncBand).observe(title)
+  }
+
   const boot = async (host: HTMLElement, cv: HTMLCanvasElement) => {
     const { bootNightMap } = await import('../lib/night-map')
     const map: NightMapHandle = bootNightMap(cv, {
@@ -149,6 +165,7 @@ const legend: Array<{ key: StopKey; label: string }> = [
       ticking = true
       requestAnimationFrame(() => {
         ticking = false
+        syncBand()
         if (tour) {
           const key = readingStop()
           map.setStop(key)
