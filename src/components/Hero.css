@@ -229,6 +229,40 @@
   }
 }
 
+/* 证据条：一行、等宽、无链接，只给两个能在站内数到的数字。
+   它是 CTA 的脚注，不构成第四层 —— 招聘方扫到这里就够了。 */
+.hero-evidence {
+  align-items: baseline;
+  color: var(--ink-dim);
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.04em;
+  margin: var(--s5) 0 0;
+}
+
+.hero-evidence span {
+  align-items: baseline;
+  display: inline-flex;
+}
+
+.hero-evidence b {
+  color: var(--ink);
+  font-weight: 500;
+  margin-right: 5px;
+}
+
+.hero-evidence span + span {
+  margin-left: var(--s4);
+}
+
+.hero-evidence span + span::before {
+  color: var(--ink-faint);
+  content: '·';
+  margin-right: var(--s4);
+}
+
 .hero-reveal {
   animation: hero-rise 0.9s var(--ease-cine) both;
 }
