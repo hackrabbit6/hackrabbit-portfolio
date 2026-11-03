@@ -11,6 +11,12 @@
   --panel: rgba(12, 13, 17, 0.42);
   /* 面板底边渐隐到的值：卡片不封口，下半部分让地图透出来一点。 */
   --panel-fade: rgba(12, 13, 17, 0.26);
+  /* 阅读型卡片（正文三行以上）：保持底色不变（仍是 0.46，不破上面 0.45 的上限），
+     只把模糊从 12px 提到 18px —— 实测卡片内最亮背景像素从可见的细线降到
+     (15,15,16)（与底色 #08090C 几乎无差），笔画上不再有硬线，但地图的那层很淡的起伏还在。
+     只给技能卡与案例卡；其余面板继续用 0.42 + 12px 的「透」。 */
+  --panel-read: rgba(12, 13, 17, 0.46);
+  --panel-read-fade: rgba(12, 13, 17, 0.34);
   /* 小面积文字块用的更强遮罩（图例、标签、页尾 CTA）。大面积面板不得用它 —— 会把地图盖掉。 */
   --panel-strong: rgba(12, 13, 17, 0.72);
   --panel-line: rgba(236, 234, 228, 0.22);
@@ -148,6 +154,17 @@ body > footer {
   border-radius: 0;
   border-top: 1px solid var(--panel-line);
   position: relative;
+}
+
+/* 阅读型卡片：技能卡与案例卡的正文是三行以上，等高线从字后面游过去会让长段读不稳。
+   解法不是把面板压得更实（那会破 0.45 的上限、变成普通深色卡片），而是把模糊从 12px
+   提到 18px：细线被摊成一层很淡的起伏，桌面宽屏实测卡片内最亮背景像素 ≈ (15,15,16)，
+   与底色几乎无差，但地图的存在感还在。 */
+.skill-card,
+.case-card {
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  background: linear-gradient(180deg, var(--panel-read), var(--panel-read-fade));
 }
 
 a {
