@@ -135,19 +135,55 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
   }
 
   // ── 夜空里的微尘 ────────────────────────────────────────────────
+  // 没有贴图的 PointsMaterial 画出来是**硬边方块**：偶尔有颗粒飘到镜头前，就是一个
+  // 几十像素的灰色方方贴在副文旁边，像渲染 bug。所以给一张径向渐变的圆点贴图，
+  // 并且生成时避开镜头常驻的那条走廊（相机 y≈5.4，z 在 22 → -33 之间移动）——
+  // 贴图让它变圆，避让让它不会贴脸。
+  const dustDot = (() => {
+    const c = document.createElement('canvas')
+    c.width = c.height = 64
+    const x = c.getContext('2d')
+    if (x) {
+      const g = x.createRadialGradient(32, 32, 0, 32, 32, 32)
+      g.addColorStop(0, 'rgba(255,255,255,1)')
+      g.addColorStop(0.45, 'rgba(255,255,255,0.6)')
+      g.addColorStop(1, 'rgba(255,255,255,0)')
+      x.fillStyle = g
+      x.fillRect(0, 0, 64, 64)
+    }
+    return track(new THREE.CanvasTexture(c))
+  })()
+
   const dust = (() => {
     const n = coarse ? 500 : 1300
     const a = new Float32Array(n * 3)
     for (let i = 0; i < n; i += 1) {
+      let y = 0
+      let z = 0
+      for (let tryCount = 0; tryCount < 8; tryCount += 1) {
+        y = Math.random() * 22
+        z = 22 - Math.random() * 80
+        // 镜头走廊：y 2.5–9、z -36–24。落在这里就重抽（平均不到两次）。
+        if (!(y > 2.5 && y < 9 && z > -36 && z < 24)) break
+      }
       a[i * 3] = (Math.random() - 0.5) * 64
-      a[i * 3 + 1] = Math.random() * 22
-      a[i * 3 + 2] = 22 - Math.random() * 80
+      a[i * 3 + 1] = y
+      a[i * 3 + 2] = z
     }
     const geo = track(new THREE.BufferGeometry())
     geo.setAttribute('position', new THREE.BufferAttribute(a, 3))
     const pts = new THREE.Points(
       geo,
-      track(new THREE.PointsMaterial({ color: 0xa3a6ae, size: 0.07, transparent: true, opacity: 0.7 })),
+      track(
+        new THREE.PointsMaterial({
+          color: 0xa3a6ae,
+          map: dustDot,
+          size: 0.09,
+          transparent: true,
+          opacity: 0.7,
+          depthWrite: false,
+        }),
+      ),
     )
     scene.add(pts)
     return pts
