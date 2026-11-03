@@ -121,17 +121,36 @@
 
 /* ── 标题与地图分层 ──────────────────────────────────────────────
    上半截由 .hero-title-ghost 画在 canvas 之下（Hero 脚本克隆并定位到同一位置），
-   下半截由正文标题画在内容层。两者是同一段文字、同一套字号，所以拼起来没有接缝；
-   中间相交 4px，避免抗锯齿出现一条亮线。
-   上半截的亮度靠夜色遮罩的开口保回来（NightMap.css 的 --band-*），不靠 filter —— 
+   下半截由正文标题画在内容层。两者是同一段文字、同一套字号，所以拼起来没有接缝。
+
+   切边是**斜**的，刻意不用水平线：水平切恰好对齐文本基线网格，人第一眼会读成
+   「字被截断了」（像排版事故）；一旦斜过来，它就是一个明确的设计动作 ——
+   左边大半沉进地图、右边站住，标题也因此有了方向。
+   两个切点是变量：改角度只改这两个值。
+
+   上半截的亮度靠夜色遮罩的开口保回来（NightMap.css 的 --band-*），不靠 filter ——
    brightness 会把台灯色截顶，上下两半颜色对不上。
    只在 3D 就绪时才裁 —— 没有 WebGL 时地标不存在，裁一半就只是缺字。 */
+/* 两个切点（左 / 右）：改角度只改这两个值。
+   两条规则各自声明一遍 —— ghost 是 body 顶层的克隆，和标题不同父节点，CSS 变量不互通。 */
+.night-map[data-webgl='on'] ~ main .hero-title:not(.hero-title-ghost),
+.hero-title-ghost {
+  --title-split-left: 68%;
+  --title-split-right: 32%;
+}
+
 .night-map[data-webgl='on'] ~ main .hero-title:not(.hero-title-ghost) {
-  clip-path: inset(calc(50% - 2px) 0 0 0);
+  clip-path: polygon(0 var(--title-split-left), 100% var(--title-split-right), 100% 100%, 0 100%);
 }
 
 .hero-title-ghost {
-  clip-path: inset(0 0 calc(50% - 2px) 0);
+  /* 两条互补的斜线相交 3px，避免抗锯齿在切边上留一条亮缝。 */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(var(--title-split-right) + 3px),
+    0 calc(var(--title-split-left) + 3px)
+  );
   pointer-events: none;
   position: absolute;
   user-select: none;
