@@ -95,3 +95,12 @@
     padding: var(--s5);
   }
 }
+/* 没有公开链接的在研项目：落一行事实状态（Evidence 口径），
+   让读者能判断「这个能不能看」，而不是靠猜。比链接轻，字号与标签一致。 */
+.building-note {
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.04em;
+  margin: var(--s2) 0 0;
+}

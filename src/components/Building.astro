@@ -6,6 +6,8 @@ import { MapMark } from './MapMark'
 // 不放「在看什么、在想什么」—— 那是 /now/ 的事（决定 5）。
 // 它取代了原来的 NOW · CREW 薄带，NOW 并入这里（决定 3）。
 // 措辞只能来自事实：没有公开链接的就不给链接，未上线就直说在起步。
+// 没有链接的项会自动落一行「暂无公开材料」—— 这是 CONTEXT.md 里 Evidence 的固定词汇，
+// 陈述的是事实（现在没有可看的材料），不是「整理中」那种进度承诺。
 const items = [
   {
     label: '内容',
@@ -55,7 +57,9 @@ const items = [
             <a class="building-link" href={item.href}>
               {item.action} →
             </a>
-          ) : null}
+          ) : (
+            <p class="building-note">暂无公开材料</p>
+          )}
         </li>
       ))
     }
