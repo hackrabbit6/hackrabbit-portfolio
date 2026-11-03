@@ -582,6 +582,11 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
   }
 
   let current: StopKey = options.initial
+  // 纯阅读区（能力 / 经历 / 联系）化身退一档：这三段是要人把字读完的，
+  // 全站唯一的亮实体站在旁边只会抢视线（NIGHT-MAP.md「阅读区退让」）。
+  const QUIET_STOPS: StopKey[] = ['pillars', 'stairs', 'portal']
+  const RABBIT_SCALE = 0.9
+  const RABBIT_SCALE_QUIET = 0.755
   let orbit = 0
   let hovered: StopKey | null = null
   const parallax = new THREE.Vector2()
@@ -658,6 +663,10 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     rabbit.rotation.y = reduceMotion ? face : turn(rabbit.rotation.y, face, ease(moving ? 0.0005 : 0.05))
 
     const flop = moving ? hop * 0.9 : reduceMotion ? 0 : Math.sin(t * 1.3) * 0.05
+    // 阅读区退让：缩放跟着 current 平滑变，不跳变。
+    const scaleGoal = QUIET_STOPS.includes(current) ? RABBIT_SCALE_QUIET : RABBIT_SCALE
+    const scaleNow = reduceMotion ? scaleGoal : rabbit.scale.x + (scaleGoal - rabbit.scale.x) * ease(0.01)
+    rabbit.scale.setScalar(scaleNow)
     earL.rotation.x = -0.1 - flop
     earR.rotation.x = -0.1 - flop * 0.8
     const headY = moving ? 0 : par.x * 1.1 + (current === 'desk' ? 0.45 : 0)
