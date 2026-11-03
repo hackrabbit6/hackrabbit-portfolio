@@ -49,6 +49,26 @@
   line-height: 1.4;
 }
 
+/* 标题单元：标题 + 一行摘要。摘要给内容读者「这篇讲什么」的判断依据 ——
+   只靠标题无法判断值不值得点开。 */
+.writing-list a .writing-item {
+  display: grid;
+  font-size: inherit;
+  gap: var(--s2);
+  line-height: inherit;
+}
+
+.writing-list a .writing-title {
+  font-size: var(--fs-h4);
+  line-height: 1.4;
+}
+
+.writing-list a .writing-summary {
+  color: var(--ink-dim);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+
 .writing-list a::after {
   color: var(--ink-dim);
   content: '↗';
