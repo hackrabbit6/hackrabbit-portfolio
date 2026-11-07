@@ -1,0 +1,87 @@
+---
+import Base from '../../layouts/Base.astro'
+import '../../styles/case-study.css'
+import '../../styles/now.css'
+
+// 近况页（CONTEXT.md「近况页」）：只放**在看的东西**，不放「在做什么」—— 那是首页的事。
+// 与 CREW 的分界：CREW 是班底（用什么做），这里是状态（在看什么）。
+//
+// 现阶段的限制：在读的书、在追的人这两块只有作者本人知道，别人不能代填，
+// 所以本页只渲染「在想的方向」，这三条全部来自已发布文章，可点回原文核对。
+// 没有内容的段不渲染 —— 不留「待补充」这类占位文案（AGENTS.md）。
+const updated = '2026-11-07'
+
+const thinking = [
+  {
+    question: 'AI 检测能不能当证据？',
+    view: '不能。检测分数只是一个「不完整的嫌疑提示」，真被质疑时能自证的是版本历史、草稿和资料痕迹。',
+    source: '4 次全对，也不能证明你用 AI',
+    href: 'https://mp.weixin.qq.com/s/7NO4TQt9fV-zbW97Lz4Mtg',
+    date: '2026-07-13',
+  },
+  {
+    question: '健康信息该信哪一个？',
+    view: 'AI 摘要已经是健康搜索的默认入口，但它引的来源和原研究常常对不上，所以看结论之前先核来源。',
+    source: '近 9 成健康搜索出现 AI 摘要，排第一也不能直接信',
+    href: 'https://mp.weixin.qq.com/s/xTFSXX-GoId90nqUuyg57Q',
+    date: '2026-08-08',
+  },
+  {
+    question: '普通人到底要装几款 AI 工具？',
+    view: '不用装满。先留一个常用助手、一个能给出处的搜索入口，再按反复出现的任务加专项工具。',
+    source: '50 款 AI 工具，普通人不用全装',
+    href: 'https://mp.weixin.qq.com/s/g_j_fP9HmOfHaw-stvEeZw',
+    date: '2026-07-20',
+  },
+]
+---
+
+<Base
+  mapStop="lab"
+  title="近况 | hackrabbit"
+  description="hackrabbit 的近况：最近在想的方向，每条都能点回原文。只放在看的东西。"
+>
+  <main class="case-shell">
+    <nav class="case-nav" aria-label="页面导航">
+      <a href="/">← 返回首页</a>
+      <a href="/writing/">看过的东西</a>
+    </nav>
+
+    <header class="case-hero">
+      <p class="case-kicker">近况 · now</p>
+      <h1>最近在想什么。</h1>
+      <p class="case-lead">
+        这里只放「在看的东西」。现在记的是在想的方向，每条都能点回原文核对。
+      </p>
+      <p class="now-updated">
+        最后更新 <time datetime={updated}>{updated}</time>
+      </p>
+    </header>
+
+    <section class="case-section" aria-labelledby="now-thinking-title">
+      <div>
+        <p class="case-label">在想的方向</p>
+        <h2 id="now-thinking-title">三个还没答完的问题</h2>
+      </div>
+      <ol class="now-list">
+        {
+          thinking.map((item) => (
+            <li>
+              <h3>{item.question}</h3>
+              <p>{item.view}</p>
+              <a href={item.href} target="_blank" rel="noreferrer">
+                出处：{item.source}（<span class="nowrap">{item.date}</span>）↗
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="case-cta">
+      <h2>造的在首页，写的在写作页。</h2>
+      <a class="case-button" href="/#building">看我在做什么 →</a>
+      <a class="case-button" href="/writing/">看写过的长文 →</a>
+    </section>
+  </main>
+</Base>
