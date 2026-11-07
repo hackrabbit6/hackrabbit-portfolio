@@ -58,7 +58,8 @@ const timer = setInterval(() => {
 | 从 load 到开始加载 3D | 5–44 ms | 同量级 |
 | **3D 就绪（`data-webgl=on`）** | **1.7–2.9 s** | 1.7–2.9 s |
 
-注意：本地 preview 没有网络延迟，LCP 只反映解析与渲染，**不代表线上**（Netlify + 真实网络）。
+注意：本地 preview 没有网络延迟，LCP 只反映解析与渲染，**不代表线上**（真实网络 + 真实 CDN）。
+线上部署平台 2026-11-07 从 Netlify 迁到 Cloudflare Pages（ADR 0005），CDN 不同则同一份产物的线上时间也不同。
 
 ## 3D 启动里各阶段的实际占比
 

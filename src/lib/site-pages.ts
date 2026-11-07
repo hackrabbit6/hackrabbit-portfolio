@@ -12,8 +12,8 @@
 // 收集到的文件交给 git 问最后提交时间。构建机上没有 .git 时退回兜底日期。
 
 import { execFileSync } from 'node:child_process'
-import { readFileSync, existsSync } from 'node:fs'
-import { relative, dirname, resolve } from 'node:path'
+import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs'
+import { relative, dirname, resolve, join } from 'node:path'
 
 const SRC = 'src'
 const PAGES = 'src/pages'
@@ -22,21 +22,37 @@ export const FALLBACK_DATE = '2026-11-07'
 
 type PageEntry = { route: string; files: string[] }
 
-/** 递归列出目录下的 .astro 文件（相对仓库根） */
+/**
+ * 递归列出目录下的 .astro 文件（相对仓库根）。
+ *
+ * 用文件系统直接走，不用 `git ls-files`：构建环境（Cloudflare Pages 之类）
+ * 未必带 git 或完整的 .git 目录，而这份清单一旦列不出来，sitemap 会是空的 ——
+ * 那比日期不准严重得多。
+ */
 const listAstro = (dir: string): string[] => {
-  // 用 git ls-files 列举，避免自己实现目录遍历（构建产物目录里也有文件，要排除）
-  try {
-    const out = execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', `${dir}`], {
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    })
-    return out
-      .split('\n')
-      .map((l) => l.trim())
-      .filter((l) => l.endsWith('.astro'))
-  } catch {
-    return []
+  const out: string[] = []
+  const walk = (abs: string) => {
+    let entries: string[] = []
+    try {
+      entries = readdirSync(abs)
+    } catch {
+      return
+    }
+    for (const name of entries) {
+      if (name.startsWith('.') || name === 'node_modules') continue
+      const child = join(abs, name)
+      let isDir = false
+      try {
+        isDir = statSync(child).isDirectory()
+      } catch {
+        continue
+      }
+      if (isDir) walk(child)
+      else if (name.endsWith('.astro')) out.push(relative(process.cwd(), child))
+    }
   }
+  walk(dir)
+  return out
 }
 
 /** 文件里的本地 import（相对路径），解析成仓库根下的路径 */
