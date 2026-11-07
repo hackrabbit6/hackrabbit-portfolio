@@ -25,6 +25,9 @@
 - `/work/h5-game-sdk/`：H5 游戏发行 SDK 与充值体系脱敏案例
 - `/writing/`：公众号长文列表
 - `/now/`：近况，最近在想的方向（只放在看的东西）
+- `/sitemap.xml`、`/robots.txt`：构建时生成。sitemap 的 URL 列表从 `src/pages` 扫出来，
+  每页的 `lastmod` 是「该页用到的所有本地源文件里最晚的那次提交」—— 首页正文在
+  `src/components/Hero.astro` 里，只看 `index.astro` 会给出一个过期的日期
 - `/resume.pdf`：简历
 
 ## 本地开发
