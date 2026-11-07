@@ -74,13 +74,9 @@
   margin-top: var(--s6);
 }
 
+/* 面板外观走 tokens.css 的共享规则（去矩形化：只留上边细描边 + 台灯色直角 + 渐隐底色）。 */
 .case-meta div,
 .case-card {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 2px;
   padding: var(--s5);
 }
 
@@ -182,11 +178,12 @@
 
 .case-cta {
   align-items: center;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: var(--panel-strong);
-  border: 1px solid rgba(242, 178, 102, 0.35);
-  border-radius: 2px;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background: linear-gradient(180deg, var(--panel-strong), rgba(12, 13, 17, 0.5));
+  border: 0;
+  border-radius: 0;
+  border-top: 1px solid rgba(242, 178, 102, 0.45);
   box-shadow: var(--glow);
   display: flex;
   flex-wrap: wrap;

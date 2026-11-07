@@ -1,5 +1,6 @@
 ---
 import './Follow.css'
+import { MapMark } from './MapMark'
 
 // 两个平台是同一个身份，简介也相同，所以简介提到区块级别，卡片里只区分「形式」。
 // 公众号在微信生态里没有可点击的公开主页，只能放二维码或让人搜账号名 —— 这是平台限制，
@@ -22,7 +23,7 @@ const accounts = [
 
 <section class="follow" id="follow" data-map-stop="lab">
   <div class="follow-head">
-    <p class="eyebrow">关注</p>
+    <MapMark stop="lab" />
     <h2>黑兔实验室</h2>
     <p class="follow-bio">帮普通人看懂 AI 时代里和自己有关的变化。</p>
   </div>

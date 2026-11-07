@@ -1,3 +1,4 @@
+import { MapMark } from './MapMark'
 import { HackRabbitMark } from './HackRabbitMark'
 import './Contact.css'
 
@@ -12,7 +13,7 @@ export function Contact() {
   return (
     <section className="contact" id="contact" data-map-stop="portal">
       <div className="contact-main">
-        <p className="eyebrow">联系</p>
+        <MapMark stop="portal" />
         {/* 合作在前、全职在后 —— 与首屏的「独立优先」口径一致，见 CONTEXT.md。
             CJK 默认可在任意两字之间断行，词组要逐个锁住不许拆。 */}
         <h2>

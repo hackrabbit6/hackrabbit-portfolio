@@ -12,6 +12,16 @@
   text-wrap: balance;
 }
 
+/* 首屏挪过来的那句自我介绍。它是这一段的开场，不是标题的副标 —— 所以用 lead 字号、
+   但保持 --ink 而不是 --ink-dim，它得和标题一个重量级。 */
+.building-lead {
+  color: var(--ink);
+  font-size: var(--fs-lead);
+  line-height: 1.75;
+  margin: var(--s5) 0 0;
+  max-width: 34em;
+}
+
 .building-list {
   /* 同一行两张卡等高：去掉 align-items:start，让矮的那张撑到行高，底边对齐。 */
   align-items: stretch;
@@ -25,21 +35,15 @@
 
 .building-card {
   align-content: start;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 2px;
   display: grid;
   gap: var(--s3);
   overflow: hidden;
   padding: var(--s6);
-  position: relative;
   transition: border-color 0.3s var(--ease-cine), box-shadow 0.3s var(--ease-cine);
 }
 
 .building-card:hover {
-  border-color: rgba(242, 178, 102, 0.45);
+  border-top-color: rgba(242, 178, 102, 0.55);
   box-shadow: var(--glow);
 }
 
@@ -90,4 +94,13 @@
   .building-card {
     padding: var(--s5);
   }
+}
+/* 没有公开链接的在研项目：落一行事实状态（Evidence 口径），
+   让读者能判断「这个能不能看」，而不是靠猜。比链接轻，字号与标签一致。 */
+.building-note {
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.04em;
+  margin: var(--s2) 0 0;
 }

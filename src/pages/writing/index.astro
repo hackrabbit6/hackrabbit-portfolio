@@ -4,41 +4,55 @@ import '../../styles/case-study.css'
 import '../../styles/writing.css'
 
 // 全部是真实已发布内容，链接是公众号永久链接。倒序，最新在前。
-// 暂不列日期：后台只对近一周显示「星期X」，其余是「07月20日」这类不含年份的格式，
-// 逐条推断日期会有猜的成分，宁可先不写。
-//
+// summary 是从标题提炼的「这篇解决什么问题」，不改原标题。
+// date 用公众号后台显示的发布日期（带年份的完整日期）；全部填齐后列表自动按日期倒序，
+// 页头也会自动出现「最近更新 YYYY-MM」。没填齐就维持人工顺序，也不会显示日期。
 // 小红书那 10 条没有逐条列出：它的卡片标题取的是正文首行，会被截断，
 // 照抄会改写作者的原文。所以小红书给主页入口，让读者自己去看。
-const articles = [
+type Article = { title: string; href: string; summary?: string; date?: string }
+
+const articles: Article[] = [
   {
     title: '用 AI 学习，为什么有人学得更快，有人只是更快抄完？',
     href: 'https://mp.weixin.qq.com/s/TXXY8mF-R0SpYEPfIkeIAQ',
+    summary: '分清「学得快」和「更快抄完」：差别在判断有没有长在自己身上。',
   },
   {
     title: '近 9 成健康搜索出现 AI 摘要，排第一也不能直接信',
     href: 'https://mp.weixin.qq.com/s/xTFSXX-GoId90nqUuyg57Q',
+    summary: 'AI 摘要给了结论也不等于可信，先看它凭什么。',
   },
   {
     title: '简历、合同发给 AI 安全吗？最长可能留 5 年',
     href: 'https://mp.weixin.qq.com/s/VmF8_zQNecOLFsumIF8gPw',
+    summary: '贴进 AI 之前先看留存规则：这类文件最长可能被留 5 年。',
   },
   {
     title: '50 款 AI 工具，普通人不用全装',
     href: 'https://mp.weixin.qq.com/s/g_j_fP9HmOfHaw-stvEeZw',
+    summary: '50 款里真正用得上的只有一小部分，先弄清自己要解决什么。',
   },
   {
     title: '连续 5 年赚 30%，概率约 1/595,000',
     href: 'https://mp.weixin.qq.com/s/ZXoxNGGSZkRXwWoFDAgKIQ',
+    summary: '把「稳定年化」换算成概率，这件事还成不成立就清楚了。',
   },
   {
+    // 摘要待补：标题信息不足以判断落点，先把原有标题单独列着，不编。
     title: '4 次全对，也不能证明你用 AI',
     href: 'https://mp.weixin.qq.com/s/7NO4TQt9fV-zbW97Lz4Mtg',
   },
   {
     title: '金价半年跌 25%：该慌的和该高兴的，不是同一批人',
     href: 'https://mp.weixin.qq.com/s/RZyJpzKxvAf4FSKmNIO0Kw',
+    summary: '同一条行情对不同仓位的人意义相反，先确认你站在哪一边。',
   },
 ]
+
+// 日期全齐才按日期倒序；否则维持人工顺序（新 → 旧）。
+const dated = articles.every((a) => a.date)
+const ordered = dated ? [...articles].sort((a, b) => (a.date as string).localeCompare(b.date as string) * -1) : articles
+const latest = dated ? (ordered[0].date as string).slice(0, 7) : null
 ---
 
 <Base
@@ -62,15 +76,23 @@ const articles = [
 
     <section class="writing-section" aria-labelledby="writing-list-title">
       <div>
-        <p class="case-label">公众号 · 长文</p>
+        {/* 数量与最近更新挂在列表标签上，不进首屏：首屏那块在窄屏正好压在化身上，
+            而且这两个数属于「列表里有什么」，放在列表头上更好找。
+            数量取数组长度、日期取最新一篇 —— 以后加文章不用手改。 */}
+        <p class="case-label">
+          公众号 · 长文 · {ordered.length} 篇{latest ? ` · 最近更新 ${latest}` : ''}
+        </p>
         <h2 id="writing-list-title">文章</h2>
       </div>
       <ol class="writing-list">
         {
-          articles.map((a) => (
+          ordered.map((a) => (
             <li>
               <a href={a.href} target="_blank" rel="noreferrer">
-                <span>{a.title}</span>
+                <span class="writing-item">
+                  <span class="writing-title">{a.title}</span>
+                  {a.summary ? <small class="writing-summary">{a.summary}</small> : null}
+                </span>
               </a>
             </li>
           ))

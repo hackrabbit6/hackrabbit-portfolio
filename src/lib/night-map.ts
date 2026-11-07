@@ -19,6 +19,9 @@ export type NightMapOptions = {
   initial: StopKey
   reduceMotion: boolean
   coarse: boolean
+  /** 正文栏右边界（窗口坐标 px），由页面量出来；返回 0 表示正文铺满，不启用化身安全线。
+   *  模块自己不去猜布局 —— 子页面的正文比首页窄，写死 token 算出来的边界会偏。 */
+  contentRight?: () => number
 }
 
 export type NightMapHandle = {
@@ -29,6 +32,10 @@ export type NightMapHandle = {
   /** 用归一化设备坐标（-1 … 1）拾取地标 */
   pick: (nx: number, ny: number) => StopKey | null
   setHover: (key: StopKey | null) => void
+  /** 把地标的世界坐标投影到屏幕像素（窗口坐标）；在相机背后或超出远平面时返回 null */
+  project: (key: StopKey) => { x: number; y: number } | null
+  /** 每帧在相机更新完之后回调一次（页面用它把投影写进 CSS 变量）。不要在里面读布局。 */
+  onFrame: (cb: () => void) => void
   dispose: () => void
 }
 
@@ -58,6 +65,9 @@ const smooth = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t)
 }
 
+// 拾取用的归一化设备坐标。pointermove 每帧都在调 pick()，提到模块作用域复用。
+const pointerNdc = new THREE.Vector2()
+
 // 起伏地形，地标周围压平，让建筑稳稳落地。
 const height = (x: number, z: number) => {
   const h =
@@ -86,9 +96,12 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     return item
   }
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !coarse, powerPreference: 'low-power' })
+  // alpha 透明 + 清除色带 0 alpha：地图只是一层线，夜色来自页面底色。
+  // 这样首屏标题的上半截能画在 canvas 之下（NIGHT-MAP.md「排版与地图的耦合」），
+  // 地形线才会从字中间穿过去；canvas 不透明就永远只能当壁纸。
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !coarse, alpha: true, powerPreference: 'low-power' })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 2))
-  renderer.setClearColor(NIGHT, 1)
+  renderer.setClearColor(NIGHT, 0)
 
   const scene = new THREE.Scene()
   scene.fog = new THREE.FogExp2(NIGHT, 0.03)
@@ -122,19 +135,55 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
   }
 
   // ── 夜空里的微尘 ────────────────────────────────────────────────
+  // 没有贴图的 PointsMaterial 画出来是**硬边方块**：偶尔有颗粒飘到镜头前，就是一个
+  // 几十像素的灰色方方贴在副文旁边，像渲染 bug。所以给一张径向渐变的圆点贴图，
+  // 并且生成时避开镜头常驻的那条走廊（相机 y≈5.4，z 在 22 → -33 之间移动）——
+  // 贴图让它变圆，避让让它不会贴脸。
+  const dustDot = (() => {
+    const c = document.createElement('canvas')
+    c.width = c.height = 64
+    const x = c.getContext('2d')
+    if (x) {
+      const g = x.createRadialGradient(32, 32, 0, 32, 32, 32)
+      g.addColorStop(0, 'rgba(255,255,255,1)')
+      g.addColorStop(0.45, 'rgba(255,255,255,0.6)')
+      g.addColorStop(1, 'rgba(255,255,255,0)')
+      x.fillStyle = g
+      x.fillRect(0, 0, 64, 64)
+    }
+    return track(new THREE.CanvasTexture(c))
+  })()
+
   const dust = (() => {
     const n = coarse ? 500 : 1300
     const a = new Float32Array(n * 3)
     for (let i = 0; i < n; i += 1) {
+      let y = 0
+      let z = 0
+      for (let tryCount = 0; tryCount < 8; tryCount += 1) {
+        y = Math.random() * 22
+        z = 22 - Math.random() * 80
+        // 镜头走廊：y 2.5–9、z -36–24。落在这里就重抽（平均不到两次）。
+        if (!(y > 2.5 && y < 9 && z > -36 && z < 24)) break
+      }
       a[i * 3] = (Math.random() - 0.5) * 64
-      a[i * 3 + 1] = Math.random() * 22
-      a[i * 3 + 2] = 22 - Math.random() * 80
+      a[i * 3 + 1] = y
+      a[i * 3 + 2] = z
     }
     const geo = track(new THREE.BufferGeometry())
     geo.setAttribute('position', new THREE.BufferAttribute(a, 3))
     const pts = new THREE.Points(
       geo,
-      track(new THREE.PointsMaterial({ color: 0xa3a6ae, size: 0.07, transparent: true, opacity: 0.7 })),
+      track(
+        new THREE.PointsMaterial({
+          color: 0xa3a6ae,
+          map: dustDot,
+          size: 0.09,
+          transparent: true,
+          opacity: 0.7,
+          depthWrite: false,
+        }),
+      ),
     )
     scene.add(pts)
     return pts
@@ -504,6 +553,52 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     return v
   }
 
+  // ── 化身不许站到正文上 ────────────────────────────────────────
+  // 化身是全站唯一的亮实体，它一旦飘到卡片上，半透明面板就漏出一团白，像贴纸粘在字上
+  // （/services/ 的「案例 · 站内 8 篇」是已知反例）。
+  // 规则：着地点的屏幕投影必须落在正文栏右边之外，越过时沿镜头右把它推回来。
+  // 推得很少（一般几十像素）—— 推多了会把「站在建筑旁边」变成「站在建筑里」。
+  const CONTENT_GAP = 72
+  const safe = { x: 0 }
+  const scratch = new THREE.Vector3()
+  const probe = new THREE.Vector3()
+  const camRight = new THREE.Vector3()
+
+  const measureSafe = () => {
+    const edge = options.contentRight?.() ?? 0
+    safe.x = edge > 0 ? edge + CONTENT_GAP : 0
+  }
+
+  // 屏幕坐标投影（窗口像素），背后或超出远平面时返回 null。
+  const toScreen = (v: THREE.Vector3) => {
+    scratch.copy(v).project(camera)
+    if (scratch.z > 1) return null
+    return { x: (scratch.x * 0.5 + 0.5) * window.innerWidth, y: (-scratch.y * 0.5 + 0.5) * window.innerHeight }
+  }
+
+  // 就地推：地标旁的站位与跳跃中的位置都走这一个函数，路径也不会从卡片背后穿过去。
+  const keepOffContent = (v: THREE.Vector3, elevated: boolean) => {
+    if (!safe.x) return
+    camera.updateMatrixWorld()
+    // 用头部高度算投影：字坐在地上，但屏幕上要算到它的头，否则还是压着字。
+    const own = toScreen(probe.copy(v).setY(v.y + 1.1))
+    if (!own || own.x >= safe.x) return
+
+    // 屏幕像素 → 该深度上的世界单位，沿镜头右方向推。
+    camRight.setFromMatrixColumn(camera.matrixWorld, 0).normalize()
+    const dist = camera.position.distanceTo(v)
+    const unitsPerPx = (2 * Math.tan((camera.fov * Math.PI) / 360) * dist) / window.innerHeight
+    v.addScaledVector(camRight, Math.min(safe.x - own.x, 260) * unitsPerPx)
+    // 地面上的地标推完重新贴地；工作台与台阶是作者摆好的高台，保持原高度。
+    if (!elevated) v.y = Math.max(0, height(v.x, v.z))
+  }
+
+  const guardedSpot = (key: StopKey) => {
+    const v = rabbitSpot(key)
+    keepOffContent(v, key === 'desk' || key === 'stairs')
+    return v
+  }
+
   // ── 镜头 ───────────────────────────────────────────────────────
   const shot = (key: StopKey, orbit: number, narrow: boolean) => {
     if (key === 'start') {
@@ -523,6 +618,11 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
   }
 
   let current: StopKey = options.initial
+  // 纯阅读区（能力 / 经历 / 联系）化身退一档：这三段是要人把字读完的，
+  // 全站唯一的亮实体站在旁边只会抢视线（NIGHT-MAP.md「阅读区退让」）。
+  const QUIET_STOPS: StopKey[] = ['pillars', 'stairs', 'portal']
+  const RABBIT_SCALE = 0.9
+  const RABBIT_SCALE_QUIET = 0.755
   let orbit = 0
   let hovered: StopKey | null = null
   const parallax = new THREE.Vector2()
@@ -544,6 +644,7 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     camera.aspect = w / h
     camera.fov = w < 760 ? 58 : 45
     camera.updateProjectionMatrix()
+    measureSafe()
   }
   resize()
 
@@ -551,6 +652,7 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
   let last = performance.now()
   let elapsed = 0
   const ray = new THREE.Raycaster()
+  const frameHooks: Array<() => void> = []
   let frame = 0
   let running = false
 
@@ -580,13 +682,15 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     walked.setDrawRange(0, Math.max(1, Math.round(walkedCount)))
 
     // 化身：匀速跳到目标点，近了再减速
-    const spot = rabbitSpot(current)
+    const spot = guardedSpot(current)
     const d = spot.clone().sub(rabbitPos)
     const dist = d.length()
     const moving = dist > 0.08
     if (reduceMotion) rabbitPos.copy(spot)
     else if (moving) rabbitPos.add(d.multiplyScalar(Math.min(1, Math.max(dt * 9, dist * dt * 2.5) / dist)))
     const hop = !reduceMotion && moving ? Math.abs(Math.sin(t * 9)) * 0.55 : 0
+    // 跳跃途中也要守线：只约束落点的话，半路会从卡片背后穿过去。
+    keepOffContent(rabbitPos, current === 'desk' || current === 'stairs')
     rabbit.position.set(rabbitPos.x, rabbitPos.y + hop, rabbitPos.z)
     let face: number
     if (moving && !reduceMotion) face = Math.atan2(spot.x - rabbitPos.x, spot.z - rabbitPos.z)
@@ -595,6 +699,10 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
     rabbit.rotation.y = reduceMotion ? face : turn(rabbit.rotation.y, face, ease(moving ? 0.0005 : 0.05))
 
     const flop = moving ? hop * 0.9 : reduceMotion ? 0 : Math.sin(t * 1.3) * 0.05
+    // 阅读区退让：缩放跟着 current 平滑变，不跳变。
+    const scaleGoal = QUIET_STOPS.includes(current) ? RABBIT_SCALE_QUIET : RABBIT_SCALE
+    const scaleNow = reduceMotion ? scaleGoal : rabbit.scale.x + (scaleGoal - rabbit.scale.x) * ease(0.01)
+    rabbit.scale.setScalar(scaleNow)
     earL.rotation.x = -0.1 - flop
     earR.rotation.x = -0.1 - flop * 0.8
     const headY = moving ? 0 : par.x * 1.1 + (current === 'desk' ? 0.45 : 0)
@@ -616,6 +724,10 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
         lampGlow.scale.set(s, s, 1)
       }
     }
+
+    // 相机、化身都摆好之后再投影：引线才不会慢一帧。
+    camera.updateMatrixWorld()
+    for (const hook of frameHooks) hook()
 
     renderer.render(scene, camera)
   }
@@ -668,7 +780,7 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
       parallax.set(x, y)
     },
     pick(nx, ny) {
-      ray.setFromCamera(new THREE.Vector2(nx, ny), camera)
+      ray.setFromCamera(pointerNdc.set(nx, ny), camera)
       const hit = ray.intersectObjects(pickers, false)[0]
       return hit ? (hit.object.userData.key as StopKey) : null
     },
@@ -676,6 +788,13 @@ export function bootNightMap(canvas: HTMLCanvasElement, options: NightMapOptions
       if (key === hovered) return
       hovered = key
       still()
+    },
+    project(key) {
+      camera.updateMatrixWorld()
+      return toScreen(probe.copy(STOPS[key].p).setY(STOPS[key].p.y + 1))
+    },
+    onFrame(cb) {
+      frameHooks.push(cb)
     },
     dispose() {
       stop()

@@ -14,7 +14,8 @@
   text-wrap: balance;
 }
 
-.contact-main > p:not(.eyebrow):not(.contact-secondary) {
+/* 两段正话：不是地图标注体，也不是次要项。 */
+.contact-main > p:not(.contact-secondary):not(.map-mark) {
   color: var(--ink-dim);
   font-size: var(--fs-lead);
   line-height: 1.8;
@@ -39,11 +40,9 @@
   margin-top: var(--s6);
 }
 
-.contact-links a,
-.next-card {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: var(--panel);
+/* 页尾两张去向卡走共享的内容面板（tokens.css）；这里的两个邮箱是行内小标签，需要更强的遮罩。 */
+.contact-links a {
+  background: var(--panel-strong);
   border: 1px solid var(--line);
   border-radius: 2px;
   color: var(--ink);
@@ -60,15 +59,18 @@
 }
 
 .next-card {
+  color: var(--ink);
   display: grid;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
   gap: var(--s3);
   min-height: 140px;
-  position: relative;
+  padding: var(--s3) var(--s5);
   transition: border-color 0.25s var(--ease-cine);
 }
 
 .next-card:hover {
-  border-color: rgba(242, 178, 102, 0.55);
+  border-top-color: rgba(242, 178, 102, 0.55);
 }
 
 .contact-links a:hover {

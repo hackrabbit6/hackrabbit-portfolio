@@ -13,15 +13,12 @@
   align-items: baseline;
   display: grid;
   gap: var(--s3) var(--s6);
-  grid-template-columns: 64px minmax(0, 1fr);
+  /* 左边不再是 64px 的文字标签，而是地图标注体（06 · 台灯工作台 · N）。 */
+  grid-template-columns: max-content minmax(0, 1fr);
 }
 
-/* 同 .eyebrow：标签已是中文，不再用英文小标签那套等宽 + uppercase + 宽字距 */
-.band-label {
-  color: var(--accent);
-  font-family: var(--font-body);
-  font-size: var(--fs-small);
-  letter-spacing: 0.02em;
+/* 薄带里的标注不占额外竖向空间。 */
+.band-row .map-mark {
   margin: 0;
 }
 

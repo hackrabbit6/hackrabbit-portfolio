@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { MapMark } from './MapMark'
 import './Work.css'
 
 type Project = {
@@ -159,7 +160,7 @@ export function Work() {
   return (
     <section className="work" id="work" data-map-stop="tower">
       <div className="work-heading">
-        <p className="eyebrow">作品</p>
+        <MapMark stop="tower" />
         <h2>做过的项目</h2>
         <p className="work-lead">工作项目脱敏，个人项目开源。</p>
       </div>
