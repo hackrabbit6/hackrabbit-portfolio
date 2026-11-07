@@ -13,6 +13,9 @@ dist-ssr
 .astro
 *.local
 
+# macOS 索引标记（Spotlight/同步工具会放）
+.metadata_never_index
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
