@@ -21,6 +21,15 @@
 
 /* align-items: start —— 两张卡内容量差很多（公众号有二维码，小红书只有一个链接），
    默认拉伸等高会让小红书那张变成一个大空盒子。 */
+/* 活跃信号：等宽小字，比 bio 轻一档，不抢主标题。 */
+.follow-updated {
+  color: var(--ink-dim);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.04em;
+  margin: var(--s4) 0 0;
+}
+
 .follow-list {
   align-items: start;
   display: grid;
@@ -95,7 +104,16 @@
     padding: var(--s7) var(--s5) var(--s6);
   }
 
-  .follow-list {
+  /* 活跃信号：等宽小字，比 bio 轻一档，不抢主标题。 */
+.follow-updated {
+  color: var(--ink-dim);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.04em;
+  margin: var(--s4) 0 0;
+}
+
+.follow-list {
     grid-template-columns: 1fr;
     margin-top: var(--s6);
   }

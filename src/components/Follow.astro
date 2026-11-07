@@ -1,5 +1,6 @@
 ---
 import './Follow.css'
+import { writingCount, latestDate } from '../lib/writing'
 import { MapMark } from './MapMark'
 
 // 两个平台是同一个身份，简介也相同，所以简介提到区块级别，卡片里只区分「形式」。
@@ -26,6 +27,11 @@ const accounts = [
     <MapMark stop="lab" />
     <h2>黑兔实验室</h2>
     <p class="follow-bio">帮普通人看懂 AI 时代里和自己有关的变化。</p>
+    {/* 内容维度的活跃证据：篇数与最新一篇的发布日期，都取自 src/lib/writing.ts。
+        招聘方与内容读者都能据此判断「这个号还在写」。 */}
+    <p class="follow-updated">
+      {writingCount} 篇长文{latestDate ? ` · 最近更新 ${latestDate}` : ''}
+    </p>
   </div>
 
   <ul class="follow-list">
