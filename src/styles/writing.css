@@ -1,8 +1,8 @@
 /* 写作列表。沿用 case-study 的排版刻度，只加列表本身需要的部分。 */
 .writing-section {
   display: grid;
-  gap: var(--s6);
-  grid-template-columns: 0.55fr 1.45fr;
+  gap: var(--s5);
+  grid-template-columns: minmax(0, 1fr);
   padding: var(--space-section) 0 0;
 }
 
@@ -61,8 +61,6 @@
 
 @media (max-width: 767px) {
   .writing-section {
-    gap: var(--s5);
-    grid-template-columns: 1fr;
     padding-top: var(--s7);
   }
 

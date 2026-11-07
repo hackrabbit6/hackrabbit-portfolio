@@ -1,16 +1,20 @@
 :root {
-  /* 东方水墨色板（ADR 0003 / ORIENTAL-REDESIGN.md）。
-     朱砂 --accent 与青玉 --accent-2 都按 AA 校准过，可直接用于 15px 小字。 */
-  --bg: #0B0A08;
-  --bg-elev: #16130D;
-  --panel: rgba(22, 19, 13, 0.72);
-  --ink: #EDE4D3;
-  --ink-dim: #A79E8C;
-  --accent: #D64A32;
-  --accent-2: #3E8E7E;
-  --gold: #C9A227;
-  --line: rgba(237, 228, 211, 0.1);
-  --glow: 0 0 40px rgba(214, 74, 50, 0.22);
+  /* 夜间地图色板（ADR 0004 / NIGHT-MAP.md）。
+     整个世界只有黑白灰的细线；暖色只给台灯光 --accent，冷色只给化身围巾上的徽章青 --accent-2。
+     四个文字色于 --bg 都 ≥ 4.5:1，可直接用于小字。 */
+  --bg: #08090C;
+  --bg-elev: #111318;
+  --panel: rgba(12, 13, 17, 0.78);
+  --panel-strong: rgba(12, 13, 17, 0.9);
+  --ink: #ECEAE4;
+  --ink-dim: #A3A6AE;
+  --ink-faint: #858A94;
+  --accent: #F2B266;
+  --on-accent: #1A1208;
+  --accent-2: #5FBFAE;
+  --gold: #F2B266;
+  --line: rgba(236, 234, 228, 0.13);
+  --glow: 0 0 40px rgba(242, 178, 102, 0.16);
   --blur-depth: 24px;
   --s1: 4px;
   --s2: 8px;
@@ -25,6 +29,8 @@
 
   /* 容器与左右留白。章节一律用 --gutter，不要再各自写一遍这个 calc。 */
   --container: 1180px;
+  /* 宽屏下内容只占左侧这一栏，右侧留给 3D 地图上的当前地标（NIGHT-MAP.md）。 */
+  --map-col: 720px;
   --gutter: max(var(--s5), calc((100vw - var(--container)) / 2 + var(--s5)));
 
   /* 节奏：间距本身是层级信号，刻意不等距。
@@ -74,10 +80,51 @@ body {
 }
 
 body {
-  background:
-    radial-gradient(circle at 80% 6%, rgba(214, 74, 50, 0.1), transparent 26rem),
-    radial-gradient(circle at 10% 90%, rgba(62, 142, 126, 0.08), transparent 24rem),
-    var(--bg);
+  background: var(--bg);
+  line-height: 1.7;
+}
+
+/* 内容浮在固定的夜间地图（.night-map, z-index 0）之上。 */
+body > main,
+body > header,
+body > footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* 宽屏：首页各区块的内容收进左侧一栏，地标在右侧露出来。 */
+@media (min-width: 1100px) {
+  /* React 岛屿外面会包一层 astro-island，所以不用子选择器。 */
+  main [data-map-stop]:not(#top) {
+    padding-right: max(var(--gutter), calc(100% - var(--gutter) - var(--map-col)));
+  }
+}
+
+/* 地图注记式的角标：卡片左上角一个台灯色直角，替代原来的朱砂顶线。
+   各卡片自己的 CSS 负责 position: relative。 */
+.building-card::before,
+.skill-card::before,
+.follow-card::before,
+.next-card::before,
+.case-card::before,
+.case-cta::before {
+  border-left: 1px solid var(--accent);
+  border-top: 1px solid var(--accent);
+  content: '';
+  height: 14px;
+  left: -1px;
+  pointer-events: none;
+  position: absolute;
+  top: -1px;
+  width: 14px;
+}
+
+/* 压在 3D 地图上的内容面板：半透明夜色 + 模糊，地图隐约透出来。 */
+.map-panel {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: var(--panel);
+  border: 1px solid var(--line);
 }
 
 a {
@@ -155,17 +202,10 @@ a {
   }
 }
 
-/* 宣纸底区块：在墨黑长页里插一段暖白，制造明暗呼吸（ORIENTAL-REDESIGN.md）。
-   局部反转色板变量，子组件无需改动即可适配。 */
+/* .paper 曾是水墨版的宣纸反色区块。夜间地图版不再反色（会把背后的地标整块挡住），
+   保留类名只为不改组件结构。 */
 .paper {
-  --ink: #1c1712;
-  --ink-dim: #5b5142;
-  --line: rgba(28, 23, 18, 0.16);
-  --panel: rgba(255, 255, 255, 0.42);
-  --accent: #b23a2e;
-  --glow: none;
-  background: #ede4d3;
-  color: var(--ink);
+  background: transparent;
 }
 
 /* Valorant 式速度线：hover 时轻微前冲（ORIENTAL-REDESIGN.md）。

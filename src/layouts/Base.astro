@@ -1,8 +1,14 @@
 ---
 import '../styles/tokens.css'
+import NightMap from '../components/NightMap.astro'
+import type { StopKey } from '../lib/night-map'
+
+type Props = { title?: string; description?: string; mapStop?: StopKey }
 
 const {
   title = 'hackrabbit · 前端工程师 / 独立开发',
+  // 本页在夜间地图上对应的地标（NIGHT-MAP.md）。首页由各区块的 data-map-stop 决定。
+  mapStop = 'start',
   description = 'hackrabbit 的个人主页：前端工程师、独立开发。做前端交付、H5 SDK、AI 应用与独立产品，也写 AI 时代里和普通人有关的变化。',
 } = Astro.props
 
@@ -20,7 +26,7 @@ const ogImage = new URL('/og.png', Astro.site)
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#0B0A08" />
+    <meta name="theme-color" content="#08090C" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="hackrabbit" />
@@ -39,6 +45,7 @@ const ogImage = new URL('/og.png', Astro.site)
     <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
+    <NightMap stop={mapStop} />
     <slot />
     <script>
       // 卡片 3D 倾斜（ORIENTAL-REDESIGN.md）。只写 CSS 变量，不动布局与滚动。

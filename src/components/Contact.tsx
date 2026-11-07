@@ -10,7 +10,7 @@ const next = [
 
 export function Contact() {
   return (
-    <section className="contact" id="contact">
+    <section className="contact" id="contact" data-map-stop="portal">
       <div className="contact-main">
         <p className="eyebrow">联系</p>
         {/* 合作在前、全职在后 —— 与首屏的「独立优先」口径一致，见 CONTEXT.md。

@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: superseded（视觉部分由 ADR 0004 取代）
 ---
 
 # 全站改为东方水墨风格，并引入 Three.js 实时 3D 背景

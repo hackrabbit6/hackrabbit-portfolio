@@ -14,13 +14,13 @@
 
 - Astro 7 负责静态页面、路由和 SEO
 - React 19 islands 承载需要交互的首页区块
-- Lenis + GSAP ScrollTrigger 驱动滚动叙事
-- 原生 Canvas 2D 提供轻量动态 Hero；移动端和 `prefers-reduced-motion` 自动降级
+- GSAP ScrollTrigger 负责进场动画
+- Three.js「夜间地图」：全站共用的 3D 背景，每个内容区块对应地图上的一个地标（见 `docs/NIGHT-MAP.md`）；无 WebGL、触摸设备和 `prefers-reduced-motion` 自动降级
 - Netlify 静态部署
 
 ## 页面
 
-- `/`：电影感滚动首页
+- `/`：首页，按阅读位置在夜间地图的地标间导览
 - `/work/`：项目案例索引
 - `/work/h5-game-sdk/`：H5 游戏发行 SDK 与充值体系脱敏案例
 - `/resume.pdf`：简历

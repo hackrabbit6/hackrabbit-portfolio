@@ -14,39 +14,33 @@
 /* Skills 内部保持紧凑 —— 章节之间才拉开距离 */
 .skills-grid {
   display: grid;
+  margin-top: var(--s6);
   gap: var(--s4);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .skill-card {
-  background: linear-gradient(160deg, rgba(36, 31, 22, 0.92), rgba(16, 14, 10, 0.96));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: var(--s4);
-  min-height: 280px;
+  border-radius: 2px;
+  min-height: 240px;
   overflow: hidden;
   padding: var(--s6);
   position: relative;
   transition: border-color 0.3s var(--ease-cine), box-shadow 0.3s var(--ease-cine);
 }
 
-.skill-card::before {
-  background: linear-gradient(90deg, var(--accent), rgba(214, 74, 50, 0));
-  content: '';
-  height: 2px;
-  inset: 0 auto auto 0;
-  position: absolute;
-  width: 72px;
-}
-
 .skill-card:hover {
-  border-color: rgba(214, 74, 50, 0.45);
-  box-shadow: 0 0 34px rgba(214, 74, 50, 0.12);
+  border-color: rgba(242, 178, 102, 0.45);
+  box-shadow: var(--glow);
 }
 
 .skill-card h3 {
   font-family: var(--font-display);
-  font-size: var(--fs-h3);
-  line-height: 1.1;
+  font-size: var(--fs-h4);
+  line-height: 1.25;
   margin: 0;
 }
 
