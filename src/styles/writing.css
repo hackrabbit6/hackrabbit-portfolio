@@ -90,3 +90,19 @@
     grid-template-columns: 28px 1fr auto;
   }
 }
+
+/* 日期 + 摘要同一行：日期是元信息（等宽、更淡），摘要说这篇解决什么问题。
+   日期来自文章页的 create_time，不是估算值。 */
+.writing-list a .writing-meta {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px var(--s3);
+}
+
+.writing-list a .writing-meta time {
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.04em;
+}
