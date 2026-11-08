@@ -21,7 +21,7 @@ hackrabbit 的个人主页。静态站，无后端，无数据库，无登录态
 | 动画 | GSAP + ScrollTrigger |
 | 样式 | 原生 CSS，每个组件一个同名 `.css`，变量在 `src/styles/tokens.css` |
 | 包管理 | Bun |
-| 部署 | Cloudflare Pages（`wrangler.toml`，`bunx astro build` → `dist`）；Netlify 保留为回退（见 ADR 0005） |
+| 部署 | Netlify（`netlify.toml`，`bunx astro build` → `dist`） |
 
 ## 命令
 
@@ -49,10 +49,7 @@ public/           favicon.svg、icons.svg、resume.pdf
 
 **不得新增功能。** 不加 AI Chat、CMS、后台、评论、搜索、分析面板、i18n 切换。
 
-**不得换技术。** 不换框架，不换包管理器，不引入 CSS 框架（Tailwind / UnoCSS 等），不引入组件库，不引入状态管理。
-
-换部署平台需要站主明确指示并写进 ADR（目前只有一次：ADR 0005，Netlify → Cloudflare Pages，
-原因是 Netlify 用的 AWS IP 段在大陆不可达）。
+**不得换技术。** 不换框架，不换包管理器，不换部署平台，不引入 CSS 框架（Tailwind / UnoCSS 等），不引入组件库，不引入状态管理。
 
 **新增路由需要先在文档里落定。** 当前路由集合是 `/`、`/work/`、`/work/h5-game-sdk/`，加静态文件 `/resume.pdf`。
 

@@ -10,7 +10,6 @@
     "build": "astro build",
     "lint": "astro check",
     "preview": "astro preview",
-    "deploy": "bunx wrangler pages deploy dist --project-name=hackrabbit-portfolio",
     "astro": "astro"
   },
   "dependencies": {
